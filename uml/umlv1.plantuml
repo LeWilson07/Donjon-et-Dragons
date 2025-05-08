@@ -1,0 +1,55 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+interface Classe << interface >> {
+  + definirCaracsBase(Personnage): void
+}
+class Guerrier {
+  + Guerrier(): 
+  + definirCaracsBase(Personnage): void
+}
+class Main {
+  + Main(): 
+  + main(String[]): void
+}
+class Nain {
+  + Nain(): 
+  + appliquerBonusStat(Personnage): void
+}
+class Personnage {
+  + Personnage(String, Race, Classe): 
+  - m_pv: int
+  - m_force: int
+  - m_nom: String
+  - m_vitesse: int
+  - m_classe: Classe
+  - m_dexterite: int
+  - m_race: Race
+  - m_initiative: int
+  + setM_force(int): void
+  + setM_initiative(int): void
+  + setM_pv(int): void
+  + getM_force(): int
+  + getM_nom(): String
+  + getM_dexterite(): int
+  + getM_vitesse(): int
+  + setM_dexterite(int): void
+  + setM_vitesse(int): void
+  + getM_initiative(): int
+  + getM_Pv(): int
+}
+interface Race << interface >> {
+  + appliquerBonusStat(Personnage): void
+}
+
+Guerrier    -[#008200,dashed]-^  Classe     
+Main        -[#595959,dashed]->  Guerrier   : "«create»"
+Main        -[#595959,dashed]->  Nain       : "«create»"
+Main        -[#595959,dashed]->  Personnage : "«create»"
+Nain        -[#008200,dashed]-^  Race       
+Personnage "1" *-[#595959,plain]-> "m_classe\n1" Classe     
+Personnage "1" *-[#595959,plain]-> "m_race\n1" Race       
+@enduml
