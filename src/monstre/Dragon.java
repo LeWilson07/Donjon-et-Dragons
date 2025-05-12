@@ -13,6 +13,8 @@ public class Dragon implements Monstre{
     public Dragon(int num) {
         m_num = num;
     }
+
     public void attaquer(Personnage p){}
+
     public void SeDeplacer(){}
 }

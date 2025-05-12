@@ -67,6 +67,14 @@ class Monstre{
     + SeDeplacer() : void
 }
 
+class De{
+    + UnDeQuatre() : int
+    + UnDeSix() : int
+    + UnDeHuit() : int
+    + UnDeVingt() : int
+    + QuatreDeQuatre() : int
+}
+
 Guerrier    -[#008200,dashed]-^  Classe     
 Main        -[#595959,dashed]->  Guerrier   : "«create»"
 Main        -[#595959,dashed]->  Nain       : "«create»"
@@ -76,5 +84,7 @@ Personnage "1" *-[#595959,plain]-> "m_classe\n1" Classe
 Personnage "1" *-[#595959,plain]-> "m_race\n1" Race
 
 Personnage "0..1" -- "0..1" Monstre : attaque
+Personnage "0..1" -- "0..1" De : Lancer
+Monstre "0..1" -- "0..1" De : Lancer
 
 @enduml

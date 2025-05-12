@@ -2,12 +2,15 @@ package personnage;
 
 import classe.Classe;
 import race.Race;
+import jeux.De;
 
 public class Personnage {
 
     private String m_nom;
     private Race m_race;
     private Classe m_classe;
+
+    private De QuatreDeQuatre = new De(4,4);
 
     private int m_pv;
     private int m_force = 5;
@@ -20,9 +23,18 @@ public class Personnage {
         this.m_race = race;
         this.m_classe = classe;
 
+        loadState();
         classe.definirCaracsBase(this);
         race.appliquerBonusStat(this);
 
+    }
+
+    private void loadState(){
+                int result = QuatreDeQuatre.lancerDe() + 3;
+                m_force = result;
+                m_dexterite = result;
+                m_vitesse = result;
+                m_initiative = result;
     }
 
     public int getM_Pv(){
