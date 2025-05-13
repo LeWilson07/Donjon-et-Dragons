@@ -3,6 +3,11 @@ package personnage;
 import classe.Classe;
 import race.Race;
 import jeux.De;
+import equipement.Arme;
+import equipement.Armure;
+import java.util.*;
+
+import java.util.Dictionary;
 
 public class Personnage {
 
@@ -10,13 +15,18 @@ public class Personnage {
     private Race m_race;
     private Classe m_classe;
 
-    private De QuatreDeQuatre = new De(4,4);
+    private De de = new De();
 
     private int m_pv;
     private int m_force = 5;
     private int m_dexterite = 5;
     private int m_vitesse = 5;
     private int m_initiative = 5;
+    private Arme m_armeEquipe;
+    private Armure m_armureEquipe;
+
+    ArrayList<Arme> m_inventaireArme = new ArrayList<Arme>();
+    ArrayList<Armure> m_inventaireArmure = new ArrayList<Armure>();
 
     public Personnage(String nom,Race race,Classe classe){
         this.m_nom = nom;
@@ -30,10 +40,13 @@ public class Personnage {
     }
 
     private void loadState(){
-                int result = QuatreDeQuatre.lancerDe() + 3;
+                int result = de.QuatreDeQuatre() + 3;
                 m_force = result;
+                result = de.QuatreDeQuatre() + 3;
                 m_dexterite = result;
+                result = de.QuatreDeQuatre() + 3;
                 m_vitesse = result;
+                result = de.QuatreDeQuatre() + 3;
                 m_initiative = result;
     }
 
@@ -79,5 +92,21 @@ public class Personnage {
 
     public String getM_nom() {
         return m_nom;
+    }
+
+    public void EquiperArme(Arme arme) {
+        m_armeEquipe = arme;
+    }
+    public void EquiperArmure(Armure armure) {
+        m_armureEquipe = armure;
+    }
+    public void ramasser(Arme arme) {
+        m_inventaireArme.add(arme);
+    }
+    public void ramasser(Armure armure) {
+        m_inventaireArmure.add(armure);
+    }
+    public void attaquer(Arme arme) {
+
     }
 }

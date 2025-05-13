@@ -7,4 +7,6 @@ public class Elfe implements Race{
     public void appliquerBonusStat(Personnage personnage) {
         personnage.setM_dexterite(personnage.getM_dexterite()+6);
     }
+
+
 }
