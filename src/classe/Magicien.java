@@ -6,12 +6,13 @@ import jeux.De;
 import personnage.Personnage;
 
 public class Magicien implements Classe{
-    private De de = new De();
+    private De UnDeQuatre = new De(4,1);
+    private De UnDeSix = new De(6,1);
 
     @Override
     public void definirCaracsBase(Personnage personnage) {
-        Arme ArmeParDefaut = new Arme("Bâton", de.UnDeSix(), 1, false);
-        Arme ArmeParDefaut2 = new Arme("fronde", de.UnDeQuatre(), 6, false);
+        Arme ArmeParDefaut = new Arme("Bâton", UnDeSix, 1, false);
+        Arme ArmeParDefaut2 = new Arme("fronde", UnDeQuatre, 6, false);
         personnage.EquiperArme(ArmeParDefaut);
         personnage.ramasser(ArmeParDefaut2);
         personnage.ramasser(ArmeParDefaut);
