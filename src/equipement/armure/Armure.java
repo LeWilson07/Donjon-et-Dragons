@@ -1,4 +1,4 @@
-package equipement;
+package equipement.armure;
 
 public class Armure {
     private String m_nom;

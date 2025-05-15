@@ -1,4 +1,4 @@
-package equipement;
+package equipement.arme;
 import jeux.De;
 
 public class Arme {
