@@ -1,7 +1,7 @@
-package equipement;
+package equipement.arme;
 import jeux.De;
 
-public class Arme extends Equipement {
+public class Arme extends equipement.Equipement{
     private De m_degat;
     private int m_porte;
     private boolean m_IsGuerre;
@@ -21,6 +21,9 @@ public class Arme extends Equipement {
         return m_porte;
     }
 
+    public String getNom() {
+        return super.getNom();
+    }
     public boolean getM_IsGuerre() {
         return m_IsGuerre;
     }

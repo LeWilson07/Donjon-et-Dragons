@@ -31,7 +31,7 @@ De plus, il y aura un rendu hebdomadaire avant chaque **dimanche, minuit**.
 
 ## Le jeu
 
-Il s'agit d'un jeu avec plusieurs joueurs face à des monstres contrôlés par le maître du jeu, qui se joue **au tour par tour**. Les joueurs incarnant les personnages doivent éliminer les monstres de trois donjons successifs. Un autre joueur est Maître du Jeu et a pour rôle de narrer l'histoire et expliquer le contexte aux joueurs. Si un seul joueur est éliminé par un monstre dans un des donjons, l'équipe a perdu.
+Il s'agit d'un jeu avec plusieurs joueurs face à des monstres contrôlés par le maître du jeu, qui se joue **au tour par tour**. Les joueurs incarnant les personnages doivent éliminer les monstres de trois donjons successifs. Un autre joueur est Maître du Jeu et a pour rôle de narrer l'histoire et expliquer le contexte aux joueurs. Si un seul joueur est éliminé par un entite.monstre dans un des donjons, l'équipe a perdu.
 
  Le jeu se base sur des jets de dés désignés par <nombre de dés>d<nombre de faces des dés>.
  Par exemple, 3d4 désigne le jet de 3 dés à 4 faces.
@@ -39,8 +39,8 @@ Il s'agit d'un jeu avec plusieurs joueurs face à des monstres contrôlés par l
 
 ### Les personnages
 
-Chaque joueur à l'exception du Maître du Jeu incarne un personnage.
-Chaque personnage est défini par:
+Chaque joueur à l'exception du Maître du Jeu incarne un entite.personnage.
+Chaque entite.personnage est défini par:
 - un nom
 - une race parmi:
   - Humain
@@ -63,10 +63,10 @@ Chaque personnage est défini par:
 
 #### Les caractéristiques
 - la caractéristique de points de vie indique le nombre de dégâts que peut subir un joueur avant de mourir
-- la caractéristique force offre un bonus lors de l'utilisation d'une arme de corps à corps (voir Déroulement d'un donjon >  Tour d'un personnage ou d'un monstre > Attaquer)
-- la caractéristique dextérité offre un bonus lors de l'utilisation de armes à distance (voir Déroulement d'un donjon >  Tour d'un personnage ou d'un monstre > Attaquer)
-- la caractéristique vitesse indique la distance que peut parcourir un personnage lors d'une action (voir Déroulement d'un donjon >  Tour d'un personnage ou d'un monstre > Se déplacer)
-- la caractéristique initiative offre un bonus pour déterminer l'ordre dans lequel jouera un personnage lors d'un combat dans un donjon (voir Déroulement d'un donjon >  Mise en Place)
+- la caractéristique force offre un bonus lors de l'utilisation d'une arme de corps à corps (voir Déroulement d'un donjon >  Tour d'un entite.personnage ou d'un entite.monstre > Attaquer)
+- la caractéristique dextérité offre un bonus lors de l'utilisation de armes à distance (voir Déroulement d'un donjon >  Tour d'un entite.personnage ou d'un entite.monstre > Attaquer)
+- la caractéristique vitesse indique la distance que peut parcourir un entite.personnage lors d'une action (voir Déroulement d'un donjon >  Tour d'un entite.personnage ou d'un entite.monstre > Se déplacer)
+- la caractéristique initiative offre un bonus pour déterminer l'ordre dans lequel jouera un entite.personnage lors d'un combat dans un donjon (voir Déroulement d'un donjon >  Mise en Place)
 
 #### Les équipements
 - les armures légères
@@ -86,8 +86,8 @@ Chaque personnage est défini par:
   - fronde, dégât 1d4, portée 6 cases
   - arc court, dégât 1d6, portée 16 cases
 
-Les armes de guerre lorsqu'elles sont équipées par un personnage diminuent de 2 points leur vitesse et augmente de 4 leur force.
-Les armures lourdes lorsqu'elles sont équipées par un personnage diminuent de 4 point leur vitesse.
+Les armes de guerre lorsqu'elles sont équipées par un entite.personnage diminuent de 2 points leur vitesse et augmente de 4 leur force.
+Les armures lourdes lorsqu'elles sont équipées par un entite.personnage diminuent de 4 point leur vitesse.
 
 #### Les races
 - les Elfes possèdent une dextérité de base augmentée de 6 points
@@ -111,16 +111,16 @@ Les armures lourdes lorsqu'elles sont équipées par un personnage diminuent de 
   - 16 points de vie
   - un équipement contenant une rapière et un arc court
 
-#### Création d'un personnage
-Au début d'une partie, chaque joueur crée son personnage de la façon suivante:
-- le joueur choisit un nom pour son personnage
-- le joueur choisit une race pour son personnage
-- le joueur choisit une classe pour son personnage
-- la caractéristique point de vie est déterminée par la classe de son personnage
-- chacune des autres caractéristique du personnage est déterminée par la somme de:
+#### Création d'un entite.personnage
+Au début d'une partie, chaque joueur crée son entite.personnage de la façon suivante:
+- le joueur choisit un nom pour son entite.personnage
+- le joueur choisit une race pour son entite.personnage
+- le joueur choisit une classe pour son entite.personnage
+- la caractéristique point de vie est déterminée par la classe de son entite.personnage
+- chacune des autres caractéristique du entite.personnage est déterminée par la somme de:
   - 4d4
   - 3 points
-  - l'augmentation déterminée par la race du personnage
+  - l'augmentation déterminée par la race du entite.personnage
 
 ### Les monstres
 
@@ -133,7 +133,7 @@ Stranger Things, Saison 1, épisode 1*
 
 
 Les monstres sont contrôlés par le maître du jeu.
-Un monstre est défini par:
+Un entite.monstre est défini par:
 - son espèce (par exemple dragon)
 - son numéro si plusieurs monstres de la même espèce sont présents
 - son attaque (qui est unique)
@@ -149,7 +149,7 @@ Un monstre est défini par:
 
 
 
-En revanche un monstre ne possède pas d'équipement.
+En revanche un entite.monstre ne possède pas d'équipement.
 
 
 
@@ -167,30 +167,30 @@ Au début de chaque donjon, le maître du jeu
 
 Afin de faciliter la tâche au maître du jeu, un choix de mise en place du donjon par défaut devra être proposé pour chaque donjon.
 
-Chaque joueur et chaque monstre lance 1d20 et ajoute leur caractéristique d'initiative. Ils joueront par ordre décroissant du résultat d'initiative.
+Chaque joueur et chaque entite.monstre lance 1d20 et ajoute leur caractéristique d'initiative. Ils joueront par ordre décroissant du résultat d'initiative.
 
 Avant de débuter le donjon, chaque joueur peut équiper l'armure et l'arme de son choix.
 
 
-#### Tour d'un personnage ou d'un monstre
-Les tours sont joués dans l'ordre déterminé par l'initiative lors de la mise en place du donjon. Après le dernier joueur ou monstre, c'est le premier joueur ou monstre qui continue.
+#### Tour d'un entite.personnage ou d'un entite.monstre
+Les tours sont joués dans l'ordre déterminé par l'initiative lors de la mise en place du donjon. Après le dernier joueur ou entite.monstre, c'est le premier joueur ou entite.monstre qui continue.
 
-Lors de son tour, le joueur ou le monstre (contrôlé par le maître du jeu) peut réaliser jusqu'à 3 actions parmi. Une action consiste soit à s'équiper, soit à se déplacer, soit attaquer, soit ramasser un équipement.
+Lors de son tour, le joueur ou le entite.monstre (contrôlé par le maître du jeu) peut réaliser jusqu'à 3 actions parmi. Une action consiste soit à s'équiper, soit à se déplacer, soit attaquer, soit ramasser un équipement.
 
 A la fin de chaque action le joueur ou le maître du jeu peut commenter l'action pour améliorer le *Role Play*.
 
 ##### S'équiper *(uniquement pour les personnages)*
 Un joueur peut équiper une arme ou une armure de son inventaire.
 (L'arme ou l'armure précédemment équipée retourne dans l'inventaire)
-Ne pas oublier de prendre alors en compte l'éventuel modificateur de vitesse dû à l'arme de guerre ou l'armure lourde lors des futurs déplacements du personnage.
+Ne pas oublier de prendre alors en compte l'éventuel modificateur de vitesse dû à l'arme de guerre ou l'armure lourde lors des futurs déplacements du entite.personnage.
 
 ##### Se Déplacer
-Un joueur ou un monstre peut de déplacer d'une distance égale à sa caractéristique de vitesse divisée par 3 sur une case sans monstre, joueur ou obstacle.
+Un joueur ou un entite.monstre peut de déplacer d'une distance égale à sa caractéristique de vitesse divisée par 3 sur une case sans entite.monstre, joueur ou obstacle.
 L'évitement d'obstacles n'est pas pris en compte pour le calcul de la distance de déplacement.
 
 ##### Attaquer
 L'attaquant attaque avec l'arme  qu'il porte.
-- L'attaquant choisit la cible de son attaque(monstre dans le cas d'un attaquant personnage et personnage dans le cas d'un attaquant monstre). La cible de l'attaque  doit être à portée du joueur donnée par l'arme (les armes au corps-à-corps ont une portée d'une seule case). Les obstacles ne bloquent pas les attaques des armes à distance.
+- L'attaquant choisit la cible de son attaque(entite.monstre dans le cas d'un attaquant entite.personnage et entite.personnage dans le cas d'un attaquant entite.monstre). La cible de l'attaque  doit être à portée du joueur donnée par l'arme (les armes au corps-à-corps ont une portée d'une seule case). Les obstacles ne bloquent pas les attaques des armes à distance.
 - L'attaquant commence par faire un jet d'attaque (1d20). Il ajoute ensuite au résultat du dé sa caractéristique de Dextérité s'il s'agit d'une attaque avec arme à distance et sa caractéristique de Force s'il s'agit d'une attaque avec arme au corps-à-corps.
 - Si la somme est supérieur à la classe d'armure de la cible, l'attaquant lance le dé de dégât de l'arme et la cible perd en point de vies le résultat du jet de dé. Dans le cas contraire, l'attaquant finit son action sans infliger de dégâts à la cible.
 

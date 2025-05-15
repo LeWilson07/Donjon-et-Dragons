@@ -1,4 +1,6 @@
-package equipement;
+package equipement.armure;
+
+import equipement.Equipement;
 
 public class Armure extends Equipement {
     private boolean m_IsLourde;

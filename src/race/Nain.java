@@ -1,6 +1,6 @@
 package race;
 
-import personnage.Personnage;
+import entite.personnage.Personnage;
 
 public class Nain implements Race {
 

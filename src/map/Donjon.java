@@ -1,8 +1,11 @@
 package map;
 
 import equipement.*;
+import equipement.Equipement;
+import equipement.arme.Arme;
+import equipement.armure.Armure;
 import jeux.De;
-import personnage.Personnage;
+import entite.personnage.Personnage;
 
 import java.util.ArrayList;
 import java.util.List;
