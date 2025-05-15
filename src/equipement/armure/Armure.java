@@ -1,17 +1,15 @@
 package equipement.armure;
 
-public class Armure {
-    private String m_nom;
+import equipement.Equipement;
+
+public class Armure extends Equipement {
     private boolean m_IsLourde;
     private int m_classArmure;
 
     public Armure(String nom, int classArmure, boolean isLourde) {
-        m_nom = nom;
+        super(nom);
         m_IsLourde = isLourde;
         m_classArmure = classArmure;
-    }
-    public String getNom() {
-        return m_nom;
     }
 
     public boolean getIsLourde() {
