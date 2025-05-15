@@ -21,7 +21,7 @@ public class Main {
         System.out.println("Force " + Senshi.getM_force());
         System.out.println("Initiative " + Senshi.getM_initiative());
 
-        Donjon Donjon1 = new Donjon(26,18);
+        Donjon Donjon1 = new Donjon(26,18, Donjon.ModeGeneration.MANUEL);
         Donjon1.afficherDonjon();
 
 
