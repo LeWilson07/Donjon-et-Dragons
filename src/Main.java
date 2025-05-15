@@ -6,6 +6,7 @@ import entite.monstre.Monstre;
 import entite.personnage.Personnage;
 import equipement.arme.Arme;
 import equipement.arme.EpeeLongue;
+import map.Donjon;
 import race.Nain;
 import race.Race;
 
@@ -43,6 +44,9 @@ public class Main {
 
         Monstre dragon = new Dragon(1);
         Monstre bowser = new Bowser(2);
+
+        Donjon donjon1 = new Donjon(15,15, Donjon.ModeGeneration.AUTO);
+        donjon1.afficherDonjon();
 
     }
 }

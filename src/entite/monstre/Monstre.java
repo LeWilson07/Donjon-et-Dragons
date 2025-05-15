@@ -10,12 +10,15 @@ public class Monstre extends entite.Entite {
     private int m_num;
     private De m_damage;
 
+
+
     public Monstre(int num, int force, int dexterite, int initiative, int pv, int classArmure, int porteAttaque, int vitesse) {
-        super(pv,force,dexterite,vitesse, initiative);
+        super(pv, force, dexterite, vitesse, initiative,0,0);
         m_num = num;
         m_classArmure = classArmure;
         m_porteAttaque = porteAttaque;
     }
+
 
     public int getClassArmure() {
         return m_classArmure;

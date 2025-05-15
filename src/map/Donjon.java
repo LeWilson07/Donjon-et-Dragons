@@ -6,6 +6,7 @@ import equipement.arme.Arme;
 import equipement.armure.Armure;
 import jeux.De;
 import entite.personnage.Personnage;
+import entite.monstre.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,23 @@ public class Donjon {
             // Config 3: L
             {{4,3}, {4,4}, {4,5}, {5,5},{14,13},{14,14},{14,15},{15,15}}
     };
-    private int configChoisie = 0;
+
+    private static final int[][][] MONSTRES_POSITIONS = {
+            // Config 1 positions (x,y)
+            {{3,3}, {7,3}},
+            // Config 2 positions
+            {{5,5}, {10,10}},
+            // Config 3 positions
+            {{2,2}, {10,12}}
+    };
+
+
+    private static final Monstre[][] MonstreDefault= {
+            {new Dragon(0),new Bowser(1)},
+            {new Dragon(0),new Bowser(1)},
+            {new Dragon(0),new Bowser(1)}
+    };
+    private int configChoisie = 2;
 
     public Donjon(int largeur, int hauteur, ModeGeneration mode) {
         grille = new char[hauteur][largeur];
@@ -39,20 +56,48 @@ public class Donjon {
         }
     }
 
+    public void placerMonstres(List<Monstre> monstres) {
+        for (Monstre m : monstres) {
+            placerEntite(m, 'M');
+        }
+    }
+
+    private void placerMonstresConfig() {
+        Monstre[] monstres = MonstreDefault[configChoisie];
+        int[][] positions = MONSTRES_POSITIONS[configChoisie];
+
+        for (int i = 0; i < monstres.length; i++) {
+            Monstre m = monstres[i];
+            int x = positions[i][0];
+            int y = positions[i][1];
+
+            // S'assurer que la case est accessible (tu peux aussi gérer autrement si ce n'est pas le cas)
+            if (!estAccessible(x, y)) {
+                // Trouver une case libre proche (optionnel, ou skip)
+                continue;
+            }
+
+            m.setX(x);
+            m.setY(y);
+            placerEntiteManuellement(m, x, y, 'M');
+        }
+    }
+
+
+
+
     public void initialiserGrilleVide() {
         for (int y = 0; y < grille.length; y++) {
             for (int x = 0; x < grille[0].length; x++) {
-                if (x == 0 || y == 0 || x == grille[0].length - 1 || y == grille.length - 1) {
-                    grille[y][x] = '■';
-                } else {
+
                     grille[y][x] = '.';
-                }
             }
         }
     }
 
     public void genererDonjon() {
         initialiserGrilleVide();
+        grille[0][0] = '!';
 
         for (int[] obstacle : CONFIGS_OBSTACLES[configChoisie]) {
             int x = obstacle[0];
@@ -62,15 +107,18 @@ public class Donjon {
             }
         }
 
-        int nbEquipements = 7;
+        placerMonstresConfig();
+
+        int nbEquipements = 5;
         for (int i = 0; i < nbEquipements; i++) {
-            placerEquipementAvecDistance(5); // min 5 cases d'écart
+            placerEquipementAvecDistance(5);
         }
     }
 
+
     public boolean ajouterObstacle(int x, int y) {
         if (grille[y][x] == '.') {
-            grille[y][x] = '┼';
+            grille[y][x] = '■';
             obstacles.add(new Obstacle(x, y));
             return true;
         }
@@ -84,7 +132,7 @@ public class Donjon {
         return false;
     }
 
-    private void placerEquipementAvecDistance(int distanceMin) {
+    public void placerEquipementAvecDistance(int distanceMin) {
         int x, y;
         boolean valide = false;
 
@@ -105,7 +153,7 @@ public class Donjon {
         }
     }
 
-    private boolean respecteDistance(int x, int y, int distanceMin) {
+     boolean respecteDistance(int x, int y, int distanceMin) {
         for (ObjetAuSol objet : objetsAuSol) {
             int dx = objet.getX() - x;
             int dy = objet.getY() - y;
@@ -115,6 +163,24 @@ public class Donjon {
         }
         return true;
     }
+
+    public boolean placerEntiteManuellement(Object entite, int x, int y, char symbole) {
+        if (grille[y][x] == '.') {
+            grille[y][x] = symbole;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean placerObjetAuSol(int x, int y, Equipement e) {
+        if (grille[y][x] == '.') {
+            grille[y][x] = 'E';
+            objetsAuSol.add(new ObjetAuSol(x, y, e));
+            return true;
+        }
+        return false;
+    }
+
 
     public void afficherDonjon() {
         // En-tête des colonnes
@@ -172,7 +238,7 @@ public class Donjon {
     }
 
     public boolean estAccessible(int x, int y){
-        return grille[y][x] != '■' && grille[y][x] != '┼';
+        return grille[y][x] != '■';
     }
 
     public char getCase(int x, int y) {

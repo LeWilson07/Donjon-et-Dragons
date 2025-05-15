@@ -10,14 +10,20 @@ public abstract class Entite {
     private int m_vitesse;
     private int m_initiative;
 
+    private int m_x;
+
+    private int m_y;
+
     public Entite() {}
 
-    public Entite(int pv, int force, int dexterite, int vitesse, int initiative) {
+    public Entite(int pv, int force, int dexterite, int vitesse, int initiative,int x,int y) {
         m_pv = pv;
         m_force = force;
         m_dexterite = dexterite;
         m_vitesse = vitesse;
         m_initiative = initiative;
+        m_x = x;
+        m_y = y;
     }
 
     public void setPv(int pv) {
@@ -53,6 +59,23 @@ public abstract class Entite {
     public De getDe() {
         return m_de;
     }
+
+    public int getX() {
+        return m_x;
+    }
+
+    public int getY() {
+        return m_y;
+    }
+
+    public void setX(int x) {
+        this.m_x = x;
+    }
+
+    public void setY(int y) {
+        this.m_y = y;
+    }
+
     public abstract void attaquer(Entite entite);
 
     public abstract void SeDeplacer();
