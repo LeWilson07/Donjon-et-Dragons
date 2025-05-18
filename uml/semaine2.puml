@@ -1,0 +1,312 @@
+@startuml
+left to right direction
+skinparam linetype ortho
+
+class Main {
+  + main(args : String[]) : void
+}
+
+package doonjonEtDragon {
+
+class equipement.arme.EpeeLongue {
+  +  <<Create>> EpeeLongue() : EpeeLongue
+}
+
+class map.ObjetAuSol {
+  - m_x : integer
+  - m_y : integer
+  +  <<Create>> ObjetAuSol(x : integer, y : integer, equipement : Equipement) : ObjetAuSol
+  + getX() : integer
+  + getY() : integer
+  + getEquipement() : Equipement
+}
+
+interface classe.Classe {
+  ~ definirCaracsBase(p : Personnage) : void
+}
+
+class equipement.armure.Armure extends equipement.Equipement{
+  - m_IsLourde : boolean
+  - m_classArmure : integer
+  + Armure(nom : String, classeArmure : integer, estLourde : boolean) : Armure
+  + getIsLourde() : boolean
+  + getClassArmure() : integer
+}
+
+class classe.Guerrier {
+  - "UnDeHuit : De
+  + definirCaracsBase(p : Personnage) : void
+}
+
+class race.Nain {
+  + appliquerBonusStat(p : Personnage) : void
+}
+
+class jeux.De {
+  - m_nbFace : integer
+  - m_nbDe : integer
+  + De() : De
+  + De(faces : integer, nb : integer) : De
+  + LancerDe() : integer
+  + UnDeQuatre() : integer
+  + UnDeSix() : integer
+  + UnDeHuit() : integer
+  + UnDeVingt() : integer
+  + QuatreDeQuatre() : integer
+}
+
+abstract class equipement.Equipement {
+  - nom : String
+  + Equipement(nom : String) : Equipement
+  + getNom() : String
+}
+
+interface race.Race {
+  ~ appliquerBonusStat(p : Personnage) : void
+}
+
+class classe.Magicien {
+  + definirCaracsBase(p : Personnage) : void
+}
+
+abstract class entite.Entite {
+  - m_pv : integer
+  - m_force : integer
+  - m_dexterite : integer
+  - m_vitesse : integer
+  - m_initiative : integer
+  - m_x : integer
+  - m_y : integer
+  + <<Create>> Entite() : Entite
+  + <<Create>> Entite(pv : integer, force : integer, dex : integer, vit : integer, init : integer, x : integer, y : integer) : Entite
+  + setPv(pv : integer) : void
+  + setForce(f : integer) : void
+  + setDexterite(d : integer) : void
+  + setVitesse(v : integer) : void
+  + setInitiative(i : integer) : void
+  + getPv() : integer
+  + getForce() : integer
+  + getDexterite() : integer
+  + getVitesse() : integer
+  + getInitiative() : integer
+  + getDe() : De
+  + getX() : integer
+  + getY() : integer
+  + setX(x : integer) : void
+  + setY(y : integer) : void
+  + attaquer(e : Entite) : void
+  + SeDeplacer() : void
+}
+
+class entite.personnage.Personnage {
+  - m_nom : String
+  - m_race : Race
+  - m_classe : Classe
+  - m_armeEquipe : Arme
+  - m_armureEquipe : Armure
+  + Personnage(nom : String, race : Race, classe : Classe) : Personnage
+  - loadState() : void
+  + getM_Pv() : integer
+  + setM_pv(pv : integer) : void
+  + getM_force() : integer
+  + setM_force(f : integer) : void
+  + getM_dexterite() : integer
+  + setM_dexterite(d : integer) : void
+  + getM_vitesse() : integer
+  + setM_vitesse(v : integer) : void
+  + getM_initiative() : integer
+  + setM_initiative(i : integer) : void
+  + getM_nom() : String
+  + getM_armeEquipe() : Arme
+  + EquiperArme(a : Arme) : void
+  + EquiperArmure(a : Armure) : void
+  + ramasser(a : Arme) : void
+  + ramasser(a : Armure) : void
+  + getArmureEquipe() : Armure
+  + attaquer(e : Entite) : void
+  + SeDeplacer() : void
+}
+
+class map.Obstacle {
+  - x : integer
+  - y : integer
+  + <<Create>> Obstacle(x : integer, y : integer) : Obstacle
+  + getX() : integer
+  + getY() : integer
+}
+
+class equipement.arme.Arme {
+  - m_degat : De
+  - m_porte : integer
+  - m_IsGuerre : boolean
+  + <<Create>> Arme(nom : String, degat : De, porte : integer, guerre : boolean) : Arme
+  + getM_degat() : De
+  + getM_porte() : integer
+  + getNom() : String
+  + getM_IsGuerre() : boolean
+}
+
+class classe.Roublard {
+  - UnDeHuit : De
+  - UnDeSix : De
+  + definirCaracsBase(p : Personnage) : void
+}
+
+class entite.monstre.Monstre {
+  - m_espece : String
+  - m_classArmure : integer
+  - m_porteAttaque : integer
+  - m_num : integer
+  - m_damage : De
+  + Monstre(...) : Monstre
+  + getClassArmure() : integer
+  + setDamage(d : De) : void
+  + setPV(pv : integer) : void
+  + getPV() : integer
+  + getNum() : integer
+  + setEspece(e : String) : void
+  + attaquer(e : Entite) : void
+  + SeDeplacer() : void
+}
+
+class map.Donjon {
+  - grille : char[][]
+  - objetsAuSol : List<ObjetAuSol>
+  - obstacles : List<Obstacle>
+  - configChoisie : integer
+  + <<Create>> Donjon(w : integer, h : integer, mode : ModeGeneration) : Donjon
+  + placerMonstres(l : List<Monstre>) : void
+  + initialiserGrilleVide() : void
+  + genererDonjon() : void
+  + ajouterObstacle(x : integer, y : integer) : boolean
+  + estObstacle(x : integer, y : integer) : boolean
+  + placerEquipementAvecDistance(d : integer) : void
+  + placerEntiteManuellement(o : Object, x : integer, y : integer, c : char) : boolean
+  + placerObjetAuSol(x : integer, y : integer, e : Equipement) : boolean
+  + afficherDonjon() : void
+  + placerJoueurs(p : List<Personnage>) : void
+  + estAccessible(x : integer, y : integer) : boolean
+  + getCase(x : integer, y : integer) : char
+  + setCase(x : integer, y : integer, c : char) : void
+  + getObstacles() : List<Obstacle>
+}
+
+enum map.ModeGeneration {
+  AUTO
+  MANUEL
+}
+
+class classe.Clerc {
+  - UnDeHuit : De
+  - UnDeSix : De
+  + definirCaracsBase(p : Personnage) : void
+}
+
+class race.Elfe {
+  + appliquerBonusStat(p : Personnage) : void
+}
+
+class race.Halflin {
+  + appliquerBonusStat(p : Personnage) : void
+}
+
+class entite.monstre.Dragon {
+  - m_UnDeSix : De
+  + Dragon(pv : integer) : Dragon
+}
+
+class race.Humain {
+  + appliquerBonusStat(p : Personnage) : void
+}
+
+class entite.monstre.Bowser {
+  - m_UnDeSept : De
+  + Bowser(pv : integer) : Bowser
+}
+
+}
+
+
+
+
+Arme       "1" *-[#bbbbbb,plain]-> "m_degat\n1" De
+
+Bowser     "1" *-[#bbbbbb,plain]-> "m_UnDeSept\n1" De
+Bowser      -[#589df6,plain]-^  Monstre
+
+Clerc       -[#609350,dashed]-^  Classe
+Clerc      "1" *-[#bbbbbb,plain]-> "UnDeHuit\n1" De
+
+Donjon     "1" *-[#bbbbbb,plain]-> "MonstreDefault\n*" Monstre
+Donjon     "1" *-[#bbbbbb,plain]-> "objetsAuSol\n*" ObjetAuSol
+Donjon     "1" *-[#bbbbbb,plain]-> "obstacles\n*" Obstacle
+
+Dragon     "1" *-[#bbbbbb,plain]-> "m_UnDeSix\n1" De
+Dragon      -[#589df6,plain]-^  Monstre
+
+Elfe        -[#609350,dashed]-^  Race
+
+Entite     "1" *-[#bbbbbb,plain]-> "m_de\n1" De
+
+EpeeLongue  -[#589df6,plain]-^  Arme
+
+Guerrier    -[#609350,dashed]-^  Classe
+Guerrier   "1" *-[#bbbbbb,plain]-> "UnDeHuit\n1" De
+
+Halflin     -[#609350,dashed]-^  Race
+
+Humain      -[#609350,dashed]-^  Race
+
+Magicien    -[#609350,dashed]-^  Classe
+Magicien   "1" *-[#bbbbbb,plain]-> "UnDeQuatre\n1" De
+
+Monstre    "1" *-[#bbbbbb,plain]-> "m_damage\n1" De
+Monstre     -[#589df6,plain]-^  Entite
+
+Nain        -[#609350,dashed]-^  Race
+
+ObjetAuSol "1" *-[#bbbbbb,plain]-> "m_equipement\n1" Equipement
+
+Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArme\n*" Arme
+Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArmure\n*" Armure
+Personnage "1" *-[#bbbbbb,plain]-> "m_classe\n1" Classe
+Personnage  -[#589df6,plain]-^  Entite
+Personnage "1" *-[#bbbbbb,plain]-> "m_race\n1" Race
+
+Roublard    -[#609350,dashed]-^  Classe
+Roublard   "1" *-[#bbbbbb,plain]-> "UnDeHuit\n1" De
+
+Main ..> doonjonEtDragon : <<uses>>
+
+
+Personnage ..> Arme : <<call>>
+Personnage ..> Armure : <<call>>
+Personnage ..> Entite : <<call>>
+Personnage ..> Race : <<use>>
+Personnage ..> Classe : <<use>>
+
+Guerrier ..> De : <<call>>
+Magicien ..> De : <<call>>
+Clerc ..> De : <<call>>
+Roublard ..> De : <<call>>
+
+Entite ..> De : <<use>>
+Entite ..> Entite : <<call>>
+
+Arme ..> De : <<use>>
+
+Donjon ..> Monstre : <<use>>
+
+Monstre ..> De : <<call>>
+Monstre ..> Entite : <<call>>
+
+Elfe ..> Personnage : <<call>>
+Nain ..> Personnage : <<call>>
+Humain ..> Personnage : <<call>>
+Halflin ..> Personnage : <<call>>
+
+Classe ..> Personnage : <<call>>
+
+
+
+@enduml
