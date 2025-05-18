@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Donjon {
+    //Bon j'ai déjà finis de placer des monstres obstacles et equipement sur les donjons par défaut, faudrait que je rendre le code + propre parce que
+    //j'ai essayé bcp de chose et me suis un perdu, toute les fonctions sont peut être pas pertinente mais au moins j'ai un résultat
+    //Aussi jvais ptet commencer a commenter bcp les fonctions que j'ai faite précédemment, historie de rendre le code + clair.
     public enum ModeGeneration {
         AUTO,
         MANUEL
@@ -41,18 +44,19 @@ public class Donjon {
 
 
     private static final Monstre[][] MonstreDefault= {
+            //a changer quand on aura établit une bonne liste de monstre
             {new Dragon(0),new Bowser(1)},
             {new Dragon(0),new Bowser(1)},
             {new Dragon(0),new Bowser(1)}
     };
-    private int configChoisie = 2;
+    private int configChoisie = 1;
 
     public Donjon(int largeur, int hauteur, ModeGeneration mode) {
         grille = new char[hauteur][largeur];
         if (mode == ModeGeneration.AUTO) {
             genererDonjon();
         } else {
-            initialiserGrilleVide(); // Manuel
+            initialiserGrilleVide();
         }
     }
 
@@ -71,9 +75,7 @@ public class Donjon {
             int x = positions[i][0];
             int y = positions[i][1];
 
-            // S'assurer que la case est accessible (tu peux aussi gérer autrement si ce n'est pas le cas)
             if (!estAccessible(x, y)) {
-                // Trouver une case libre proche (optionnel, ou skip)
                 continue;
             }
 
@@ -184,7 +186,7 @@ public class Donjon {
 
     public void afficherDonjon() {
         // En-tête des colonnes
-        System.out.print("   ");
+        System.out.print("    ");
         for (int x = 0; x < grille[0].length; x++) {
             char colonne = (char) ('A' + x);
             System.out.print(" " + colonne + " ");
@@ -225,7 +227,7 @@ public class Donjon {
 
             if (grille[y][x] == '.') {
                 grille[y][x] = symbole;
-                // Ajouter position à l'entité si nécessaire
+
                 place = true;
             }
         }

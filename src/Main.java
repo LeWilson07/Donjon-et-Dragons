@@ -17,7 +17,7 @@ public class Main {
         Race nain = new Nain();
         Classe guerrier = new Guerrier();
 
-        Personnage Senshi =  new Personnage("Senshi",nain, guerrier);
+        Personnage Senshi =  new Personnage("Goku",nain, guerrier);
         System.out.println("arme équipé :"+Senshi.getM_armeEquipe().getNom()+"\n");
         Arme epee = new EpeeLongue();
 
