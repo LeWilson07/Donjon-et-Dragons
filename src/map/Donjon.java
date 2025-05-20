@@ -1,5 +1,6 @@
 package map;
 
+import entite.Entite;
 import equipement.*;
 import equipement.Equipement;
 import equipement.arme.Arme;
@@ -42,11 +43,7 @@ public class Donjon {
     public void initialiserGrilleVide() {
         for (int y = 0; y < grille.length; y++) {
             for (int x = 0; x < grille[0].length; x++) {
-                if (x == 0 || y == 0 || x == grille[0].length - 1 || y == grille.length - 1) {
-                    grille[y][x] = '■';
-                } else {
                     grille[y][x] = '.';
-                }
             }
         }
     }
@@ -118,7 +115,7 @@ public class Donjon {
 
     public void afficherDonjon() {
         // En-tête des colonnes
-        System.out.print("   ");
+        System.out.print("    ");
         for (int x = 0; x < grille[0].length; x++) {
             char colonne = (char) ('A' + x);
             System.out.print(" " + colonne + " ");
@@ -133,6 +130,7 @@ public class Donjon {
         System.out.println("*");
 
         // Corps du donjon
+
         for (int y = 0; y < grille.length; y++) {
             System.out.printf("%2d |", y + 1);
             for (int x = 0; x < grille[0].length; x++) {
@@ -149,7 +147,7 @@ public class Donjon {
         System.out.println("*");
     }
 
-    private void placerEntite(Object entite, char symbole) {
+    public void placerEntite(Entite entite, char symbole) {
         int x, y;
         boolean place = false;
 
@@ -161,13 +159,15 @@ public class Donjon {
                 grille[y][x] = symbole;
                 // Ajouter position à l'entité si nécessaire
                 place = true;
+                entite.setX(x);
+                entite.setY(y);
             }
         }
     }
 
     public void placerJoueurs(List<Personnage> personnages) {
         for (Personnage p: personnages) {
-            placerEntite(p, 'J');
+            placerEntite(p, p.getSymbole());
         }
     }
 
@@ -185,5 +185,12 @@ public class Donjon {
 
     public List<Obstacle> getObstacles() {
         return obstacles;
+    }
+
+    public char[][] getGrille() {
+        return grille;
+    }
+    public void setGrille(char[][] grille) {
+        this.grille = grille;
     }
 }
