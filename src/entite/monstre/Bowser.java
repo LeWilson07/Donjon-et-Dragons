@@ -8,5 +8,6 @@ public class Bowser extends Monstre{
         super(num, 5, 0, 5, 60, 23, 1, 10, 'B');
         super.setDamage(m_UnDeSept);
         super.setEspece("Bowser");
+
     }
 }
