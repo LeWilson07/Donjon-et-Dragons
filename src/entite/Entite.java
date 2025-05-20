@@ -16,14 +16,13 @@ public abstract class Entite {
 
     public Entite() {}
 
-    public Entite(int pv, int force, int dexterite, int vitesse, int initiative,int x,int y) {
+    public Entite(int pv, int force, int dexterite, int vitesse, int initiative) {
         m_pv = pv;
         m_force = force;
         m_dexterite = dexterite;
         m_vitesse = vitesse;
         m_initiative = initiative;
-        m_x = x;
-        m_y = y;
+
     }
 
     public void setPv(int pv) {

@@ -13,7 +13,7 @@ public class Monstre extends entite.Entite {
 
 
     public Monstre(int num, int force, int dexterite, int initiative, int pv, int classArmure, int porteAttaque, int vitesse) {
-        super(pv, force, dexterite, vitesse, initiative,0,0);
+        super(pv, force, dexterite, vitesse, initiative);
         m_num = num;
         m_classArmure = classArmure;
         m_porteAttaque = porteAttaque;
