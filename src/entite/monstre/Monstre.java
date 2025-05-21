@@ -10,15 +10,12 @@ public class Monstre extends entite.Entite {
     private int m_num;
     private De m_damage;
 
-
-
-    public Monstre(int num, int force, int dexterite, int initiative, int pv, int classArmure, int porteAttaque, int vitesse) {
-        super(pv, force, dexterite, vitesse, initiative);
+    public Monstre(int num, int force, int dexterite, int initiative, int pv, int classArmure, int porteAttaque, int vitesse, char sym) {
+        super(pv,force,dexterite,vitesse, initiative, sym);
         m_num = num;
         m_classArmure = classArmure;
         m_porteAttaque = porteAttaque;
     }
-
 
     public int getClassArmure() {
         return m_classArmure;
@@ -43,22 +40,25 @@ public class Monstre extends entite.Entite {
     public void attaquer(Entite p){
         if(p instanceof Personnage){
             Personnage perso = (Personnage)p;
-            int damage = m_damage.UnDeVingt() + super.getDexterite();
-            if (damage > perso.getArmureEquipe().getClassArmure()){
-                System.out.println("\nLe monstre n°" + m_num + " à percer l'armure de " + perso.getM_nom() + "\n");
-                damage = m_damage.LancerDe();
-                perso.setM_pv(perso.getM_Pv()-damage);
-                System.out.println(perso.getM_nom() + " à perdu " + damage + "pv\n");
+            if(super.distance(perso.getX(), perso.getY()) <= m_porteAttaque){
+                int damage = m_damage.UnDeVingt() + super.getDexterite();
+                if (damage > perso.getArmureEquipe().getClassArmure()){
+                    System.out.println("\nLe monstre n°" + m_num + " à percer l'armure de " + perso.getM_nom() + "\n");
+                    damage = m_damage.LancerDe();
+                    perso.setM_pv(perso.getM_Pv()-damage);
+                    System.out.println(perso.getM_nom() + " à perdu " + damage + "pv\n");
+                }
+                else{
+                    System.out.println("\nLe monstre n°" + m_num + " n'a pas réussit à percer l'armure de " + perso.getM_nom() + "\n");
+                }
             }
             else{
-                System.out.println("\nLe monstre n°" + m_num + " n'a pas réussit à percer l'armure de " + perso.getM_nom() + "\n");
+                System.out.println("Le personnage que vous souhaitez attaquer est hors de porté !");
             }
         }
         else{
-            System.out.println("Ce n'est pas un personnage !");
+            System.out.println("Vous ne pouvez pas attaquer un autre monstre !");
         }
 
     }
-
-    public void SeDeplacer(){}
 }

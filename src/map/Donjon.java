@@ -1,20 +1,17 @@
 package map;
 
+import entite.Entite;
 import equipement.*;
 import equipement.Equipement;
 import equipement.arme.Arme;
 import equipement.armure.Armure;
 import jeux.De;
 import entite.personnage.Personnage;
-import entite.monstre.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Donjon {
-    //Bon j'ai déjà finis de placer des monstres obstacles et equipement sur les donjons par défaut, faudrait que je rendre le code + propre parce que
-    //j'ai essayé bcp de chose et me suis un perdu, toute les fonctions sont peut être pas pertinente mais au moins j'ai un résultat
-    //Aussi jvais ptet commencer a commenter bcp les fonctions que j'ai faite précédemment, historie de rendre le code + clair.
     public enum ModeGeneration {
         AUTO,
         MANUEL
@@ -32,66 +29,20 @@ public class Donjon {
             // Config 3: L
             {{4,3}, {4,4}, {4,5}, {5,5},{14,13},{14,14},{14,15},{15,15}}
     };
-
-    private static final int[][][] MONSTRES_POSITIONS = {
-            // Config 1 positions (x,y)
-            {{3,3}, {7,3}},
-            // Config 2 positions
-            {{5,5}, {10,10}},
-            // Config 3 positions
-            {{2,2}, {10,12}}
-    };
-
-
-    private static final Monstre[][] MonstreDefault= {
-            //a changer quand on aura établit une bonne liste de monstre
-            {new Dragon(0),new Bowser(1)},
-            {new Dragon(0),new Bowser(1)},
-            {new Dragon(0),new Bowser(1)}
-    };
-    private int configChoisie = 1;
+    private int configChoisie = 0;
 
     public Donjon(int largeur, int hauteur, ModeGeneration mode) {
         grille = new char[hauteur][largeur];
         if (mode == ModeGeneration.AUTO) {
             genererDonjon();
         } else {
-            initialiserGrilleVide();
+            initialiserGrilleVide(); // Manuel
         }
     }
-
-    public void placerMonstres(List<Monstre> monstres) {
-        for (Monstre m : monstres) {
-            placerEntite(m, 'M');
-        }
-    }
-
-    private void placerMonstresConfig() {
-        Monstre[] monstres = MonstreDefault[configChoisie];
-        int[][] positions = MONSTRES_POSITIONS[configChoisie];
-
-        for (int i = 0; i < monstres.length; i++) {
-            Monstre m = monstres[i];
-            int x = positions[i][0];
-            int y = positions[i][1];
-
-            if (!estAccessible(x, y)) {
-                continue;
-            }
-
-            m.setX(x);
-            m.setY(y);
-            placerEntiteManuellement(m, x, y, 'M');
-        }
-    }
-
-
-
 
     public void initialiserGrilleVide() {
         for (int y = 0; y < grille.length; y++) {
             for (int x = 0; x < grille[0].length; x++) {
-
                     grille[y][x] = '.';
             }
         }
@@ -99,7 +50,6 @@ public class Donjon {
 
     public void genererDonjon() {
         initialiserGrilleVide();
-        grille[0][0] = '!';
 
         for (int[] obstacle : CONFIGS_OBSTACLES[configChoisie]) {
             int x = obstacle[0];
@@ -109,18 +59,15 @@ public class Donjon {
             }
         }
 
-        placerMonstresConfig();
-
-        int nbEquipements = 5;
+        int nbEquipements = 7;
         for (int i = 0; i < nbEquipements; i++) {
-            placerEquipementAvecDistance(5);
+            placerEquipementAvecDistance(5); // min 5 cases d'écart
         }
     }
 
-
     public boolean ajouterObstacle(int x, int y) {
         if (grille[y][x] == '.') {
-            grille[y][x] = '■';
+            grille[y][x] = '┼';
             obstacles.add(new Obstacle(x, y));
             return true;
         }
@@ -134,7 +81,7 @@ public class Donjon {
         return false;
     }
 
-    public void placerEquipementAvecDistance(int distanceMin) {
+    private void placerEquipementAvecDistance(int distanceMin) {
         int x, y;
         boolean valide = false;
 
@@ -155,7 +102,7 @@ public class Donjon {
         }
     }
 
-     boolean respecteDistance(int x, int y, int distanceMin) {
+    private boolean respecteDistance(int x, int y, int distanceMin) {
         for (ObjetAuSol objet : objetsAuSol) {
             int dx = objet.getX() - x;
             int dy = objet.getY() - y;
@@ -165,24 +112,6 @@ public class Donjon {
         }
         return true;
     }
-
-    public boolean placerEntiteManuellement(Object entite, int x, int y, char symbole) {
-        if (grille[y][x] == '.') {
-            grille[y][x] = symbole;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean placerObjetAuSol(int x, int y, Equipement e) {
-        if (grille[y][x] == '.') {
-            grille[y][x] = 'E';
-            objetsAuSol.add(new ObjetAuSol(x, y, e));
-            return true;
-        }
-        return false;
-    }
-
 
     public void afficherDonjon() {
         // En-tête des colonnes
@@ -201,6 +130,7 @@ public class Donjon {
         System.out.println("*");
 
         // Corps du donjon
+
         for (int y = 0; y < grille.length; y++) {
             System.out.printf("%2d |", y + 1);
             for (int x = 0; x < grille[0].length; x++) {
@@ -217,7 +147,7 @@ public class Donjon {
         System.out.println("*");
     }
 
-    private void placerEntite(Object entite, char symbole) {
+    public void placerEntite(Entite entite, char symbole) {
         int x, y;
         boolean place = false;
 
@@ -227,20 +157,22 @@ public class Donjon {
 
             if (grille[y][x] == '.') {
                 grille[y][x] = symbole;
-
+                // Ajouter position à l'entité si nécessaire
                 place = true;
+                entite.setX(x);
+                entite.setY(y);
             }
         }
     }
 
     public void placerJoueurs(List<Personnage> personnages) {
         for (Personnage p: personnages) {
-            placerEntite(p, 'J');
+            placerEntite(p, p.getSymbole());
         }
     }
 
     public boolean estAccessible(int x, int y){
-        return grille[y][x] != '■';
+        return grille[y][x] != '■' && grille[y][x] != '┼';
     }
 
     public char getCase(int x, int y) {
@@ -253,5 +185,12 @@ public class Donjon {
 
     public List<Obstacle> getObstacles() {
         return obstacles;
+    }
+
+    public char[][] getGrille() {
+        return grille;
+    }
+    public void setGrille(char[][] grille) {
+        this.grille = grille;
     }
 }

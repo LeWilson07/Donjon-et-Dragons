@@ -21,10 +21,11 @@ public class Personnage extends entite.Entite{
     ArrayList<Arme> m_inventaireArme = new ArrayList<Arme>();
     ArrayList<Armure> m_inventaireArmure = new ArrayList<Armure>();
 
-    public Personnage(String nom,Race race,Classe classe){
+    public Personnage(String nom,Race race,Classe classe, char sym){
         this.m_nom = nom;
         this.m_race = race;
         this.m_classe = classe;
+        super.setSymbole(sym);
 
         loadState();
         classe.definirCaracsBase(this);
@@ -117,24 +118,27 @@ public class Personnage extends entite.Entite{
     public void attaquer(Entite cible) {
         if(cible instanceof Monstre){
             Monstre monstre = (Monstre) cible;
-            int damage;
-            if(m_armeEquipe.getM_porte() == 1){
-                damage = super.getDe().UnDeVingt() + super.getForce();
+            if(super.distance(monstre.getX(), monstre.getY()) <= m_armeEquipe.getM_porte()){
+                int damage;
+                if(m_armeEquipe.getM_porte() == 1){
+                    damage = super.getDe().UnDeVingt() + super.getForce();
+                }
+                else{
+                    damage = super.getDe().UnDeVingt() + super.getDexterite();
+                }
+                if (damage > monstre.getClassArmure()){
+                    System.out.println("\n"+ m_nom + " à percer l'armure du monstre n°" + monstre.getNum()+ "\n");
+                    damage = m_armeEquipe.getM_degat().LancerDe();
+                    monstre.setPV(monstre.getPV()-damage);
+                    System.out.println("Le monstre n°" +monstre.getNum()+ " à perdu " + damage + "pv\n");
+                }
             }
             else{
-                damage = super.getDe().UnDeVingt() + super.getDexterite();
-            }
-            if (damage > monstre.getClassArmure()){
-                System.out.println("\n"+ m_nom + " à percer l'armure du monstre n°" + monstre.getNum()+ "\n");
-                damage = m_armeEquipe.getM_degat().LancerDe();
-                monstre.setPV(monstre.getPV()-damage);
-                System.out.println("Le monstre n°" +monstre.getNum()+ " à perdu " + damage + "pv\n");
+                System.out.println("Le monstre que vous souhaitez attaquer est hors de porté !");
             }
         }
         else{
-            System.out.println("Ce n'est pas un monstre !");
+            System.out.println("Vous ne pouvez pas attaquez un autre personnage !");
         }
     }
-
-    public void SeDeplacer(){}
 }

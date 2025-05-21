@@ -10,14 +10,17 @@ import map.Donjon;
 import race.Nain;
 import race.Race;
 
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String args[]){
         System.out.println("Bienvenue dans DOOnjon et Dragons");
-
+        ArrayList<Personnage> joueurs = new ArrayList<Personnage>();
         Race nain = new Nain();
         Classe guerrier = new Guerrier();
 
-        Personnage Senshi =  new Personnage("Goku",nain, guerrier);
+        Personnage Senshi =  new Personnage("Senshi",nain, guerrier, 'S');
+        joueurs.add(Senshi);
         System.out.println("arme équipé :"+Senshi.getM_armeEquipe().getNom()+"\n");
         Arme epee = new EpeeLongue();
 
@@ -28,8 +31,11 @@ public class Main {
         System.out.println("Force " + Senshi.getM_force());
         System.out.println("Initiative " + Senshi.getM_initiative());
 
-        //Donjon Donjon1 = new Donjon(26,18, Donjon.ModeGeneration.MANUEL);
-        //Donjon1.afficherDonjon();
+        Donjon Donjon1 = new Donjon(26,18, Donjon.ModeGeneration.MANUEL);
+        Donjon1.placerJoueurs(joueurs);
+
+
+
         System.out.println("-------------------------------------");
         Senshi.ramasser(epee);
         Senshi.EquiperArme(epee);
@@ -45,8 +51,17 @@ public class Main {
         Monstre dragon = new Dragon(1);
         Monstre bowser = new Bowser(2);
 
-        Donjon donjon1 = new Donjon(15,15, Donjon.ModeGeneration.AUTO);
-        donjon1.afficherDonjon();
+        Donjon1.placerEntite(dragon, 'D');
+        Donjon1.placerEntite(bowser, 'B');
 
+
+        Donjon1.afficherDonjon();
+        dragon.attaquer(Senshi);
+
+        System.out.println("-------------------------------------");
+
+
+        Senshi.SeDeplacer("M10", Donjon1);
+        Donjon1.afficherDonjon();
     }
 }
