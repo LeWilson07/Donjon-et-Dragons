@@ -12,7 +12,7 @@ public abstract class Entite {
     private int m_initiative;
     private int m_x;
     private int m_y;
-    private char m_symbole;
+    protected char m_symbole;
 
     public Entite() {}
 
@@ -90,7 +90,12 @@ public abstract class Entite {
         return new int[] { x, y };
     }
 
+    public abstract void effectuerTour(Donjon donjon);
+
     public abstract void attaquer(Entite entite);
+
+    public abstract boolean estVivant();
+    public abstract boolean estUnPersonnage();
 
     public void SeDeplacer(String c, Donjon donjon) {
         int[] coord = ConvertCoord(c);
@@ -112,5 +117,6 @@ public abstract class Entite {
         else{
             System.out.println("La case sur laquelle vous souhaitez vous déplacez est trop éloigné de votre joueur !");
         }
+
     }
 }

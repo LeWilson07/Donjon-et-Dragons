@@ -3,6 +3,7 @@ package entite.personnage;
 
 import classe.Classe;
 import entite.Entite;
+import map.Donjon;
 import race.Race;
 import equipement.arme.Arme;
 import equipement.armure.Armure;
@@ -46,6 +47,10 @@ public class Personnage extends entite.Entite{
 
     public int getM_Pv(){
         return super.getPv();
+    }
+
+    public ArrayList<Arme> getM_inventaireArme() {
+        return m_inventaireArme;
     }
 
     public void setM_pv(int m_pv) {super.setPv(m_pv);}
@@ -115,6 +120,31 @@ public class Personnage extends entite.Entite{
         return m_armureEquipe;
     }
 
+    @Override
+    public void effectuerTour(Donjon donjon) {
+        System.out.println(m_nom + ", c'est votre tour !");
+        System.out.println("Nom : " + getM_nom());
+        System.out.println("Dexterite: " + getM_dexterite());
+        System.out.println("Vitesse : " + getM_vitesse());
+        System.out.println("Point de vie : " + getM_Pv());
+        System.out.println("Force : " + getForce());
+        System.out.println("Initiative : " + getM_initiative());
+        // Ici, ajoute d'autres actions si besoin
+    }
+
+    @Override
+    public boolean estVivant() {
+        return getM_Pv() > 0;
+    }
+
+    @Override
+    public boolean estUnPersonnage() {
+        return true;
+    }
+
+    public String getRaceNom(){
+        return m_race.getM_nom();
+    }
     public void attaquer(Entite cible) {
         if(cible instanceof Monstre){
             Monstre monstre = (Monstre) cible;
