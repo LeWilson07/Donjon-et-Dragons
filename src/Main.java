@@ -1,72 +1,51 @@
-import classe.Classe;
-import classe.Clerc;
+
 import classe.Guerrier;
-import entite.monstre.Bowser;
-import entite.monstre.Dragon;
-import entite.monstre.Monstre;
+import entite.Entite;
 import entite.personnage.Personnage;
-import equipement.arme.Arme;
 import equipement.arme.EpeeLongue;
-import jeux.MaitreDuJeu;
+import jeux.Tour;
 import map.Donjon;
 import race.Humain;
-import race.Nain;
-import race.Race;
+import entite.personnage.Personnage;
 
 import java.util.ArrayList;
 
 public class Main {
-    public static void main(String args[]){
-        System.out.println("Bienvenue dans DOOnjon et Dragons");
-        ArrayList<Personnage> joueurs = new ArrayList<Personnage>();
-        Race nain = new Nain();
-        Classe guerrier = new Guerrier();
+    public static void main(String[] args) {
+        // Création du donjon
+        Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON3);
+        System.out.println("=== CONTEXTE DU DONJON ===");
+        System.out.println(donjon.getContexte());
 
-        Personnage Senshi =  new Personnage("Senshi",nain, guerrier, 'S');
-        joueurs.add(Senshi);
-        System.out.println("arme équipé :"+Senshi.getM_armeEquipe().getNom()+"\n");
-        Arme epee = new EpeeLongue();
+        // Création des personnages
+        Personnage joueur1 = new Personnage("Arthur", new Humain(), new Guerrier(), 'A');
+        Personnage joueur2 = new Personnage("Luna", new Humain(), new Guerrier(), 'L');
 
-        System.out.println("Nom : " + Senshi.getM_nom());
-        System.out.println("Dexterite: " + Senshi.getM_dexterite());
-        System.out.println("Vitesse : " + Senshi.getM_vitesse());
-        System.out.println("Point de vie : " + Senshi.getM_Pv());
-        System.out.println("Force " + Senshi.getM_force());
-        System.out.println("Initiative " + Senshi.getM_initiative());
+        // Ajout d’une arme pour test
+        joueur1.ramasser(new EpeeLongue());
+        joueur2.ramasser(new EpeeLongue());
+        joueur1.EquiperArme(joueur1.getM_inventaireArme().get(0));
+        joueur2.EquiperArme(joueur2.getM_inventaireArme().get(0));
 
-        Donjon Donjon1 = new Donjon(26,18, Donjon.ModeGeneration.MANUEL);
-        Donjon1.placerJoueurs(joueurs);
+        // Liste de personnages
+        ArrayList<Personnage> personnages = new ArrayList<>();
+        personnages.add(joueur1);
+        personnages.add(joueur2);
 
+        // Placement des joueurs
+        donjon.placerJoueurs(personnages);
 
+        // Ajout de toutes les entités (joueurs + monstres)
+        ArrayList<Entite> toutesEntites = new ArrayList<>();
+        toutesEntites.addAll(personnages);
+        toutesEntites.addAll(donjon.getMonstres());
 
-        System.out.println("-------------------------------------");
-        Senshi.ramasser(epee);
-        Senshi.EquiperArme(epee);
-        System.out.println("arme équipé :"+Senshi.getM_armeEquipe().getNom()+"\n");
-
-        System.out.println("Nom : " + Senshi.getM_nom());
-        System.out.println("Dexterite: " + Senshi.getM_dexterite());
-        System.out.println("Vitesse : " + Senshi.getM_vitesse());
-        System.out.println("Point de vie : " + Senshi.getM_Pv());
-        System.out.println("Force " + Senshi.getM_force());
-        System.out.println("Initiative " + Senshi.getM_initiative());
-
-        Monstre dragon = new Dragon(1);
-        Monstre bowser = new Bowser(2);
-
-        Donjon1.placerEntite(dragon, 'D');
-        Donjon1.placerEntite(bowser, 'B');
+        // Démarrage du système de tours
+        System.out.println("\n=== ÉTAT INITIAL DU DONJON ===");
+        donjon.afficherDonjon();
 
 
-        Donjon1.afficherDonjon();
-        dragon.attaquer(Senshi);
-
-        System.out.println("-------------------------------------");
-
-
-        MaitreDuJeu mj = new MaitreDuJeu();
-        mj.AjoutObstacle(Donjon1);
-        Donjon1.afficherDonjon();
-
+        Tour tour = new Tour(toutesEntites, donjon);
+        tour.start();
     }
 }

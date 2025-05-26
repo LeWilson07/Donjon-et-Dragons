@@ -1,0 +1,372 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class ArbaleteLegere {
+  + ArbaleteLegere(): 
+}
+class ArcCourt {
+  + ArcCourt(): 
+}
+class Arme {
+  + Arme(String, De, int, boolean): 
+  - m_IsGuerre: boolean
+  - m_degat: De
+  - m_porte: int
+  + getM_porte(): int
+  + getNom(): String
+  + getM_degat(): De
+  + getM_IsGuerre(): boolean
+}
+class Armure {
+  + Armure(String, int, boolean): 
+  - m_IsLourde: boolean
+  - m_classArmure: int
+  + getIsLourde(): boolean
+  + getClassArmure(): int
+}
+class ArmureEcaille {
+  + ArmureEcaille(): 
+}
+class Baton {
+  + Baton(): 
+}
+class Bowser {
+  + Bowser(int): 
+  - m_UnDeSept: De
+}
+interface Classe << interface >> {
+  + definirCaracsBase(Personnage): void
+}
+class Clerc {
+  + Clerc(): 
+  + definirCaracsBase(Personnage): void
+}
+class CoteDeMaille {
+  + CoteDeMaille(): 
+}
+class De {
+  + De(int, int): 
+  + De(): 
+  - m_nbDe: int
+  - m_nbFace: int
+  + UnDeSix(): int
+  + LancerDe(): int
+  + UnDeVingt(): int
+  + UnDeHuit(): int
+  + QuatreDeQuatre(): int
+  + UnDeQuatre(): int
+}
+class DemiPlate {
+  + DemiPlate(): 
+}
+class Donjon {
+  - Donjon(int, int): 
+  - CONTEXTES: String[]
+  - monstres: List<Monstre>
+  - largeur: int
+  - grille: char[][]
+  - obstacles: List<Obstacle>
+  - indexDonjon: int
+  - hauteur: int
+  - objetsAuSol: List<ObjetAuSol>
+  - ajouterMonstre(Monstre, int, int): void
+  - creerDonjon1(): Donjon
+  + afficherDonjon(): void
+  - ajouterObstacle(int, int): void
+  - estDansGrille(int, int): boolean
+  + placerJoueurs(List<Personnage>): void
+  - initialiserGrilleVide(): void
+  + creerDonjonPredefini(TypeDonjon): Donjon
+  + getObstacles(): List<Obstacle>
+  + getContexte(): String
+  + getObjetsAuSol(): List<ObjetAuSol>
+  - creerDonjon3(): Donjon
+  + getMonstres(): List<Monstre>
+  + placerEntite(Entite, char): void
+  + setGrille(char[][]): void
+  + getEntiteAt(int, int): Entite
+  - ajouterEquipement(Equipement, int, int): void
+  - creerDonjon2(): Donjon
+  + getGrille(): char[][]
+}
+class Dragon {
+  + Dragon(int): 
+  - m_UnDeSix: De
+}
+class Elfe {
+  + Elfe(): 
+  - m_nom: String
+  + getM_nom(): String
+  + appliquerBonusStat(Personnage): void
+}
+class Entite {
+  + Entite(): 
+  + Entite(int, int, int, int, int, char): 
+  - m_force: int
+  - m_dexterite: int
+  - m_y: int
+  - m_vitesse: int
+  - m_initiative: int
+  # m_symbole: char
+  - m_de: De
+  - m_x: int
+  - m_pv: int
+  + estVivant(): boolean
+  + setForce(int): void
+  + setDexterite(int): void
+  + getForce(): int
+  + estUnPersonnage(): boolean
+  + distance(int, int): int
+  + getDe(): De
+  + ConvertCoord(String): int[]
+  + SeDeplacer(String, Donjon): void
+  + setSymbole(char): void
+  + getDexterite(): int
+  + setPv(int): void
+  + getPv(): int
+  + getVitesse(): int
+  + effectuerTour(Donjon): void
+  + getInitiative(): int
+  + setInitiative(int): void
+  + getX(): int
+  + setY(int): void
+  + getSymbole(): char
+  + setX(int): void
+  + attaquer(Entite): void
+  + getY(): int
+  + setVitesse(int): void
+}
+class EpeeLongue {
+  + EpeeLongue(): 
+}
+class Equipement {
+  + Equipement(String): 
+  - nom: String
+  + getNom(): String
+}
+class Fronde {
+  + Fronde(): 
+}
+class Guerrier {
+  + Guerrier(): 
+  + definirCaracsBase(Personnage): void
+}
+class Halflin {
+  + Halflin(): 
+  - m_nom: String
+  + appliquerBonusStat(Personnage): void
+  + getM_nom(): String
+}
+class Harnois {
+  + Harnois(): 
+}
+class Humain {
+  + Humain(): 
+  - m_nom: String
+  + getM_nom(): String
+  + appliquerBonusStat(Personnage): void
+}
+class Magicien {
+  + Magicien(): 
+  + definirCaracsBase(Personnage): void
+}
+class Main {
+  + Main(): 
+  + main(String[]): void
+}
+class MasseArme {
+  + MasseArme(): 
+}
+class Monstre {
+  + Monstre(int, int, int, int, int, int, int, int, char): 
+  - m_espece: String
+  - m_num: int
+  - m_classArmure: int
+  - m_porteAttaque: int
+  - m_damage: De
+  + setPV(int): void
+  + estVivant(): boolean
+  + setDamage(De): void
+  + getPV(): int
+  + attaquer(Entite): void
+  + setEspece(String): void
+  + effectuerTour(Donjon): void
+  + getNum(): int
+  + getClassArmure(): int
+  + estUnPersonnage(): boolean
+}
+class Nain {
+  + Nain(): 
+  - m_nom: String
+  + getM_nom(): String
+  + appliquerBonusStat(Personnage): void
+}
+class ObjetAuSol {
+  + ObjetAuSol(int, int, Equipement): 
+  - y: int
+  - equipement: Equipement
+  - x: int
+  + getEquipement(): Equipement
+  + getX(): int
+  + getY(): int
+}
+class Obstacle {
+  + Obstacle(int, int): 
+  - y: int
+  - x: int
+  + getY(): int
+  + getX(): int
+}
+class Personnage {
+  + Personnage(String, Race, Classe, char): 
+  - m_nom: String
+  ~ m_inventaireArmure: ArrayList<Armure>
+  - m_race: Race
+  - m_classe: Classe
+  - m_armeEquipe: Arme
+  ~ m_inventaireArme: ArrayList<Arme>
+  - m_armureEquipe: Armure
+  + getM_force(): int
+  + ramasser(Arme): void
+  + ramasser(Armure): void
+  + getM_armeEquipe(): Arme
+  + setM_pv(int): void
+  + setM_initiative(int): void
+  + setM_dexterite(int): void
+  + getM_Pv(): int
+  + getM_vitesse(): int
+  + estUnPersonnage(): boolean
+  + effectuerTour(Donjon): void
+  + estVivant(): boolean
+  + getArmureEquipe(): Armure
+  + EquiperArmure(Armure): void
+  + attaquer(Entite): void
+  - loadState(): void
+  + EquiperArme(Arme): void
+  + getM_nom(): String
+  + getM_initiative(): int
+  + getM_dexterite(): int
+  + getRaceNom(): String
+  + setM_force(int): void
+  + getM_inventaireArme(): ArrayList<Arme>
+  + setM_vitesse(int): void
+}
+interface Race << interface >> {
+  + appliquerBonusStat(Personnage): void
+  + getM_nom(): String
+}
+class Rapiere {
+  + Rapiere(): 
+}
+class Roublard {
+  + Roublard(): 
+  + definirCaracsBase(Personnage): void
+}
+class Tour {
+  + Tour(List<Entite>, Donjon): 
+  - donjon: Donjon
+  - entities: List<Entite>
+  - rollInitiative(): void
+  - checkGameEnd(): boolean
+  + start(): void
+}
+
+ArbaleteLegere  -[#000082,plain]-^  Arme           
+ArbaleteLegere  -[#595959,dashed]->  De             
+ArcCourt        -[#000082,plain]-^  Arme           
+ArcCourt        -[#595959,dashed]->  De             
+Arme           "1" *-[#595959,plain]-> "m_degat\n1" De             
+Arme            -[#000082,plain]-^  Equipement     
+Armure          -[#000082,plain]-^  Equipement     
+ArmureEcaille   -[#000082,plain]-^  Armure         
+Baton           -[#000082,plain]-^  Arme           
+Baton           -[#595959,dashed]->  De             
+Bowser         "1" *-[#595959,plain]-> "m_UnDeSept\n1" De             
+Bowser          -[#000082,plain]-^  Monstre        
+Classe          -[#595959,dashed]->  Personnage     
+Clerc           -[#595959,dashed]->  ArbaleteLegere 
+Clerc           -[#595959,dashed]->  Arme           
+Clerc           -[#595959,dashed]->  Armure         
+Clerc           -[#595959,dashed]->  ArmureEcaille  
+Clerc           -[#008200,dashed]-^  Classe         
+Clerc           -[#595959,dashed]->  MasseArme      
+Clerc           -[#595959,dashed]->  Personnage     
+CoteDeMaille    -[#000082,plain]-^  Armure         
+DemiPlate       -[#000082,plain]-^  Armure         
+Donjon          -[#595959,dashed]->  Bowser         
+Donjon          -[#595959,dashed]->  CoteDeMaille   
+Donjon          -[#595959,dashed]->  Dragon         
+Donjon          -[#595959,dashed]->  Entite         
+Donjon          -[#595959,dashed]->  EpeeLongue     
+Donjon          -[#595959,dashed]->  Equipement     
+Donjon         "1" *-[#595959,plain]-> "monstres\n*" Monstre        
+Donjon         "1" *-[#595959,plain]-> "objetsAuSol\n*" ObjetAuSol     
+Donjon         "1" *-[#595959,plain]-> "obstacles\n*" Obstacle       
+Donjon          -[#595959,dashed]->  Personnage     
+Dragon         "1" *-[#595959,plain]-> "m_UnDeSix\n1" De             
+Dragon          -[#000082,plain]-^  Monstre        
+Elfe            -[#595959,dashed]->  Personnage     
+Elfe            -[#008200,dashed]-^  Race           
+Entite         "1" *-[#595959,plain]-> "m_de\n1" De             
+Entite          -[#595959,dashed]->  Donjon         
+EpeeLongue      -[#000082,plain]-^  Arme           
+EpeeLongue      -[#595959,dashed]->  De             
+Fronde          -[#000082,plain]-^  Arme           
+Fronde          -[#595959,dashed]->  De             
+Guerrier        -[#595959,dashed]->  ArbaleteLegere 
+Guerrier        -[#595959,dashed]->  Arme           
+Guerrier        -[#595959,dashed]->  Armure         
+Guerrier        -[#008200,dashed]-^  Classe         
+Guerrier        -[#595959,dashed]->  CoteDeMaille   
+Guerrier        -[#595959,dashed]->  EpeeLongue     
+Guerrier        -[#595959,dashed]->  Personnage     
+Halflin         -[#595959,dashed]->  Personnage     
+Halflin         -[#008200,dashed]-^  Race           
+Harnois         -[#000082,plain]-^  Armure         
+Humain          -[#595959,dashed]->  Personnage     
+Humain          -[#008200,dashed]-^  Race           
+Magicien        -[#595959,dashed]->  Arme           
+Magicien        -[#595959,dashed]->  Baton          
+Magicien        -[#008200,dashed]-^  Classe         
+Magicien        -[#595959,dashed]->  Fronde         
+Magicien        -[#595959,dashed]->  Personnage     
+Main            -[#595959,dashed]->  Donjon         
+Main            -[#595959,dashed]->  Entite         
+Main            -[#595959,dashed]->  EpeeLongue     
+Main            -[#595959,dashed]->  Guerrier       
+Main            -[#595959,dashed]->  Humain         
+Main            -[#595959,dashed]->  Personnage     
+Main            -[#595959,dashed]->  Tour           
+MasseArme       -[#000082,plain]-^  Arme           
+MasseArme       -[#595959,dashed]->  De             
+Monstre         -[#595959,dashed]->  Armure         
+Monstre        "1" *-[#595959,plain]-> "m_damage\n1" De             
+Monstre         -[#595959,dashed]->  Donjon         
+Monstre         -[#000082,plain]-^  Entite         
+Monstre         -[#595959,dashed]->  Personnage     
+Nain            -[#595959,dashed]->  Personnage     
+Nain            -[#008200,dashed]-^  Race           
+ObjetAuSol     "1" *-[#595959,plain]-> "equipement\n1" Equipement     
+Personnage     "1" *-[#595959,plain]-> "m_inventaireArme\n*" Arme           
+Personnage     "1" *-[#595959,plain]-> "m_inventaireArmure\n*" Armure         
+Personnage     "1" *-[#595959,plain]-> "m_classe\n1" Classe         
+Personnage      -[#595959,dashed]->  De             
+Personnage      -[#595959,dashed]->  Donjon         
+Personnage      -[#000082,plain]-^  Entite         
+Personnage      -[#595959,dashed]->  Monstre        
+Personnage     "1" *-[#595959,plain]-> "m_race\n1" Race           
+Race            -[#595959,dashed]->  Personnage     
+Rapiere         -[#000082,plain]-^  Arme           
+Rapiere         -[#595959,dashed]->  De             
+Roublard        -[#595959,dashed]->  ArcCourt       
+Roublard        -[#595959,dashed]->  Arme           
+Roublard        -[#008200,dashed]-^  Classe         
+Roublard        -[#595959,dashed]->  Personnage     
+Roublard        -[#595959,dashed]->  Rapiere        
+Tour           "1" *-[#595959,plain]-> "donjon\n1" Donjon         
+Tour           "1" *-[#595959,plain]-> "entities\n*" Entite         
+Tour            -[#595959,dashed]->  Personnage     
+@enduml
