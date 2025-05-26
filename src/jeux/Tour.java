@@ -25,7 +25,7 @@ public class Tour {
                 if (entity.estUnPersonnage()) {
                     Personnage joueur = (Personnage) entity;
                     joueur.effectuerTour(donjon);
-                    System.out.println("\n---------- Tour de " +  joueur.getRaceNom() + " : " +joueur.getM_nom() + " ----------");
+                    System.out.println("\n---------- Tour de " +  joueur.getRaceNom() xœ+ " : " +joueur.getM_nom() + " ----------");
                     int actionsRestantes = 3;
 
                     while (actionsRestantes > 0) {
