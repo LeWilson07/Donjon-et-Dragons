@@ -84,9 +84,26 @@ public abstract class Entite {
         return dx + dy;
     }
     public int[] ConvertCoord(String coord) {
+        if (coord == null || coord.length() < 2) {
+            System.out.println("Coordonnée trop courte ou nulle.");
+            return null;
+        }
+
         char lettre = coord.charAt(0);
+        if (lettre < 'A' || lettre > 'Z') {
+            System.out.println("Lettre invalide : doit être entre A et Z.");
+            return null;
+        }
+
         int x = lettre - 'A';
-        int y = Integer.parseInt(coord.substring(1))-1;
+        int y;
+        try {
+            y = Integer.parseInt(coord.substring(1)) - 1;
+        } catch (NumberFormatException e) {
+            System.out.println("Format numérique invalide après la lettre.");
+            return null;
+        }
+
         return new int[] { x, y };
     }
 
@@ -99,24 +116,31 @@ public abstract class Entite {
 
     public void SeDeplacer(String c, Donjon donjon) {
         int[] coord = ConvertCoord(c);
-        char[][] grille = donjon.getGrille();
-        System.out.println("x : "+coord[0] + " y : " + coord[1]);
-        if(distance(coord[0], coord[1]) <= getVitesse()){
+        if (coord == null) {
+            System.out.println("Coordonnées invalides. Déplacement annulé.");
+            return;
+        }
 
-            if (grille[coord[1]][coord[0]] == '.') {
+        if (!donjon.estDansGrille(coord[0], coord[1])) {
+            System.out.println("La case est hors de la grille.");
+            return;
+        }
+
+        char[][] grille = donjon.getGrille();
+        System.out.println("x : " + coord[0] + " y : " + coord[1]);
+
+        if (distance(coord[0], coord[1]) <= getVitesse()) {
+            if (grille[coord[1]][coord[0]] == '.' || grille[coord[1]][coord[0]] == 'E') {
                 grille[coord[1]][coord[0]] = m_symbole;
                 grille[m_y][m_x] = '.';
                 donjon.setGrille(grille);
                 m_x = coord[0];
                 m_y = coord[1];
+            } else {
+                System.out.println(c + " est déjà occupé !");
             }
-            else{
-                System.out.println(c +" est déjà occupé !");
-            }
+        } else {
+            System.out.println("La case sur laquelle vous souhaitez vous déplacez est trop éloignée !");
         }
-        else{
-            System.out.println("La case sur laquelle vous souhaitez vous déplacez est trop éloigné de votre joueur !");
-        }
-
     }
 }

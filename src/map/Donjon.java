@@ -5,7 +5,9 @@ import entite.monstre.Bowser;
 import entite.monstre.Dragon;
 import entite.monstre.Monstre;
 import equipement.Equipement;
+import equipement.arme.Arme;
 import equipement.arme.EpeeLongue;
+import equipement.armure.Armure;
 import equipement.armure.CoteDeMaille;
 import entite.personnage.Personnage;
 
@@ -168,7 +170,7 @@ public class Donjon {
             }
         }
     }
-    private boolean estDansGrille(int x, int y) {
+    public boolean estDansGrille(int x, int y) {
         return x >= 0 && x < largeur && y >= 0 && y < hauteur;
     }
 
@@ -241,6 +243,37 @@ public class Donjon {
         }
         return null;
     }
+
+    // Retourne une Arme présente sur la case (x,y) si elle existe, sinon null
+    public Arme getArmeAt(int x, int y) {
+        for (ObjetAuSol o : objetsAuSol) {
+            if (o.getX() == x && o.getY() == y && o.getEquipement() instanceof Arme) {
+                return (Arme) o.getEquipement();
+            }
+        }
+        return null;
+    }
+
+    // Supprime l'arme du sol
+    public void retirerArme(Arme arme) {
+        objetsAuSol.removeIf(o -> o.getEquipement() == arme);
+    }
+
+    // Retourne une Armure présente sur la case (x,y) si elle existe, sinon null
+    public Armure getArmureAt(int x, int y) {
+        for (ObjetAuSol o : objetsAuSol) {
+            if (o.getX() == x && o.getY() == y && o.getEquipement() instanceof Armure) {
+                return (Armure) o.getEquipement();
+            }
+        }
+        return null;
+    }
+
+    // Supprime l'armure du sol
+    public void retirerArmure(Armure armure) {
+        objetsAuSol.removeIf(o -> o.getEquipement() == armure);
+    }
+
 
 }
 
