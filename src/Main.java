@@ -1,4 +1,5 @@
 import classe.Classe;
+import classe.Clerc;
 import classe.Guerrier;
 import entite.monstre.Bowser;
 import entite.monstre.Dragon;
@@ -6,7 +7,9 @@ import entite.monstre.Monstre;
 import entite.personnage.Personnage;
 import equipement.arme.Arme;
 import equipement.arme.EpeeLongue;
+import jeux.MaitreDuJeu;
 import map.Donjon;
+import race.Humain;
 import race.Nain;
 import race.Race;
 
@@ -61,7 +64,9 @@ public class Main {
         System.out.println("-------------------------------------");
 
 
-        Senshi.SeDeplacer("M10", Donjon1);
+        MaitreDuJeu mj = new MaitreDuJeu();
+        mj.AjoutObstacle(Donjon1);
         Donjon1.afficherDonjon();
+
     }
 }

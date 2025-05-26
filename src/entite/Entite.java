@@ -1,5 +1,7 @@
 package entite;
 
+import entite.monstre.Monstre;
+import entite.personnage.Personnage;
 import jeux.De;
 import map.Donjon;
 
@@ -89,6 +91,9 @@ public abstract class Entite {
         int y = Integer.parseInt(coord.substring(1))-1;
         return new int[] { x, y };
     }
+
+    public abstract void RecevoirAttaqueDe(Personnage p, int degat);
+    public abstract void RecevoirAttaqueDe(Monstre m, int degat);
 
     public abstract void attaquer(Entite entite);
 

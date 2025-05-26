@@ -82,6 +82,9 @@ public class Personnage extends entite.Entite{
 
     public Arme getM_armeEquipe() {return m_armeEquipe;}
 
+    public ArrayList<Arme> getInventaireArme() {return m_inventaireArme;}
+    public ArrayList<Armure> getInventaireArmure() {return m_inventaireArmure;}
+
     public void EquiperArme(Arme arme) {
         if(m_inventaireArme.contains(arme)){
             if(m_armeEquipe != null && m_armeEquipe.getM_IsGuerre()){
@@ -115,30 +118,31 @@ public class Personnage extends entite.Entite{
         return m_armureEquipe;
     }
 
-    public void attaquer(Entite cible) {
-        if(cible instanceof Monstre){
-            Monstre monstre = (Monstre) cible;
-            if(super.distance(monstre.getX(), monstre.getY()) <= m_armeEquipe.getM_porte()){
-                int damage;
-                if(m_armeEquipe.getM_porte() == 1){
-                    damage = super.getDe().UnDeVingt() + super.getForce();
-                }
-                else{
-                    damage = super.getDe().UnDeVingt() + super.getDexterite();
-                }
-                if (damage > monstre.getClassArmure()){
-                    System.out.println("\n"+ m_nom + " à percer l'armure du monstre n°" + monstre.getNum()+ "\n");
-                    damage = m_armeEquipe.getM_degat().LancerDe();
-                    monstre.setPV(monstre.getPV()-damage);
-                    System.out.println("Le monstre n°" +monstre.getNum()+ " à perdu " + damage + "pv\n");
-                }
+    public void RecevoirAttaqueDe(Personnage p, int degat){
+        System.out.println("Vous ne pouvez pas attaquez un autre personnage !");
+    }
+    public void RecevoirAttaqueDe(Monstre monstre, int degat){
+        if(super.distance(monstre.getX(), monstre.getY()) <= m_armeEquipe.getM_porte()){
+            if (degat > monstre.getClassArmure()){
+                System.out.println("\n"+ m_nom + " à percer l'armure du monstre n°" + monstre.getNum()+ "\n");
+                degat = m_armeEquipe.getM_degat().LancerDe();
+                monstre.setPV(monstre.getPV()-degat);
+                System.out.println("Le monstre n°" +monstre.getNum()+ " à perdu " + degat + "pv\n");
             }
             else{
                 System.out.println("Le monstre que vous souhaitez attaquer est hors de porté !");
             }
         }
-        else{
-            System.out.println("Vous ne pouvez pas attaquez un autre personnage !");
+    }
+
+    public void attaquer(Entite cible) {
+        int damage;
+        if(m_armeEquipe.getM_porte() == 1){
+            damage = super.getDe().UnDeVingt() + super.getForce();
         }
+        else{
+            damage = super.getDe().UnDeVingt() + super.getDexterite();
+        }
+        cible.RecevoirAttaqueDe(this, damage);
     }
 }
