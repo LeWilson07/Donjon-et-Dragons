@@ -132,7 +132,7 @@ public class Donjon {
         return d;
     }
 
-    private void ajouterObstacle(int x, int y) {
+    public void ajouterObstacle(int x, int y) {
         if (estDansGrille(x, y) && grille[y][x] == '.') {
             grille[y][x] = '┼';
             obstacles.add(new Obstacle(x, y));

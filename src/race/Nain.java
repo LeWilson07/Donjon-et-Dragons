@@ -7,7 +7,7 @@ public class Nain implements Race {
     private String m_nom = "Nain";
     @Override
     public void appliquerBonusStat(Personnage personnage) {
-        personnage.setM_force(personnage.getM_force()+6);
+        personnage.setForce(personnage.getForce()+6);
     }
 
     public String getM_nom() {

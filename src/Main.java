@@ -1,3 +1,4 @@
+
 import classe.Guerrier;
 import entite.Entite;
 import entite.monstre.Monstre;
@@ -14,6 +15,7 @@ public class Main {
     public static void main(String[] args) {
         // Création du donjon moment
         Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON3);
+
         System.out.println("=== CONTEXTE DU DONJON ===");
         System.out.println(donjon.getContexte());
 
@@ -43,6 +45,7 @@ public class Main {
         // Démarrage du système de tours
         System.out.println("\n=== ÉTAT INITIAL DU DONJON ===");
         donjon.afficherDonjon();
+
 
         Tour tour = new Tour(toutesEntites, donjon);
         tour.start();

@@ -15,6 +15,6 @@ public class Magicien implements Classe{
         personnage.ramasser(ArmeParDefaut2);
         personnage.ramasser(ArmeParDefaut);
         personnage.EquiperArme(ArmeParDefaut);
-        personnage.setM_pv(12);
+        personnage.setPv(12);
     }
 }

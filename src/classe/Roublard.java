@@ -15,6 +15,6 @@ public class Roublard implements Classe{
         personnage.ramasser(ArmeParDefaut2);
         personnage.ramasser(ArmeParDefaut);
         personnage.EquiperArme(ArmeParDefaut);
-        personnage.setM_pv(16);
+        personnage.setPv(16);
     }
 }

@@ -12,7 +12,7 @@
         private De m_damage;
 
         public Monstre(int num, int force, int dexterite, int initiative, int pv, int classArmure, int porteAttaque, int vitesse, char sym) {
-            super(pv,force,dexterite,vitesse, initiative, sym);
+            super(pv, force, dexterite, vitesse, initiative, sym);
             m_num = num;
             m_classArmure = classArmure;
             m_porteAttaque = porteAttaque;
@@ -26,17 +26,54 @@
             m_damage = damage;
         }
 
-        public void setPV(int pv){
-            super.setPv(pv);
+        public int getNum() {
+            return m_num;
         }
 
-        public int getPV(){
-            return super.getPv();
+        public int getPorteAttaque() {
+            return m_porteAttaque;
         }
 
-        public int getNum() {return m_num;}
+        public String getEspece() {
+            return m_espece;
+        }
 
-        public void setEspece(String espece){m_espece = espece;}
+        public void setEspece(String espece) {
+            m_espece = espece;
+        }
+
+        public void RecevoirAttaqueDe(Personnage p, int degat) {
+
+            if (super.distance(p.getX(), p.getY()) <= m_porteAttaque) {
+                if (degat > p.getArmureEquipe().getClassArmure()) {
+                    System.out.println("\n"+p.getM_nom() + " à percer l'armure de" + m_espece + "\n");
+                    degat = m_damage.LancerDe();
+                    p.setPv(p.getPv() - degat);
+                    System.out.println(m_espece + " à perdu " + degat + "pv\n");
+                } else {
+                    System.out.println("\n " + p.getM_nom() + " n'a pas réussit à percer l'armure du monstre n° " + this.m_num + "\n");
+                }
+            } else {
+                System.out.println("Le Monstre que vous souhaitez attaquer est hors de porté !");
+            }
+        }
+
+        public void RecevoirAttaqueDe(Monstre m, int degat) {
+            System.out.println("Vous ne pouvez pas attaquer un autre monstre !");
+        }
+
+        public void attaquer(Entite cible) {
+            int damage;
+            if (super.getForce() == 0) {
+                damage = m_damage.UnDeVingt() + super.getDexterite();
+            } else {
+                damage = m_damage.UnDeVingt() + super.getForce();
+            }
+            cible.RecevoirAttaqueDe(this, damage);
+        }
+
+
+        /// /////
 
         public void effectuerTour(Donjon donjon) {
             System.out.println("C'est le tour de " + m_symbole + " !");
@@ -44,7 +81,7 @@
 
         @Override
         public boolean estVivant() {
-            return getPV()>0;
+            return getPv() > 0;
         }
 
         @Override
@@ -52,28 +89,4 @@
             return false;
         }
 
-        public void attaquer(Entite p){
-            if(p instanceof Personnage){
-                Personnage perso = (Personnage)p;
-                if(super.distance(perso.getX(), perso.getY()) <= m_porteAttaque){
-                    int damage = m_damage.UnDeVingt() + super.getDexterite();
-                    if (damage > perso.getArmureEquipe().getClassArmure()){
-                        System.out.println("\nLe monstre n°" + m_num + " à percer l'armure de " + perso.getM_nom() + "\n");
-                        damage = m_damage.LancerDe();
-                        perso.setM_pv(perso.getM_Pv()-damage);
-                        System.out.println(perso.getM_nom() + " à perdu " + damage + "pv\n");
-                    }
-                    else{
-                        System.out.println("\nLe monstre n°" + m_num + " n'a pas réussit à percer l'armure de " + perso.getM_nom() + "\n");
-                    }
-                }
-                else{
-                    System.out.println("Le personnage que vous souhaitez attaquer est hors de porté !");
-                }
-            }
-            else{
-                System.out.println("Vous ne pouvez pas attaquer un autre monstre !");
-            }
-
-        }
     }

@@ -7,11 +7,11 @@ public class Humain implements Race {
 
     @Override
     public void appliquerBonusStat(Personnage personnage) {
-        personnage.setM_pv(personnage.getM_Pv()+2);
-        personnage.setM_dexterite(personnage.getM_dexterite()+2);
-        personnage.setM_force(personnage.getM_force()+2);
-        personnage.setM_vitesse(personnage.getM_vitesse()+2);
-        personnage.setM_initiative(personnage.getM_initiative()+2);
+        personnage.setPv(personnage.getPv()+2);
+        personnage.setDexterite(personnage.getDexterite()+2);
+        personnage.setForce(personnage.getForce()+2);
+        personnage.setVitesse(personnage.getVitesse()+2);
+        personnage.setInitiative(personnage.getInitiative()+2);
     }
 
     public String getM_nom() {

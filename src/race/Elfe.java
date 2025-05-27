@@ -7,7 +7,7 @@ public class Elfe implements Race{
 
     @Override
     public void appliquerBonusStat(Personnage personnage) {
-        personnage.setM_dexterite(personnage.getM_dexterite()+6);
+        personnage.setDexterite(personnage.getDexterite()+6);
     }
 
     public String getM_nom() {
