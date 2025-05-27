@@ -182,7 +182,7 @@ class map.Donjon {
   + estObstacle(x : integer, y : integer) : boolean
   + placerEquipementAvecDistance(d : integer) : void
   + placerEntiteManuellement(o : Object, x : integer, y : integer, c : char) : boolean
-  + placerObjetAuSol(x : integer, y : integer, e : Equipement) : boolean
+  + placerObjetAuSol(x : integer, y : integer, e : Equipement) : booleanplacerObjetAuSol(x : integer, y : integer, e : Equipement) : boolean
   + afficherDonjon() : void
   + placerJoueurs(p : List<Personnage>) : void
   + estAccessible(x : integer, y : integer) : boolean

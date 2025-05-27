@@ -100,7 +100,7 @@ public class Tour {
                     }
 
                 } else {
-                    // Monstre : gestion par Maître du Jeu
+                    // Monstre : gestion par Maître du Jeu dcp
                     System.out.println("\n========== Tour du Monstre ==========");
                     System.out.println("Monstre '" + entity.getSymbole() + "' en [" + entity.getX() + "," + entity.getY() + "]");
                     System.out.println("PV : " + entity.getPv() + " | Force : " + entity.getForce() + " | Dext : " + entity.getDexterite() + " | Vit : " + entity.getVitesse());
@@ -133,13 +133,13 @@ public class Tour {
                 break;
             }
         }
-        // Si aucun monstre vivant → victoire
+        // Si aucun monstre vivant => victoire
         if (!monstreEncoreVivant) {
             System.out.println("Tous les monstres ont été éliminés ! Victoire !");
             return true;
         }
 
-        // 2. Vérifie si un personnage est mort → défaite immédiate
+        // 2. Vérifie si un personnage est mort => défaite immédiate
         for (Entite entity : entities) {
             if (entity.estUnPersonnage() && !entity.estVivant()) {
                 Personnage p = (Personnage) entity;

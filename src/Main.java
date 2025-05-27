@@ -1,5 +1,6 @@
 import classe.Guerrier;
 import entite.Entite;
+import entite.monstre.Monstre;
 import entite.personnage.Personnage;
 import equipement.arme.EpeeLongue;
 import jeux.Tour;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
-        // Création du donjon
+        // Création du donjon moment
         Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON3);
         System.out.println("=== CONTEXTE DU DONJON ===");
         System.out.println(donjon.getContexte());
