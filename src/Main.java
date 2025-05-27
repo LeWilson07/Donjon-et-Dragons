@@ -13,7 +13,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         // Création du donjon
-        Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON3);
+        Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON2);
         System.out.println("=== CONTEXTE DU DONJON ===");
         System.out.println(donjon.getContexte());
 

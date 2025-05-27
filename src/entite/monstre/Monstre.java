@@ -18,21 +18,12 @@
             m_porteAttaque = porteAttaque;
         }
 
-
         public int getClassArmure() {
             return m_classArmure;
         }
 
         public void setDamage(De damage) {
             m_damage = damage;
-        }
-
-        public void setPV(int pv) {
-            super.setPv(pv);
-        }
-
-        public int getPV() {
-            return super.getPv();
         }
 
         public int getNum() {
@@ -55,10 +46,10 @@
 
             if (super.distance(p.getX(), p.getY()) <= m_porteAttaque) {
                 if (degat > p.getArmureEquipe().getClassArmure()) {
-                    System.out.println("\nLe monstre n°" + m_num + " à percer l'armure de " + p.getM_nom() + "\n");
+                    System.out.println("\n"+p.getM_nom() + " à percer l'armure de" + m_espece + "\n");
                     degat = m_damage.LancerDe();
-                    p.setM_pv(p.getM_Pv() - degat);
-                    System.out.println(p.getM_nom() + " à perdu " + degat + "pv\n");
+                    p.setPv(p.getPv() - degat);
+                    System.out.println(m_espece + " à perdu " + degat + "pv\n");
                 } else {
                     System.out.println("\n " + p.getM_nom() + " n'a pas réussit à percer l'armure du monstre n° " + this.m_num + "\n");
                 }
@@ -90,7 +81,7 @@
 
         @Override
         public boolean estVivant() {
-            return getPV() > 0;
+            return getPv() > 0;
         }
 
         @Override

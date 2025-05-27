@@ -19,6 +19,6 @@ public class Clerc implements Classe{
         personnage.ramasser(ArmeParDefaut);
         personnage.EquiperArme(ArmeParDefaut);
         personnage.EquiperArmure(ArmureParDefaut);
-        personnage.setM_pv(16);
+        personnage.setPv(16);
     }
 }

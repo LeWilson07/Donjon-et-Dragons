@@ -46,40 +46,8 @@ public class Personnage extends entite.Entite{
                 super.setInitiative(result);
     }
 
-    public int getM_Pv(){
-        return super.getPv();
-    }
-
     public ArrayList<Arme> getM_inventaireArme() {
         return m_inventaireArme;
-    }
-
-    public void setM_pv(int m_pv) {super.setPv(m_pv);}
-
-    public int getM_force() {return super.getForce();}
-
-    public void setM_force(int m_force) {
-        this.setForce(m_force);
-    }
-
-    public int getM_dexterite() {
-        return super.getDexterite();
-    }
-
-    public void setM_dexterite(int m_dexterite) {super.setDexterite(m_dexterite);}
-
-    public int getM_vitesse() {
-        return super.getVitesse();
-    }
-
-    public void setM_vitesse(int m_vitesse) {super.setVitesse(m_vitesse);}
-
-    public int getM_initiative() {
-        return super.getInitiative();
-    }
-
-    public void setM_initiative(int m_initiative) {
-        this.setInitiative(m_initiative);
     }
 
     public String getM_nom() {
@@ -179,7 +147,7 @@ public class Personnage extends entite.Entite{
             if (degat > monstre.getClassArmure()) {
                 System.out.println("\n" + m_nom + " à percer l'armure du monstre n°" + monstre.getNum() + "\n");
                 degat = m_armeEquipe.getM_degat().LancerDe();
-                monstre.setPV(monstre.getPV() - degat);
+                monstre.setPv(monstre.getPv() - degat);
                 System.out.println("Le monstre n°" + monstre.getNum() + " à perdu " + degat + "pv\n");
             }
         }
@@ -188,11 +156,11 @@ public class Personnage extends entite.Entite{
     public void effectuerTour(Donjon donjon) {
         System.out.println(m_nom + ", c'est votre tour !");
         System.out.println("Nom : " + getM_nom());
-        System.out.println("Dexterite: " + getM_dexterite());
-        System.out.println("Vitesse : " + getM_vitesse());
-        System.out.println("Point de vie : " + getM_Pv());
+        System.out.println("Dexterite: " + getDexterite());
+        System.out.println("Vitesse : " + getVitesse());
+        System.out.println("Point de vie : " + getPv());
         System.out.println("Force : " + getForce());
-        System.out.println("Initiative : " + getM_initiative());
+        System.out.println("Initiative : " + getInitiative());
         // Ici, ajoute d'autres actions si besoin
     }
 

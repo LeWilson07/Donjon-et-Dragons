@@ -19,6 +19,6 @@ public class Guerrier implements Classe
         personnage.ramasser(ArmeParDefaut);
         personnage.EquiperArme(ArmeParDefaut);
         personnage.EquiperArmure(ArmureParDefaut);
-        personnage.setM_pv(20);
+        personnage.setPv(20);
     }
 }
