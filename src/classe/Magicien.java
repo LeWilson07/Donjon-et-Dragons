@@ -23,12 +23,7 @@ public class Magicien implements Classe{
         personnage.EquiperArme(ArmeParDefaut);
         personnage.setPv(12);
         personnage.setIsMagicien(true);
-
-        ArrayList<Sort> sort = new ArrayList<>();
-        sort.add(new ArmeMagique());
-        personnage.setSort(sort);
-
-        personnage.setSort1(new Sort());
+        personnage.setSort(new Sort());
     }
 
     public Sort getArmeMagique() {

@@ -33,6 +33,10 @@ public class De {
         Random rand = new Random();
         return rand.nextInt(8)+1;
     }
+    public int UnDeDix(){
+        Random rand = new Random();
+        return rand.nextInt(10)+1;
+    }
     public int UnDeVingt(){
         Random rand = new Random();
         return rand.nextInt(20)+1;

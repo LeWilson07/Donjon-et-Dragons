@@ -16,6 +16,7 @@ import sort.Sort;
 
 public class Personnage extends entite.Entite{
 
+    private int m_pvInitial;
     private String m_nom;
     private Race m_race;
     private Classe m_classe;
@@ -25,8 +26,7 @@ public class Personnage extends entite.Entite{
     private boolean m_IsClerc = false;
     private Arme m_armeEquipe;
     private Armure m_armureEquipe;
-    private Sort m_sort1 = null;
-    private ArrayList<Sort> m_sort = null;
+    private Sort m_sort = null;
     private ArrayList<Arme> m_inventaireArme = new ArrayList<Arme>();
     private ArrayList<Armure> m_inventaireArmure = new ArrayList<Armure>();
 
@@ -39,6 +39,8 @@ public class Personnage extends entite.Entite{
         loadState();
         classe.definirCaracsBase(this);
         race.appliquerBonusStat(this);
+
+        m_pvInitial = getPv();
 
     }
 
@@ -53,25 +55,17 @@ public class Personnage extends entite.Entite{
                 super.setInitiative(result);
     }
 
-    public void setSort(ArrayList<Sort> sort){
+    public void setSort(Sort sort){
         this.m_sort = sort;
     }
-    public ArrayList<Sort> getSort(){
+    public Sort getSort(){
         return this.m_sort;
     }
 
-    public void setSort1(Sort sort){
-        this.m_sort1 = sort;
+
+    public int getPvInitial(){
+        return this.m_pvInitial;
     }
-    public Sort getSort1(){
-        return this.m_sort1;
-    }
-
-
-
-
-
-
     public void setIsMagicien(boolean isMagicien){
         m_IsMagicien = isMagicien;
     }

@@ -19,7 +19,15 @@ public class Tour {
     }
 
     public Personnage getPersoAt(int x, int y) {
-        for (Personnage e : m_personnage) {
+        for (Personnage p : m_personnage) {
+            if (p.getX() == x && p.getY() == y && p.estVivant()) {
+                return p;
+            }
+        }
+        return null;
+    }
+    public Entite getEntitiesAt(int x, int y) {
+        for (Entite e : entities) {
             if (e.getX() == x && e.getY() == y && e.estVivant()) {
                 return e;
             }
@@ -51,7 +59,7 @@ public class Tour {
                             System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, guerison <case>, ramasser, pass");
                         }
                         else if(joueur.isMagicien()){
-                            System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, guerison <case>,boogieWoogie <case> <case>, ArmeMagique <case>, ramasser, pass");
+                            System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, guerison <case>,boogieWoogie <case> <case>, Arme Magique ( 'am <case>'), ramasser, pass");
                         }
                         else{
                             System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, ramasser, pass");
@@ -59,7 +67,7 @@ public class Tour {
                         System.out.print("  $ ");
 
                         String input = scanner.nextLine().trim();
-                        String[] parts = input.split(" ", 2);
+                        String[] parts = input.split(" ");
                         String cmd = parts[0].toLowerCase();
 
                         switch (cmd) {
@@ -115,21 +123,90 @@ public class Tour {
                             case "a":
 
                                 if(joueur.isMagicien()){
-                                    int[] co = joueur.ConvertCoord(parts[1]);
-                                    getPersoAt(co[0], co[1]).Afficheinventaire();
+                                    if(parts.length != 2) {
+                                        System.out.println("ERREUR : Nombre d'argument invalide");
+                                    }
+                                    else if(joueur.ConvertCoord(parts[1]) == null){
+                                        System.out.println("ERREUR : argument invalide");
+                                    }
+                                    else{
+                                        int[] co = joueur.ConvertCoord(parts[1]);
 
-                                    Scanner scann = new Scanner(System.in);
-                                    System.out.print("Entrez le numéro de l'arme que vous souaitez améliorer : ");
-                                    String num = scanner.nextLine();
+                                        if(getPersoAt(co[0], co[1]) == null){
+                                            System.out.println("Aucune Entité trouvée sur une de vos coordonnées !!\nVeuillez réssayer ou changer d'action.\n");
+                                        }
+                                        else{
+                                            getPersoAt(co[0], co[1]).Afficheinventaire();
 
-                                    joueur.getSort1().ArmeMagique( getPersoAt(co[0], co[1]), Integer.parseInt(num)-1 );
-                                    actionsRestantes--;
+                                            Scanner scann = new Scanner(System.in);
+                                            System.out.print("Entrez le numéro de l'arme que vous souhaitez améliorer : ");
+                                            String num = scanner.nextLine();
 
-                                    System.out.print( "\nBonus Arme : " +getPersoAt(co[0], co[1]).getBonusArme()+ "\n");
+                                            joueur.getSort().ArmeMagique( getPersoAt(co[0], co[1]), Integer.parseInt(num)-1 );
+                                            actionsRestantes--;
+
+                                            System.out.print( "\nBonus Arme : " +getPersoAt(co[0], co[1]).getBonusArme()+ "\n");
+                                        }
+                                    }
+
                                 }
                                 else{
                                     System.out.println("Vous ne pouvez pas lancer ce sort !!");
                                 }
+                                break;
+
+                                case "bw":
+                                    if(joueur.isMagicien()){
+                                        if(parts.length != 3) {
+                                            System.out.println("ERREUR : Nombre d'argument invalide");
+                                        }
+                                        else if(joueur.ConvertCoord(parts[1]) == null || joueur.ConvertCoord(parts[2]) == null){
+                                            System.out.println("ERREUR : argument invalide");
+                                        }
+                                        else{
+                                            int[] co1 = joueur.ConvertCoord(parts[1]);
+                                            int[] co2 = joueur.ConvertCoord(parts[2]);
+
+                                            if(getEntitiesAt(co1[0], co1[1])!= null && getEntitiesAt(co2[0], co2[1]) != null){
+                                                joueur.getSort().BoogieWoogie( getEntitiesAt(co1[0], co1[1]), getEntitiesAt(co2[0], co2[1]), donjon);
+                                                actionsRestantes--;
+                                            }
+                                            else{
+                                                System.out.println("Aucune Entité trouvée sur une de vos coordonnées !!\nVeuillez réssayer ou changer d'action.\n");
+                                            }
+                                        }
+                                    }
+                                    else{
+                                        System.out.println("Vous ne pouvez pas lancer ce sort !!");
+                                    }
+                                    break;
+
+                            case "guerison":
+                                if(joueur.isMagicien() || joueur.isClerc()){
+                                    if(parts.length != 2) {
+                                        System.out.println("ERREUR : Nombre d'argument invalide");
+                                    }
+                                    else if(joueur.ConvertCoord(parts[1]) == null){
+                                        System.out.println("ERREUR : argument invalide");
+                                    }
+                                    else{
+                                        int[] co = joueur.ConvertCoord(parts[1]);
+
+                                        if(getPersoAt(co[0], co[1])!= null){
+                                            System.out.println("\nVie : "+getPersoAt(co[0], co[1]).getPv());
+                                            joueur.getSort().Guerison(getPersoAt(co[0], co[1]));
+                                            System.out.println("\nVie : "+getPersoAt(co[0], co[1]).getPv());
+                                            actionsRestantes--;
+                                        }
+                                        else{
+                                            System.out.println("Aucune Entité trouvée sur une de vos coordonnées !!\nVeuillez réssayer ou changer d'action.\n");
+                                        }
+                                    }
+                                }
+                                else{
+                                    System.out.println("Vous ne pouvez pas lancer ce sort !!");
+                                }
+                                break;
 
                             default:
                                 System.out.println("Commande invalide.");

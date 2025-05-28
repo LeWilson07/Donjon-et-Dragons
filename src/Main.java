@@ -1,4 +1,5 @@
 
+import classe.Clerc;
 import classe.Guerrier;
 import classe.Magicien;
 import entite.Entite;
@@ -23,7 +24,7 @@ public class Main {
         // Création des personnages
         Personnage joueur1 = new Personnage("Arthur", new Humain(), new Guerrier(), 'A');
         Personnage joueur2 = new Personnage("Luna", new Humain(), new Guerrier(), 'L');
-        Personnage joueur3 = new Personnage("TaMere", new Humain(), new Magicien(), 'T');
+        Personnage joueur3 = new Personnage("TaMere", new Humain(), new Clerc(), 'T');
 
         // Ajout d’une arme pour test
         joueur1.ramasser(new EpeeLongue());
@@ -54,6 +55,7 @@ public class Main {
 
 
         Tour tour = new Tour(toutesEntites, donjon, personnages);
+        joueur1.setPv(4);
         tour.start();
     }
 }
