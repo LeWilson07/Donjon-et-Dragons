@@ -5,6 +5,7 @@ public class Arme extends equipement.Equipement{
     private De m_degat;
     private int m_porte;
     private boolean m_IsGuerre;
+    private int m_bonus = 0;
 
     public Arme(String nom, De degat, int porte, boolean isGuerre) {
         super(nom);
@@ -15,6 +16,13 @@ public class Arme extends equipement.Equipement{
 
     public De getM_degat() {
         return m_degat;
+    }
+
+    public int getBonus(){
+        return m_bonus;
+    }
+    public void setBonus(int bonus){
+        m_bonus = bonus;
     }
 
     public int getM_porte() {

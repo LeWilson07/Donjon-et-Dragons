@@ -14,7 +14,7 @@ public class MaitreDuJeu {
         String stat = "\n";
         stat += "Vie : "+p.getPv() + "\n";
         stat += "Armure : "+ p.getArmureEquipe()+ "\n";
-        stat += "Arme : "+ p.getM_armeEquipe()+ "\n";
+        stat += "Arme : "+ p.getArmeEquipe()+ "\n";
         stat += "Nom : "+ p.getM_nom()+ "\n";
         stat += "Classe : "+ p.getClass()+ "\n";
         System.out.println( stat );

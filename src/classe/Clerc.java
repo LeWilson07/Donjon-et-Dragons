@@ -20,5 +20,6 @@ public class Clerc implements Classe{
         personnage.EquiperArme(ArmeParDefaut);
         personnage.EquiperArmure(ArmureParDefaut);
         personnage.setPv(16);
+        personnage.setIsClerc(true);
     }
 }

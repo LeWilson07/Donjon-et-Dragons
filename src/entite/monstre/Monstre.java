@@ -25,6 +25,9 @@
         public void setDamage(De damage) {
             m_damage = damage;
         }
+        public De getDamage() {
+            return m_damage;
+        }
 
         public int getNum() {
             return m_num;
@@ -45,9 +48,10 @@
         public void RecevoirAttaqueDe(Personnage p, int degat) {
 
             if (super.distance(p.getX(), p.getY()) <= m_porteAttaque) {
-                if (degat > p.getArmureEquipe().getClassArmure()) {
+                if (degat > m_classArmure ) {
                     System.out.println("\n"+p.getM_nom() + " à percer l'armure de" + m_espece + "\n");
-                    degat = m_damage.LancerDe();
+                    p.LoadStatArmeEquipe();
+                    degat = p.getBonusArme() + p.getDegatArmee().LancerDe();
                     p.setPv(p.getPv() - degat);
                     System.out.println(m_espece + " à perdu " + degat + "pv\n");
                 } else {

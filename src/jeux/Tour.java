@@ -2,6 +2,7 @@ package jeux;
 
 import entite.Entite;
 import entite.personnage.Personnage;
+import equipement.arme.Arme;
 import map.Donjon;
 
 import java.util.*;
@@ -9,11 +10,23 @@ import java.util.*;
 public class Tour {
     private List<Entite> entities;
     private Donjon donjon;
+    private ArrayList<Personnage> m_personnage;
 
-    public Tour(List<Entite> entities, Donjon donjon) {
+    public Tour(List<Entite> entities, Donjon donjon, ArrayList<Personnage> personnages) {
         this.entities = entities;
         this.donjon = donjon;
+        this.m_personnage = personnages;
     }
+
+    public Personnage getPersoAt(int x, int y) {
+        for (Personnage e : m_personnage) {
+            if (e.getX() == x && e.getY() == y && e.estVivant()) {
+                return e;
+            }
+        }
+        return null;
+    }
+
 
     public void start() {
         rollInitiative();
@@ -34,7 +47,15 @@ public class Tour {
 
                     while (actionsRestantes > 0) {
                         System.out.println("\n" + joueur.getM_nom() + ", il vous reste " + actionsRestantes + " action(s).");
-                        System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, ramasser, pass");
+                        if(joueur.isClerc()){
+                            System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, guerison <case>, ramasser, pass");
+                        }
+                        else if(joueur.isMagicien()){
+                            System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, guerison <case>,boogieWoogie <case> <case>, ArmeMagique <case>, ramasser, pass");
+                        }
+                        else{
+                            System.out.println("Commandes possibles : dep <case>, att <case>, equip <nomObjet>, ramasser, pass");
+                        }
                         System.out.print("  $ ");
 
                         String input = scanner.nextLine().trim();
@@ -91,10 +112,30 @@ public class Tour {
                                 actionsRestantes = 0;
                                 break;
 
+                            case "a":
+
+                                if(joueur.isMagicien()){
+                                    int[] co = joueur.ConvertCoord(parts[1]);
+                                    getPersoAt(co[0], co[1]).Afficheinventaire();
+
+                                    Scanner scann = new Scanner(System.in);
+                                    System.out.print("Entrez le numéro de l'arme que vous souaitez améliorer : ");
+                                    String num = scanner.nextLine();
+
+                                    joueur.getSort1().ArmeMagique( getPersoAt(co[0], co[1]), Integer.parseInt(num)-1 );
+                                    actionsRestantes--;
+
+                                    System.out.print( "\nBonus Arme : " +getPersoAt(co[0], co[1]).getBonusArme()+ "\n");
+                                }
+                                else{
+                                    System.out.println("Vous ne pouvez pas lancer ce sort !!");
+                                }
+
                             default:
                                 System.out.println("Commande invalide.");
                                 break;
                         }
+
 
                         if (!joueur.estVivant() || checkGameEnd()) break;
                     }

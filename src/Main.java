@@ -1,5 +1,6 @@
 
 import classe.Guerrier;
+import classe.Magicien;
 import entite.Entite;
 import entite.monstre.Monstre;
 import entite.personnage.Personnage;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 public class Main {
     public static void main(String[] args) {
         // Création du donjon moment
-        Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON3);
+        Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON2);
 
         System.out.println("=== CONTEXTE DU DONJON ===");
         System.out.println(donjon.getContexte());
@@ -22,6 +23,7 @@ public class Main {
         // Création des personnages
         Personnage joueur1 = new Personnage("Arthur", new Humain(), new Guerrier(), 'A');
         Personnage joueur2 = new Personnage("Luna", new Humain(), new Guerrier(), 'L');
+        Personnage joueur3 = new Personnage("TaMere", new Humain(), new Magicien(), 'T');
 
         // Ajout d’une arme pour test
         joueur1.ramasser(new EpeeLongue());
@@ -29,10 +31,14 @@ public class Main {
         joueur1.EquiperArme(joueur1.getM_inventaireArme().get(0));
         joueur2.EquiperArme(joueur2.getM_inventaireArme().get(0));
 
+        // test inventaire
+        joueur2.Afficheinventaire();
+
         // Liste de personnages
         ArrayList<Personnage> personnages = new ArrayList<>();
         personnages.add(joueur1);
         personnages.add(joueur2);
+        personnages.add(joueur3);
 
         // Placement des joueurs
         donjon.placerJoueurs(personnages);
@@ -47,7 +53,7 @@ public class Main {
         donjon.afficherDonjon();
 
 
-        Tour tour = new Tour(toutesEntites, donjon);
+        Tour tour = new Tour(toutesEntites, donjon, personnages);
         tour.start();
     }
 }
