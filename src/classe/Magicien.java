@@ -3,16 +3,10 @@ package classe;
 import equipement.arme.Arme;
 import equipement.arme.Baton;
 import equipement.arme.Fronde;
-import jeux.De;
 import entite.personnage.Personnage;
-import sort.ArmeMagique;
 import sort.Sort;
 
-import java.util.ArrayList;
-
 public class Magicien implements Classe{
-
-    private ArmeMagique m_armeMagique = new ArmeMagique();
 
     @Override
     public void definirCaracsBase(Personnage personnage) {
@@ -24,10 +18,6 @@ public class Magicien implements Classe{
         personnage.setPv(12);
         personnage.setIsMagicien(true);
         personnage.setSort(new Sort());
-    }
-
-    public Sort getArmeMagique() {
-        return m_armeMagique;
     }
 
 }

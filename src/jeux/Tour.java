@@ -1,6 +1,7 @@
 package jeux;
 
 import entite.Entite;
+import entite.monstre.Monstre;
 import entite.personnage.Personnage;
 import equipement.arme.Arme;
 import map.Donjon;
@@ -17,24 +18,6 @@ public class Tour {
         this.donjon = donjon;
         this.m_personnage = personnages;
     }
-
-    public Personnage getPersoAt(int x, int y) {
-        for (Personnage p : m_personnage) {
-            if (p.getX() == x && p.getY() == y && p.estVivant()) {
-                return p;
-            }
-        }
-        return null;
-    }
-    public Entite getEntitiesAt(int x, int y) {
-        for (Entite e : entities) {
-            if (e.getX() == x && e.getY() == y && e.estVivant()) {
-                return e;
-            }
-        }
-        return null;
-    }
-
 
     public void start() {
         rollInitiative();
@@ -132,20 +115,20 @@ public class Tour {
                                     else{
                                         int[] co = joueur.ConvertCoord(parts[1]);
 
-                                        if(getPersoAt(co[0], co[1]) == null){
+                                        if(donjon.getPersonnageAt(co[0], co[1]) == null){
                                             System.out.println("Aucune Entité trouvée sur une de vos coordonnées !!\nVeuillez réssayer ou changer d'action.\n");
                                         }
                                         else{
-                                            getPersoAt(co[0], co[1]).Afficheinventaire();
+                                            donjon.getPersonnageAt(co[0], co[1]).Afficheinventaire();
 
                                             Scanner scann = new Scanner(System.in);
                                             System.out.print("Entrez le numéro de l'arme que vous souhaitez améliorer : ");
                                             String num = scanner.nextLine();
 
-                                            joueur.getSort().ArmeMagique( getPersoAt(co[0], co[1]), Integer.parseInt(num)-1 );
+                                            joueur.getSort().ArmeMagique( donjon.getPersonnageAt(co[0], co[1]), Integer.parseInt(num)-1 );
                                             actionsRestantes--;
 
-                                            System.out.print( "\nBonus Arme : " +getPersoAt(co[0], co[1]).getBonusArme()+ "\n");
+                                            System.out.print( "\nBonus Arme : " +donjon.getPersonnageAt(co[0], co[1]).getBonusArme()+ "\n");
                                         }
                                     }
 
@@ -167,8 +150,8 @@ public class Tour {
                                             int[] co1 = joueur.ConvertCoord(parts[1]);
                                             int[] co2 = joueur.ConvertCoord(parts[2]);
 
-                                            if(getEntitiesAt(co1[0], co1[1])!= null && getEntitiesAt(co2[0], co2[1]) != null){
-                                                joueur.getSort().BoogieWoogie( getEntitiesAt(co1[0], co1[1]), getEntitiesAt(co2[0], co2[1]), donjon);
+                                            if(donjon.getEntiteAt(co1[0], co1[1])!= null && donjon.getEntiteAt(co2[0], co2[1]) != null){
+                                                joueur.getSort().BoogieWoogie( donjon.getEntiteAt(co1[0], co1[1]), donjon.getEntiteAt(co2[0], co2[1]), donjon);
                                                 actionsRestantes--;
                                             }
                                             else{
@@ -192,10 +175,10 @@ public class Tour {
                                     else{
                                         int[] co = joueur.ConvertCoord(parts[1]);
 
-                                        if(getPersoAt(co[0], co[1])!= null){
-                                            System.out.println("\nVie : "+getPersoAt(co[0], co[1]).getPv());
-                                            joueur.getSort().Guerison(getPersoAt(co[0], co[1]));
-                                            System.out.println("\nVie : "+getPersoAt(co[0], co[1]).getPv());
+                                        if(donjon.getPersonnageAt(co[0], co[1])!= null){
+                                            System.out.println("\nVie : "+donjon.getPersonnageAt(co[0], co[1]).getPv());
+                                            joueur.getSort().Guerison(donjon.getPersonnageAt(co[0], co[1]));
+                                            System.out.println("\nVie : "+donjon.getPersonnageAt(co[0], co[1]).getPv());
                                             actionsRestantes--;
                                         }
                                         else{
@@ -219,11 +202,62 @@ public class Tour {
 
                 } else {
                     // Monstre : gestion par Maître du Jeu dcp
+                    Monstre monstre = (Monstre)entity;
                     System.out.println("\n========== Tour du Monstre ==========");
                     System.out.println("Monstre '" + entity.getSymbole() + "' en [" + entity.getX() + "," + entity.getY() + "]");
                     System.out.println("PV : " + entity.getPv() + " | Force : " + entity.getForce() + " | Dext : " + entity.getDexterite() + " | Vit : " + entity.getVitesse());
                     System.out.println("Le Maître du Jeu prend la main. Appuyez sur [Entrée] pour continuer.");
-                    scanner.nextLine();
+
+                    int actionsRestantes = 3;
+                    while(actionsRestantes >0){
+
+                        System.out.println("Commandes possibles : dep <case>, att <case>, pass");
+                        System.out.print("  $ ");
+
+                        String input = scanner.nextLine().trim();
+                        String[] parts = input.split(" ");
+                        String cmd = parts[0].toLowerCase();
+
+                        switch (cmd) {
+                            case "att":
+                                if (parts.length < 2) {
+                                    System.out.println("Précisez la case cible pour attaquer.");
+                                    break;
+                                }
+                                int[] c = monstre.ConvertCoord(parts[1]);
+                                Entite cible = donjon.getEntiteAt(c[0], c[1]);
+                                if (cible != null && cible.estVivant()) {
+                                    monstre.attaquer(cible);
+                                    actionsRestantes--;
+                                } else {
+                                    System.out.println("Aucune cible valide à cette position.");
+                                }
+                                break;
+
+                            case "dep":
+                                if (parts.length < 2) {
+                                    System.out.println("Précisez la case où vous déplacer.");
+                                    break;
+                                }
+                                monstre.SeDeplacer(parts[1], donjon);
+                                donjon.afficherDonjon();
+                                actionsRestantes--;
+                                break;
+
+                            case "pass":
+                                System.out.println(monstre.getEspece() + " passe son tour.");
+                                actionsRestantes = 0;
+                                break;
+
+                            default:
+                                System.out.println("Commande invalide.");
+                                break;
+                        }
+
+                    }
+
+
+
                 }
 
                 if (checkGameEnd()) break;

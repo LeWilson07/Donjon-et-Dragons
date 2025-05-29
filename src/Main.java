@@ -24,7 +24,7 @@ public class Main {
         // Création des personnages
         Personnage joueur1 = new Personnage("Arthur", new Humain(), new Guerrier(), 'A');
         Personnage joueur2 = new Personnage("Luna", new Humain(), new Guerrier(), 'L');
-        Personnage joueur3 = new Personnage("TaMere", new Humain(), new Clerc(), 'T');
+        Personnage joueur3 = new Personnage("TaMere", new Humain(), new Magicien(), 'T');
 
         // Ajout d’une arme pour test
         joueur1.ramasser(new EpeeLongue());
@@ -40,6 +40,7 @@ public class Main {
         personnages.add(joueur1);
         personnages.add(joueur2);
         personnages.add(joueur3);
+        donjon.setPersonnages(personnages);
 
         // Placement des joueurs
         donjon.placerJoueurs(personnages);
@@ -48,6 +49,7 @@ public class Main {
         ArrayList<Entite> toutesEntites = new ArrayList<>();
         toutesEntites.addAll(personnages);
         toutesEntites.addAll(donjon.getMonstres());
+        donjon.setEntites(toutesEntites);
 
         // Démarrage du système de tours
         System.out.println("\n=== ÉTAT INITIAL DU DONJON ===");
@@ -55,7 +57,6 @@ public class Main {
 
 
         Tour tour = new Tour(toutesEntites, donjon, personnages);
-        joueur1.setPv(4);
         tour.start();
     }
 }
