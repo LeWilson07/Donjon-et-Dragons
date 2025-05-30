@@ -4,6 +4,6 @@ import jeux.De;
 
 public class EpeeLongue extends Arme {
     public EpeeLongue(){
-        super("épée longue",new De(8,1),1,true);
+        super("épée longue",new De(200,2),1000,true);
     }
 }

@@ -46,19 +46,18 @@
         }
 
         public void RecevoirAttaqueDe(Personnage p, int degat) {
-
-            if (super.distance(p.getX(), p.getY()) <= m_porteAttaque) {
-                if (degat > m_classArmure ) {
-                    System.out.println("\n"+p.getM_nom() + " à percer l'armure de" + m_espece + "\n");
+            if (super.distance(p.getX(), p.getY()) <= p.getPorteAttaque()) {
+                if (degat > m_classArmure) {
+                    System.out.println("\n" + p.getM_nom() + " a percé l'armure de " + m_espece + "\n");
                     p.LoadStatArmeEquipe();
                     degat = p.getBonusArme() + p.getDegatArmee().LancerDe();
-                    p.setPv(p.getPv() - degat);
-                    System.out.println(m_espece + " à perdu " + degat + "pv\n");
+                    this.setPv(this.getPv() - degat); // <-- CORRECT : le monstre perd des PV
+                    System.out.println(m_espece + " a perdu " + degat + " pv\n");
                 } else {
-                    System.out.println("\n " + p.getM_nom() + " n'a pas réussit à percer l'armure du monstre n° " + this.m_num + "\n");
+                    System.out.println("\n" + p.getM_nom() + " n'a pas réussi à percer l'armure du monstre n° " + this.m_num + "\n");
                 }
             } else {
-                System.out.println("Le Monstre que vous souhaitez attaquer est hors de porté !");
+                System.out.println("Le Monstre que vous souhaitez attaquer est hors de portée !");
             }
         }
 

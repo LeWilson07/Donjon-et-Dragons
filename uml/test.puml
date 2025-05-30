@@ -250,14 +250,6 @@ package doonjonEtDragon
             +DeplacerEntite(e : Entite,c : String, d : Donjon)
             +ConvertCoord(coord : string) : Integer
             +AjoutObstacle(d : Donjon)
-            +CreeDonjonCustom(personnageExistant : List<Personnage>)
-            +LireEntier(scanner : Scanner,message : String,min : integer, max : integer)
-            +CreePersonnage(scanner : Scanner)
-            -getRaceByChoice(integer : Choix) : Race
-            -getClasseByChoice(choix : integer) : Race
-            -CreeArmeParNom(nom : String) : Arme
-            -CreeArmureParNom(nom : String) : Armure
-            -CreeMonstreParChoix(nom : String) : Monstre
         }
 
         class Tour
@@ -265,9 +257,7 @@ package doonjonEtDragon
             +<<create>> Tour(entities : List<Entities>,donjon : Donjon,personnages : List<personnages>)
             +startGame()
             +rollInitiative()
-            +checkGameEnd()
-            +TourMaitreDuJeu(scanner : Scanner, ToRemove : List<Entite>)
-            +AfficherMessageFinJeu()
+            +checkGameEnd
         }
     }
     package mapJeux
@@ -404,52 +394,6 @@ Donjon ..> Arme : use
 Donjon ..> Armure : use
 ObjetAuSol ..> Equipement : use
 Race ..> Personnage : use
-
-
-classe ..> Personnage : call
-classe ..> sort : call
-Personnage ..> classe : call
-Personnage ..> race : call
-Personnage ..> equipement : call
-MaitreduJeu ..> Entite : call
-MaitreduJeu ..> Obstacle : call
-MaitreduJeu ..> Donjon: call
-MaitreduJeu ..> race : call
-MaitreduJeu ..> classe : call
-Tour ..> Donjon : call
-Tour ..> entite : call
-Tour ..> MaitreduJeu : call
-Tour ..> Sort : call
-Donjon ..> entite : call
-Donjon ..> equipement : call
-Race ..> Personnage : call
-Sort ..> Personnage : call
-
-
-Entite     "1" *-[#bbbbbb,plain]-> "m_de\n1" De
-
-Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArme\n*" Arme
-Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArmure\n*" Armure
-Personnage "1" *-[#bbbbbb,plain]-> "m_classe\n1" Classe
-Personnage "1" *-[#bbbbbb,plain]-> "m_ArmureEquipe\n1" Armure
-Personnage "1" *-[#bbbbbb,plain]-> "m_ArmeEquipe\n1" Arme
-Personnage "1" *-[#bbbbbb,plain]-> "m_sort\n1" Sort
-Personnage "1" *-[#bbbbbb,plain]-> "m_degatArme\n1" De
-
-Arme       "1" *-[#bbbbbb,plain]-> "m_degat\n1" De
-
-Tour "1" *-[#bbbbbb,plain]-> "m_entities\n*" Entite
-Tour "1" *-[#bbbbbb,plain]-> "m_personnage\n*" Personnage
-Tour "1" *-[#bbbbbb,plain]-> "m_donjon\n1" Donjon
-Tour "1" *-[#bbbbbb,plain]-> "m_mj\n1" MaitreduJeu
-
-Donjon     "1" *-[#bbbbbb,plain]-> "monstres\n*" Monstre
-Donjon     "1" *-[#bbbbbb,plain]-> "objetsAuSol\n*" ObjetAuSol
-Donjon     "1" *-[#bbbbbb,plain]-> "obstacles\n*" Obstacle
-Donjon     "1" *-[#bbbbbb,plain]-> "m_personnages\n*" Personnage
-Donjon     "1" *-[#bbbbbb,plain]-> "m_entities\n*" Entite
-
-ObjetAuSol "1" *-[#bbbbbb,plain]-> "m_equipement\n1" Equipement
 
 
 @enduml

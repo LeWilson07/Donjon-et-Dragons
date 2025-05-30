@@ -100,6 +100,10 @@ public class Personnage extends entite.Entite{
         return m_degatArme;
     }
 
+    public int getPorteAttaque(){
+        return m_armeEquipe.getM_porte();
+    }
+
     public ArrayList<Armure> getInventaireArmure() {return m_inventaireArmure;}
 
     public void EquiperArme(Arme arme) {
@@ -149,26 +153,29 @@ public class Personnage extends entite.Entite{
         m_armureEquipe = armure;
     }
 
-    public boolean equiperObjetParNom(String nomObjet) {
-        // Cherche dans les armes
-        for (Arme arme : m_inventaireArme) {
-            if (arme.getNom().equalsIgnoreCase(nomObjet)) {
-                EquiperArme(arme);
-                System.out.println("Arme '" + nomObjet + "' équipée.");
-                return true;
-            }
+    public boolean equiperObjetParIndex(int index) {
+        int tailleArmes = m_inventaireArme.size();
+        int tailleArmures = m_inventaireArmure.size();
+
+        if (index < 0 || index >= (tailleArmes + tailleArmures)) {
+            System.out.println("Index invalide pour l'équipement.");
+            return false;
         }
-        // Cherche dans les armures
-        for (Armure armure : m_inventaireArmure) {
-            if (armure.getNom().equalsIgnoreCase(nomObjet)) {
-                EquiperArmure(armure);
-                System.out.println("Armure '" + nomObjet + "' équipée.");
-                return true;
-            }
+
+        if (index < tailleArmes) {
+            Arme arme = m_inventaireArme.get(index);
+            EquiperArme(arme);
+            System.out.println("Arme '" + arme.getNom() + "' équipée.");
+        } else {
+            int indexArmure = index - tailleArmes;
+            Armure armure = m_inventaireArmure.get(indexArmure);
+            EquiperArmure(armure);
+            System.out.println("Armure '" + armure.getNom() + "' équipée.");
         }
-        System.out.println("Aucun équipement nommé '" + nomObjet + "' trouvé dans l'inventaire.");
-        return false;
+
+        return true;
     }
+
 
 
     public void ramasser(Arme arme) {
@@ -183,11 +190,14 @@ public class Personnage extends entite.Entite{
         return m_armureEquipe;
     }
 
+    public List<Arme >getInventaireArme(){
+        return m_inventaireArme;
+    }
     public void RecevoirAttaqueDe(Personnage p, int degat){
         System.out.println("Vous ne pouvez pas attaquez un autre personnage !");
     }
     public void RecevoirAttaqueDe(Monstre monstre, int degat) {
-        if (super.distance(monstre.getX(), monstre.getY()) <= m_armeEquipe.getM_porte()) {
+        if (super.distance(monstre.getX(), monstre.getY()) <= monstre.getPorteAttaque()) {
             if (m_armureEquipe != null && degat > m_armureEquipe.getClassArmure()) {
                 System.out.println("\n" + monstre.getEspece() + " à percer l'armure de" + m_nom + "\n");
                 degat = monstre.getDamage().LancerDe();

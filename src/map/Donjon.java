@@ -19,7 +19,9 @@ public class Donjon {
     public enum TypeDonjon {
         DONJON1,
         DONJON2,
-        DONJON3
+        DONJON3,
+
+        CUSTOM
     }
 
     private char[][] grille;
@@ -40,9 +42,15 @@ public class Donjon {
 
     private int indexDonjon = 0;
 
-    private Donjon(int largeur, int hauteur) {
+    public List<Entite> getEntites(){
+        return m_entites;
+
+    }
+
+    public Donjon(int largeur, int hauteur) {
         this.largeur = largeur;
         this.hauteur = hauteur;
+        this.m_entites = new ArrayList<>();
         grille = new char[hauteur][largeur];
         initialiserGrilleVide();
     }
@@ -94,9 +102,9 @@ public class Donjon {
         d.ajouterEquipement(new CoteDeMaille(), 7, 2);
         d.ajouterEquipement(new CoteDeMaille(), 6, 6);
 
-        //d.ajouterMonstre(new Monstre(1,0,0,0,10,5,1,2,'M'), 2, 7);
-        //d.ajouterMonstre(new Monstre(2,0,0,0,10,5,1,2,'M'), 8, 8);
-        //d.ajouterMonstre(new Monstre(3,0,0,0,10,5,1,2,'M'), 5, 8);
+        d.ajouterMonstre(new Bowser(1), 8, 7);
+        d.ajouterMonstre(new Dragon(2), 14, 11);
+        d.ajouterMonstre(new Bowser(3), 13, 15);
 
         return d;
     }
@@ -134,9 +142,9 @@ public class Donjon {
         d.ajouterEquipement(new CoteDeMaille(), 10, 13);
         d.ajouterEquipement(new CoteDeMaille(), 16, 16);
 
-        //d.ajouterMonstre(new Monstre(1,0,0,0,11,6,1,3,'M'), 7, 8);
-        //d.ajouterMonstre(new Monstre(2,0,0,0,9,5,1,2,'M'), 12, 10);
-        //d.ajouterMonstre(new Monstre(3,0,0,0,14,7,1,3,'M'), 17, 17);
+        d.ajouterMonstre(new Bowser(1), 8, 7);
+        d.ajouterMonstre(new Dragon(2), 14, 11);
+        d.ajouterMonstre(new Bowser(3), 13, 15);
 
         return d;
     }
@@ -148,12 +156,64 @@ public class Donjon {
         }
     }
 
+    public boolean estObstacle(int x, int y){
+        return grille[x][y] == '┼';
+     }
+
     private void ajouterEquipement(Equipement e, int x, int y) {
         if (estDansGrille(x, y) && grille[y][x] == '.') {
             grille[y][x] = 'E';
             objetsAuSol.add(new ObjetAuSol(x, y, e));
         }
     }
+    public boolean estCaseLibre(int x, int y) {
+        if (!estDansGrille(x, y)) {
+            return false;
+        }
+        return grille[y][x] == '.';
+    }
+
+    // Ajoute une arme au sol (public)
+    public void ajouterArme(Arme arme, int x, int y) {
+        ajouterEquipement(arme, x, y);
+    }
+
+    // Ajoute une armure au sol (public)
+    public void ajouterArmure(Armure armure, int x, int y) {
+        ajouterEquipement(armure, x, y);
+    }
+
+    public boolean ajouterEntite(Entite e) {
+        if (m_entites == null) {
+            m_entites = new ArrayList<>();
+        }
+        if (m_personnages == null) {
+            m_personnages = new ArrayList<>();
+        }
+
+        int x = e.getX();
+        int y = e.getY();
+
+        // Vérifie si la case est libre ET dans la grille
+        if (!estDansGrille(x, y) || grille[y][x] != '.') {
+            // La case n'est pas libre, refuse l'ajout
+            return false;
+        }
+
+        // Ajoute dans les listes
+        if (e.estUnPersonnage()) {
+            m_personnages.add((Personnage) e);
+        } else {
+            monstres.add((Monstre) e);
+        }
+        m_entites.add(e);
+
+        // Place l'entité dans la grille
+        grille[y][x] = e.getSymbole();
+
+        return true;
+    }
+
 
     private void ajouterMonstre(Monstre m, int x, int y) {
         if (estDansGrille(x, y) && grille[y][x] == '.') {
@@ -161,6 +221,7 @@ public class Donjon {
             m.setX(x);
             m.setY(y);
             monstres.add(m);
+
         }
     }
 
@@ -260,6 +321,23 @@ public class Donjon {
         }
         return null;
     }
+
+    public void enleverEntite(Entite e) {
+        int x = e.getX();
+        int y = e.getY();
+        if (estDansGrille(x, y)) {
+            grille[y][x] = '.';
+        }
+
+        m_entites.remove(e);
+
+        if (e.estUnPersonnage() ) {
+            m_personnages.remove((Personnage) e);
+        } else {
+            monstres.remove((Monstre) e);
+        }
+    }
+
 
     // Retourne une Arme présente sur la case (x,y) si elle existe, sinon null
     public Arme getArmeAt(int x, int y) {

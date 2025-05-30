@@ -1,4 +1,3 @@
-
 import classe.Clerc;
 import classe.Guerrier;
 import classe.Magicien;
@@ -6,57 +5,85 @@ import entite.Entite;
 import entite.monstre.Monstre;
 import entite.personnage.Personnage;
 import equipement.arme.EpeeLongue;
+import jeux.MaitreDuJeu;
 import jeux.Tour;
 import map.Donjon;
 import race.Humain;
-import entite.personnage.Personnage;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        // Création du donjon moment
-        Donjon donjon = Donjon.creerDonjonPredefini(Donjon.TypeDonjon.DONJON2);
+        Scanner scanner = new Scanner(System.in);
+        MaitreDuJeu mj = new MaitreDuJeu();
 
-        System.out.println("=== CONTEXTE DU DONJON ===");
-        System.out.println(donjon.getContexte());
+        // Création des personnages par méthode dédiée dans MaitreDuJeu
+        ArrayList<Personnage> personnages = mj.creerPersonnages(scanner);
 
-        // Création des personnages
-        Personnage joueur1 = new Personnage("Arthur", new Humain(), new Guerrier(), 'A');
-        Personnage joueur2 = new Personnage("Luna", new Humain(), new Guerrier(), 'L');
-        Personnage joueur3 = new Personnage("TaMere", new Humain(), new Magicien(), 'T');
+        // Ajout d’armes pour test (optionnel)
+        for (Personnage p : personnages) {
+            p.ramasser(new EpeeLongue());
+            if (!p.getM_inventaireArme().isEmpty()) {
+                p.EquiperArme(p.getM_inventaireArme().get(0));
+            }
+        }
 
-        // Ajout d’une arme pour test
-        joueur1.ramasser(new EpeeLongue());
-        joueur2.ramasser(new EpeeLongue());
-        joueur1.EquiperArme(joueur1.getM_inventaireArme().get(0));
-        joueur2.EquiperArme(joueur2.getM_inventaireArme().get(0));
+        // Liste des donjons à parcourir
+        List<Donjon.TypeDonjon> donjonsAExplorer = Arrays.asList(
+                Donjon.TypeDonjon.DONJON1,
+                Donjon.TypeDonjon.DONJON2,
+                Donjon.TypeDonjon.DONJON3
+        );
 
-        // test inventaire
-        joueur2.Afficheinventaire();
+        for (int i = 0; i < donjonsAExplorer.size(); i++) {
+            System.out.println("\n=== DÉBUT DU DONJON " + (i + 1) + " ===");
+            Donjon donjon = null;
 
-        // Liste de personnages
-        ArrayList<Personnage> personnages = new ArrayList<>();
-        personnages.add(joueur1);
-        personnages.add(joueur2);
-        personnages.add(joueur3);
-        donjon.setPersonnages(personnages);
+            // Demande custom ou prédéfini
+            System.out.println("Voulez-vous utiliser le donjon prédéfini " + donjonsAExplorer.get(i) + " ? (oui/non)");
+            String reponse = scanner.nextLine().trim().toLowerCase();
 
-        // Placement des joueurs
-        donjon.placerJoueurs(personnages);
+            if (reponse.equals("oui") || reponse.equals("o")) {
+                donjon = Donjon.creerDonjonPredefini(donjonsAExplorer.get(i));
+            } else {
+                donjon = mj.creerDonjonCustom(personnages);
+            }
 
-        // Ajout de toutes les entités (joueurs + monstres)
-        ArrayList<Entite> toutesEntites = new ArrayList<>();
-        toutesEntites.addAll(personnages);
-        toutesEntites.addAll(donjon.getMonstres());
-        donjon.setEntites(toutesEntites);
+            System.out.println(donjon.getContexte());
 
-        // Démarrage du système de tours
-        System.out.println("\n=== ÉTAT INITIAL DU DONJON ===");
-        donjon.afficherDonjon();
+            // On met à jour les personnages dans le donjon
+            donjon.setPersonnages(personnages);
 
+            // Si custom, les joueurs ont déjà leurs positions définies dans le donjon (via creerDonjonCustom)
+            // Sinon, on place les joueurs (prédéfinis)
+            if (reponse.equals("oui") || reponse.equals("o")) {
+                donjon.placerJoueurs(personnages);
+            }
 
-        Tour tour = new Tour(toutesEntites, donjon, personnages);
-        tour.start();
+            // Fusion des entités
+            ArrayList<Entite> toutesEntites = new ArrayList<>();
+            toutesEntites.addAll(personnages);
+            toutesEntites.addAll(donjon.getMonstres());
+            donjon.setEntites(toutesEntites);
+
+            System.out.println("\n=== ÉTAT INITIAL DU DONJON " + (i + 1) + " ===");
+            donjon.afficherDonjon();
+
+            // Lancement du tour
+            Tour tour = new Tour(toutesEntites, donjon, personnages);
+            tour.start();
+
+            // Affichage état final personnages
+            System.out.println("\n=== ÉTAT DES PERSONNAGES APRÈS DONJON " + (i + 1) + " ===");
+            for (Personnage p : personnages) {
+                System.out.println(p.getM_nom() + " - PV: " + p.getPv());
+                p.Afficheinventaire();
+            }
+        }
+
+        System.out.println("\n=== FIN DE LA PARTIE ===");
     }
 }
