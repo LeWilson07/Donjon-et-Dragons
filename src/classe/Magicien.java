@@ -3,8 +3,8 @@ package classe;
 import equipement.arme.Arme;
 import equipement.arme.Baton;
 import equipement.arme.Fronde;
-import jeux.De;
 import entite.personnage.Personnage;
+import sort.Sort;
 
 public class Magicien implements Classe{
 
@@ -16,5 +16,8 @@ public class Magicien implements Classe{
         personnage.ramasser(ArmeParDefaut);
         personnage.EquiperArme(ArmeParDefaut);
         personnage.setPv(12);
+        personnage.setIsMagicien(true);
+        personnage.setSort(new Sort());
     }
+
 }

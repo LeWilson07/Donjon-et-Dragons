@@ -3,6 +3,7 @@ package entite.personnage;
 
 import classe.Classe;
 import entite.Entite;
+import jeux.De;
 import map.Donjon;
 import map.ObjetAuSol;
 import race.Race;
@@ -11,17 +12,23 @@ import equipement.armure.Armure;
 
 import java.util.*;
 import entite.monstre.*;
+import sort.Sort;
 
 public class Personnage extends entite.Entite{
 
+    private int m_pvInitial;
     private String m_nom;
     private Race m_race;
     private Classe m_classe;
-
+    private int m_bonusArme = 0;
+    private De m_degatArme;
+    private boolean m_IsMagicien = false;
+    private boolean m_IsClerc = false;
     private Arme m_armeEquipe;
     private Armure m_armureEquipe;
-    ArrayList<Arme> m_inventaireArme = new ArrayList<Arme>();
-    ArrayList<Armure> m_inventaireArmure = new ArrayList<Armure>();
+    private Sort m_sort = null;
+    private ArrayList<Arme> m_inventaireArme = new ArrayList<Arme>();
+    private ArrayList<Armure> m_inventaireArmure = new ArrayList<Armure>();
 
     public Personnage(String nom,Race race,Classe classe, char sym){
         this.m_nom = nom;
@@ -32,6 +39,8 @@ public class Personnage extends entite.Entite{
         loadState();
         classe.definirCaracsBase(this);
         race.appliquerBonusStat(this);
+
+        m_pvInitial = getPv();
 
     }
 
@@ -46,6 +55,29 @@ public class Personnage extends entite.Entite{
                 super.setInitiative(result);
     }
 
+    public void setSort(Sort sort){
+        this.m_sort = sort;
+    }
+    public Sort getSort(){
+        return this.m_sort;
+    }
+
+
+    public int getPvInitial(){
+        return this.m_pvInitial;
+    }
+    public void setIsMagicien(boolean isMagicien){
+        m_IsMagicien = isMagicien;
+    }
+    public void setIsClerc(boolean isClerc){
+        m_IsClerc = isClerc;
+    }
+    public boolean isClerc(){
+        return m_IsClerc;
+    }
+    public boolean isMagicien(){
+        return m_IsMagicien;
+    }
     public ArrayList<Arme> getM_inventaireArme() {
         return m_inventaireArme;
     }
@@ -54,7 +86,19 @@ public class Personnage extends entite.Entite{
         return m_nom;
     }
 
-    public Arme getM_armeEquipe() {return m_armeEquipe;}
+    public Arme getArmeEquipe() {
+        return m_armeEquipe;
+    }
+    public void LoadStatArmeEquipe(){
+        this.m_bonusArme = m_armeEquipe.getBonus();
+        this.m_degatArme = m_armeEquipe.getM_degat();
+    }
+    public int getBonusArme() {
+        return m_bonusArme;
+    }
+    public De getDegatArmee() {
+        return m_degatArme;
+    }
 
     public ArrayList<Armure> getInventaireArmure() {return m_inventaireArmure;}
 
@@ -69,6 +113,7 @@ public class Personnage extends entite.Entite{
                 super.setForce(super.getForce()+4);
             }
             m_armeEquipe = arme;
+            LoadStatArmeEquipe();
         }
         else{
             System.out.println("Vous ne possédez pas cette arme dans votre inventaire");
@@ -143,11 +188,16 @@ public class Personnage extends entite.Entite{
     }
     public void RecevoirAttaqueDe(Monstre monstre, int degat) {
         if (super.distance(monstre.getX(), monstre.getY()) <= m_armeEquipe.getM_porte()) {
-            if (degat > monstre.getClassArmure()) {
-                System.out.println("\n" + m_nom + " à percer l'armure du monstre n°" + monstre.getNum() + "\n");
-                degat = m_armeEquipe.getM_degat().LancerDe();
-                monstre.setPv(monstre.getPv() - degat);
-                System.out.println("Le monstre n°" + monstre.getNum() + " à perdu " + degat + "pv\n");
+            if (m_armureEquipe != null && degat > m_armureEquipe.getClassArmure()) {
+                System.out.println("\n" + monstre.getEspece() + " à percer l'armure de" + m_nom + "\n");
+                degat = monstre.getDamage().LancerDe();
+                this.setPv(this.getPv() - degat);
+                System.out.println(m_nom + " à perdu " + degat + "pv\n");
+            }
+            else{
+                degat = monstre.getDamage().LancerDe();
+                this.setPv(this.getPv() - degat);
+                System.out.println(m_nom + " à perdu " + degat + "pv\n");
             }
         }
     }
@@ -186,5 +236,13 @@ public class Personnage extends entite.Entite{
             damage = super.getDe().UnDeVingt() + super.getDexterite();
         }
         cible.RecevoirAttaqueDe(this, damage);
+    }
+
+    public void Afficheinventaire(){
+        String inventaire = "";
+        for(int i=0;i<m_inventaireArme.size();i++){
+            inventaire += (i+1) + ")" + m_inventaireArme.get(i).getNom() + " -- ";
+        }
+        System.out.println(inventaire + "\n");
     }
 }

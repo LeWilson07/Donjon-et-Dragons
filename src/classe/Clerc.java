@@ -7,6 +7,7 @@ import equipement.armure.Armure;
 import entite.personnage.Personnage;
 import equipement.armure.ArmureEcaille;
 import jeux.De;
+import sort.Sort;
 
 public class Clerc implements Classe{
 
@@ -20,5 +21,7 @@ public class Clerc implements Classe{
         personnage.EquiperArme(ArmeParDefaut);
         personnage.EquiperArmure(ArmureParDefaut);
         personnage.setPv(16);
+        personnage.setIsClerc(true);
+        personnage.setSort(new Sort());
     }
 }

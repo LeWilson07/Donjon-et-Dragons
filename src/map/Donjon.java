@@ -26,6 +26,8 @@ public class Donjon {
     private List<ObjetAuSol> objetsAuSol = new ArrayList<>();
     private List<Obstacle> obstacles = new ArrayList<>();
     private List<Monstre> monstres = new ArrayList<>();
+    private List<Personnage> m_personnages;
+    private List<Entite> m_entites;
 
     private int largeur;
     private int hauteur;
@@ -43,6 +45,13 @@ public class Donjon {
         this.hauteur = hauteur;
         grille = new char[hauteur][largeur];
         initialiserGrilleVide();
+    }
+
+    public void setPersonnages(ArrayList<Personnage> listP) {
+        m_personnages = listP;
+    }
+    public void setEntites(ArrayList<Entite> listE) {
+        m_entites = listE;
     }
 
     private void initialiserGrilleVide() {
@@ -236,9 +245,17 @@ public class Donjon {
     }
 
     public Entite getEntiteAt(int x, int y) {
-        for (Entite e : getMonstres()) {
+        for (Entite e : m_entites) {
             if (e.getX() == x && e.getY() == y && e.estVivant()) {
                 return e;
+            }
+        }
+        return null;
+    }
+    public Personnage getPersonnageAt(int x, int y) {
+        for (Personnage p : m_personnages) {
+            if (p.getX() == x && p.getY() == y && p.estVivant()) {
+                return p;
             }
         }
         return null;
