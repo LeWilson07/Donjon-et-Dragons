@@ -56,7 +56,6 @@ public class Personnage extends entite.Entite{
 
     public Arme getM_armeEquipe() {return m_armeEquipe;}
 
-    public ArrayList<Arme> getInventaireArme() {return m_inventaireArme;}
     public ArrayList<Armure> getInventaireArmure() {return m_inventaireArmure;}
 
     public void EquiperArme(Arme arme) {
@@ -153,7 +152,7 @@ public class Personnage extends entite.Entite{
         }
     }
     @Override
-    public void effectuerTour(Donjon donjon) {
+    public void infoEntite(Donjon donjon) {
         System.out.println(m_nom + ", c'est votre tour !");
         System.out.println("Nom : " + getM_nom());
         System.out.println("Dexterite: " + getDexterite());
@@ -161,7 +160,7 @@ public class Personnage extends entite.Entite{
         System.out.println("Point de vie : " + getPv());
         System.out.println("Force : " + getForce());
         System.out.println("Initiative : " + getInitiative());
-        // Ici, ajoute d'autres actions si besoin
+
     }
 
     @Override

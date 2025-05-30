@@ -1,0 +1,243 @@
+@startuml
+skinparam style strictuml
+left to right direction
+skinparam linetype ortho
+hide empty members
+
+package doonjonEtDragon
+{
+    package classe
+    {
+        interface Classe{
+            +DefinirCaracsBase(p:Personnage)
+        }
+
+        class Guerrier implements Classe{
+            +DefinirCaracsBase(p:Personnage)
+        }
+        class Clerc implements Classe{
+            +DefinirCaracsBase(p:Personnage)
+        }
+        class Magicien implements Classe{
+            +DefinirCaracsBase(p:Personnage)
+        }
+        class Roublard implements Classe{
+            +DefinirCaracsBase(p:Personnage)
+        }
+    }
+    package entite
+    {
+        package monstre
+        {
+            abstract class Monstre extends Entite
+            {
+                -m_espece : String
+                -m_classeArmure : Integer
+                -m_porteAttaque : Integer
+                -m_num : Integer
+                -+<<create>> Monstre(num : Integer, force : Integer,dexterite : Integer,initiative : Integer,pv : Integer, classArmure : Integer, porteAttaque : Integer,vitesse : Integer,symbole : String)
+                +getClassArmure() : Integer
+                +setDamage(damage : De)
+                +getNum() : Integer
+                +getPorteAttaque : Integer
+                +getEspece : String
+                +setEspece(espece : String)
+                +RecevoirAttaqueDe(p:Personnage,degat : Integer)
+                +RecevoirAttaqueDe(m:Monstre,degat : Integer)
+                +attaquer(cible : Entite)
+                +estVivant() : boolean
+                +estUnPersonnage : boolean
+
+            }
+            class Bowser extends Monstre
+            {
+                +<<create>> Bowser(num : Integer)
+            }
+            class Dragon extends Monstre
+            {
+                +<<create>> Dragon(num : Integer)
+            }
+        }
+
+        package personnage
+        {
+            class Personnage extends Entite
+            {
+                -m_nom : String
+                +<<create>> Personnage(nom : String, race : Race ,classe : Classe,symbole : String)
+                +loadState()
+                +getM_inventaireArme() : List<Arme>
+                +getM_inventaireArmure() : List<Armure>
+                +getM_nom() : String
+                +getM_ArmeEquipe : Arme
+                +EquiperArme(arme : Arme)
+                +EquiperArmure(armure : Armure)
+                +RamasserObjetsAuSol(x : Integer, y : Integer, donjon : Donjon)
+                +Ramasser(arme : Arme)
+                +Ramasser(armure : Armure)
+                +EquiperObjetParNom(nomObjet : string)
+                +getArmureEquipe() : Armure
+                +RecevoirAttaqueDe(p : Personnage,degat : Integer)
+                +RecevoirAttaqueDe(m : Monstre, degat : Integer)
+                +attaquer (e : Entite)
+                +nfoEntite(e : Entite)
+                +abstract estVivant() : boolean
+                +abstract estunPersonnage() : boolean
+                +abstract seDeplacer(c : String,donjon : Donjon)
+
+
+
+            }
+        }
+
+        abstract Class Entite
+        {
+            -m_pv : Integer
+            -m_force : Integer
+            -m_dexterite : Integer
+            -m_vitesse : Integer
+            -m_initiative : Integer
+            -m_x : Integer
+            -m_y : Integer
+            #m_symbole : String
+            +<<create>> Entite()
+            +<<create>> Entite(pv : integer, force : integer, dex : integer, vit : integer, init : integer,symbole : char)
+            +setPv(pv : Integer)
+            +setForce(force : Integer)
+            +setDexterite(dexterite : Integer)
+            +setVitesse(vitesse :Integer)
+            +setInitiative(initiative : Integer)
+            +setSymbole(symbole : String)
+            +setX()
+            +setY()
+            +getPv() : Integer
+            +getForce() : Integer
+            +getDexterite() : Integer
+            +getVitesse() : Integer
+            +getInitiative() : Integer
+            +getDe() : De
+            +getX() : Integer
+            +getY() : Integer
+            +distance(x : Integer,y : Integer)
+            +ConvertCoords(coord : String)
+            +abstract  RecevoirAttaqueDe(p : Personnage,degat : Integer)
+            +abstract RecevoirAttaqueDe(m : Monstre, degat : Integer)
+            +abstract attaquer (e : Entite)
+            +abstract infoEntite(e : Entite)
+            +abstract estVivant() : boolean
+            +abstract estunPersonnage() : boolean
+            +seDeplacer(c : String,donjon : Donjon)
+            +seDeplacer(c : String,donjon : Donjon)
+
+        }
+    }
+    package equipement
+    {
+        package arme
+        {
+            class Arme extends doonjonEtDragon.equipement.Equipement
+            {
+            -m_porte : Integer
+            -m_isGuerre : Integer
+            +<<create>> Arme(nom : String,degat : De,porte : Integer,isGuerre : boolean)
+            +getM_degats() : De
+            +getM_porte : Integer
+            +getM_nom : String
+            +getM_isGuerre : Boolean
+            }
+            class ArbaleteLegere extends Arme
+            {
+                +<<create>> ArbaleteLegere()
+            }
+            class ArcCourt extends Arme
+            {
+                +<<create>> ArcCourt()
+            }
+            class Baton extends Arme
+            {
+                +<<create>> Baton()
+            }
+            class EpeeLongue extends Arme
+            {
+                +<<create>> EpeeLongue()
+            }
+            class Fronde extends Arme
+            {
+                +<<create>> Fronde()
+            }
+            class MasseArme extends Arme
+            {
+                +<<create>> MasseArme()
+            }
+            class Rapiere extends Arme
+            {
+                +<<create>> Rapiere()             }
+
+        }
+
+        package armure
+        {
+            class Armure extends doonjonEtDragon.equipement.Equipement
+            {
+                +m_isLourde : boolean
+                +m_classArmure : Integer
+                +<<create>> Armure(nom : String, classArmure : Integer,isLourde : boolean)
+                +getIsLourde : boolean
+                +getClassArmure : Integer
+
+            }
+            class ArmureEcaille extends Armure
+            {
+                +<<create>> ArmureEcaille()
+            }
+            class CoteDeMaille extends Armure
+            {
+                +<<create>> CoteDeMaille()
+            }
+            class DemiPlate extends Armure
+            {
+                +<<create>> DemiPlate()
+            }
+            class Harnois extends Armure
+            {
+                +<<create>> Harnois()
+            }
+        }
+
+        abstract class Equipement
+        {
+            -nom
+            +<<create>> Equipement(nom : String)
+            +getNom() : String
+        }
+
+    }
+    package jeux
+    {
+        class De
+        {
+        }
+    }
+    package map
+    {
+    }
+    package race
+    {
+    }
+
+}
+
+doonjonEtDragon.entite.Entite         "1" *-[#595959,plain]-> "m_de\n1" De
+doonjonEtDragon.entite.Entite   ..> De : <<use>>
+doonjonEtDragon.entite.Entite   ..> Personnage : <<use>>
+doonjonEtDragon.entite.Entite   ..> Monstre : <<use>>
+doonjonEtDragon.entite.Entite   ..> Donjon : <<call>>
+
+
+doonjoonEtDragon.entite.personnage.Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArme\n*" Arme
+doonjoonEtDragon.entite.personnage.Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArmure\n*" Armure
+doonjoonEtDragon.entite.personnage.Personnage "1" *-[#bbbbbb,plain]-> "m_classe\n1" doonjonEtDragon.classe.Classe
+doonjoonEtDragon.entite.personnage.Personnage  -[#589df6,plain]-^  doonjonEtDragon.entite.Entite
+doonjoonEtDragon.entite.personnage.Personnage "1" *-[#bbbbbb,plain]-> "m_race\n1" Race
+
+@enduml

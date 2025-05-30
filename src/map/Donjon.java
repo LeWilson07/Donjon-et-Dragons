@@ -85,9 +85,9 @@ public class Donjon {
         d.ajouterEquipement(new CoteDeMaille(), 7, 2);
         d.ajouterEquipement(new CoteDeMaille(), 6, 6);
 
-        d.ajouterMonstre(new Monstre(1,0,0,0,10,5,1,2,'M'), 2, 7);
-        d.ajouterMonstre(new Monstre(2,0,0,0,10,5,1,2,'M'), 8, 8);
-        d.ajouterMonstre(new Monstre(3,0,0,0,10,5,1,2,'M'), 5, 8);
+        //d.ajouterMonstre(new Monstre(1,0,0,0,10,5,1,2,'M'), 2, 7);
+        //d.ajouterMonstre(new Monstre(2,0,0,0,10,5,1,2,'M'), 8, 8);
+        //d.ajouterMonstre(new Monstre(3,0,0,0,10,5,1,2,'M'), 5, 8);
 
         return d;
     }
@@ -125,9 +125,9 @@ public class Donjon {
         d.ajouterEquipement(new CoteDeMaille(), 10, 13);
         d.ajouterEquipement(new CoteDeMaille(), 16, 16);
 
-        d.ajouterMonstre(new Monstre(1,0,0,0,11,6,1,3,'M'), 7, 8);
-        d.ajouterMonstre(new Monstre(2,0,0,0,9,5,1,2,'M'), 12, 10);
-        d.ajouterMonstre(new Monstre(3,0,0,0,14,7,1,3,'M'), 17, 17);
+        //d.ajouterMonstre(new Monstre(1,0,0,0,11,6,1,3,'M'), 7, 8);
+        //d.ajouterMonstre(new Monstre(2,0,0,0,9,5,1,2,'M'), 12, 10);
+        //d.ajouterMonstre(new Monstre(3,0,0,0,14,7,1,3,'M'), 17, 17);
 
         return d;
     }

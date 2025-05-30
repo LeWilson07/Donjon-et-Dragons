@@ -4,7 +4,7 @@
     import jeux.De;
     import map.Donjon;
 
-    public class Monstre extends entite.Entite {
+    public abstract class Monstre extends entite.Entite {
         private String m_espece;
         private int m_classArmure;
         private int m_porteAttaque;
@@ -75,8 +75,16 @@
 
         /// /////
 
-        public void effectuerTour(Donjon donjon) {
-            System.out.println("C'est le tour de " + m_symbole + " !");
+        @Override
+        public void infoEntite(Donjon donjon) {
+            System.out.println(m_espece + m_num  + ", c'est votre tour !");
+            System.out.println("Nom : " + getEspece());
+            System.out.println("Dexterite: " + getDexterite());
+            System.out.println("Vitesse : " + getVitesse());
+            System.out.println("Point de vie : " + getPv());
+            System.out.println("Force : " + getForce());
+            System.out.println("Initiative : " + getInitiative());
+
         }
 
         @Override

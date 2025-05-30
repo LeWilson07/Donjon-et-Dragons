@@ -111,7 +111,7 @@ public abstract class Entite {
 
     public abstract void RecevoirAttaqueDe(Personnage p, int degat);
     public abstract void RecevoirAttaqueDe(Monstre m, int degat);
-    public abstract void effectuerTour(Donjon donjon);
+    public abstract void infoEntite(Donjon donjon);
 
     public abstract void attaquer(Entite entite);
 
