@@ -1,5 +1,6 @@
     package entite.monstre;
     import entite.Entite;
+    import entite.TypeEntite;
     import entite.personnage.Personnage;
     import jeux.De;
     import map.Donjon;
@@ -11,8 +12,12 @@
         private int m_num;
         private De m_damage;
 
-        public Monstre(int num, int force, int dexterite, int initiative, int pv, int classArmure, int porteAttaque, int vitesse, char sym) {
-            super(pv, force, dexterite, vitesse, initiative, sym);
+        public Monstre(int num, int force, int dexterite, int initiative, int pv, int classArmure, int porteAttaque, int vitesse) {
+
+            super(pv, force, dexterite, vitesse, initiative,TypeEntite.MONSTRE);
+
+
+
             m_num = num;
             m_classArmure = classArmure;
             m_porteAttaque = porteAttaque;
@@ -76,28 +81,14 @@
         }
 
 
-        /// /////
 
-        @Override
-        public void infoEntite(Donjon donjon) {
-            System.out.println(m_espece + m_num  + ", c'est votre tour !");
-            System.out.println("Nom : " + getEspece());
-            System.out.println("Dexterite: " + getDexterite());
-            System.out.println("Vitesse : " + getVitesse());
-            System.out.println("Point de vie : " + getPv());
-            System.out.println("Force : " + getForce());
-            System.out.println("Initiative : " + getInitiative());
 
-        }
+
 
         @Override
         public boolean estVivant() {
             return getPv() > 0;
         }
 
-        @Override
-        public boolean estUnPersonnage() {
-            return false;
-        }
 
     }

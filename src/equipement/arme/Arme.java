@@ -1,4 +1,5 @@
 package equipement.arme;
+import equipement.TypeEquipement;
 import jeux.De;
 
 public class Arme extends equipement.Equipement{
@@ -34,5 +35,10 @@ public class Arme extends equipement.Equipement{
     }
     public boolean getM_IsGuerre() {
         return m_IsGuerre;
+    }
+
+    @Override
+    public TypeEquipement getTypeEquipement() {
+        return TypeEquipement.ARME;
     }
 }

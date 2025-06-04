@@ -7,4 +7,8 @@ public class Rapiere extends Arme{
         super("Rapiere",new De(8,1),1,true);
     }
 
+    public String toString(){
+        return "Nom : " +getNom()+ "Portee :" + getM_porte() ;
+    }
+
 }

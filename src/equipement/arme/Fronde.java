@@ -7,4 +7,8 @@ public class Fronde extends Arme{
         super("Fronde",new De(4,1),6,false);
     }
 
+    public String toString(){
+        return "Nom : " +getNom()+ "Portee :" + getM_porte() ;
+    }
+
 }

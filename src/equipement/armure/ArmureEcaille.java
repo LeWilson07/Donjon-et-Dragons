@@ -7,4 +7,8 @@ public class ArmureEcaille extends Armure{
         super("Armure d'écaille",9,true);
     }
 
+    public String toString(){
+        return "Nom : " +getNom()+ "Classe d'armure :" + getClassArmure() ;
+    }
+
 }

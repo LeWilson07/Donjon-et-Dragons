@@ -20,13 +20,7 @@ public class MaitreDuJeu {
     public MaitreDuJeu() {}
 
     public void giveStatJoueur(Personnage p){
-        String stat = "\n";
-        stat += "Vie : "+p.getPv() + "\n";
-        stat += "Armure : "+ p.getArmureEquipe()+ "\n";
-        stat += "Arme : "+ p.getArmeEquipe()+ "\n";
-        stat += "Nom : "+ p.getM_nom()+ "\n";
-        stat += "Classe : "+ p.getClass()+ "\n";
-        System.out.println( stat );
+       System.out.println(p);
 
     }
     public void giveStatMonstre(Monstre m){
@@ -188,7 +182,7 @@ public class MaitreDuJeu {
         }
 
         // 4) Ajouter équipement (armes)
-        String[] armesDispo = {"EpeeLongue", "Baton", "ArbaleteLegere"};
+        String[] armesDispo = {"Epee Longue", "Baton", "Arbalete Legere","Arc court", "Epee à deux mains","Fronde","Masse d'arme","Rapiere"};
         int nbArmes = lireEntier(scanner, "Combien d'armes voulez-vous ajouter ?", 0, 50);
 
         for (int i = 0; i < nbArmes; i++) {
@@ -203,7 +197,8 @@ public class MaitreDuJeu {
                 if (choixArme >= 1 && choixArme <= armesDispo.length) break;
                 System.out.println("Choix invalide. Réessayez.");
             }
-            Arme arme = creerArmeParNom(armesDispo[choixArme - 1]);
+            Arme arme = creerArmeParIndex(choixArme);
+            ;
 
             int[] posA;
             while (true) {
@@ -225,7 +220,7 @@ public class MaitreDuJeu {
         }
 
         // 5) Ajouter armures
-        String[] armuresDispo = {"CoteDeMaille", "ArmureEcaille"};
+        String[] armuresDispo = {"Cote De Maille", "Armure d'Ecaille","Demi plate","Harnois"};
         int nbArmures = lireEntier(scanner, "Combien d'armures voulez-vous ajouter ?", 0, 50);
 
         for (int i = 0; i < nbArmures; i++) {
@@ -240,7 +235,8 @@ public class MaitreDuJeu {
                 if (choixArmure >= 1 && choixArmure <= armuresDispo.length) break;
                 System.out.println("Choix invalide. Réessayez.");
             }
-            Armure armure = creerArmureParNom(armuresDispo[choixArmure - 1]);
+            Armure armure = creerArmureParIndex(choixArmure);
+
 
             int[] posAr;
             while (true) {
@@ -263,8 +259,8 @@ public class MaitreDuJeu {
         return donjon;
     }
 
-    // Méthode pour lire un entier dans un intervalle donné avec gestion d'erreurs
-    private int lireEntier(Scanner scanner, String message, int min, int max) {
+    private int lireEntier(Scanner scanner, String message, int min, int max) {     // Méthode pour lire un entier avec gestion d'erreurs des erreurs d'input dépassant min et max
+
         int valeur = -1;
         boolean valide = false;
         while (!valide) {
@@ -287,8 +283,7 @@ public class MaitreDuJeu {
     public ArrayList<Personnage> creerPersonnages(Scanner scanner) {
         ArrayList<Personnage> personnages = new ArrayList<>();
 
-        System.out.println("Combien de joueurs voulez-vous créer ?");
-        int nbJoueurs = Integer.parseInt(scanner.nextLine());
+        int nbJoueurs = lireEntier(scanner, "Combien de joueurs voulez-vous créer ?", 1, 10);
 
         for (int i = 0; i < nbJoueurs; i++) {
             System.out.println("Création du joueur #" + (i + 1));
@@ -296,22 +291,20 @@ public class MaitreDuJeu {
             String nom = scanner.nextLine();
 
             System.out.println("Choisissez la race : 1) Elfe  2) Halfling  3) Humain  4) Nain");
-            int choixRace = Integer.parseInt(scanner.nextLine());
+            int choixRace = lireEntier(scanner, null, 1, 4);
             Race race = getRaceByChoice(choixRace);
 
-            System.out.println("Choisissez la classe : 1) Clerc  2) Guerrier  3) Magicien  4) Nain");
-            int choixClasse = Integer.parseInt(scanner.nextLine());
+            System.out.println("Choisissez la classe : 1) Clerc  2) Guerrier  3) Magicien  4) Roublard");
+            int choixClasse = lireEntier(scanner, null, 1, 4);
             Classe classe = getClasseByChoice(choixClasse);
 
-            System.out.print("Symbole (un caractère) : ");
-            char sym = scanner.nextLine().charAt(0);
-
-            Personnage joueur = new Personnage(nom, race, classe, sym);
+            Personnage joueur = new Personnage(nom, race, classe);
             personnages.add(joueur);
         }
 
         return personnages;
     }
+
 
     // Méthode pour récupérer Race selon choix
     private Race getRaceByChoice(int choix) {
@@ -339,33 +332,36 @@ public class MaitreDuJeu {
         }
     }
 
-    // Méthode pour créer arme par nom
-    private Arme creerArmeParNom(String nom) {
-        switch (nom) {
-            case "EpeeLongue":
-                return new EpeeLongue();
-            case "Baton":
-                return new Baton();
-            case "ArbaleteLegere":
-                return new ArbaleteLegere();
+
+    private Arme creerArmeParIndex(int index) {
+        switch (index) {
+            case 1: return new EpeeLongue();
+            case 2: return new Baton();
+            case 3: return new ArbaleteLegere();
+            case 4: return new ArcCourt();
+            case 5: return new EpeeDeuxMain();
+            case 6: return new Fronde();
+            case 7 : return new MasseArme();
+            case 8: return new Rapiere();
+
             default:
-                System.out.println("Arme inconnue, Baton par défaut.");
+                System.out.println("Index d'arme inconnu, Baton par défaut.");
                 return new Baton();
         }
     }
 
-    // Méthode pour créer armure par nom
-    private Armure creerArmureParNom(String nom) {
-        switch (nom) {
-            case "CoteDeMaille":
-                return new CoteDeMaille();
-            case "ArmureEcaille":
-                return new ArmureEcaille();
+    private Armure creerArmureParIndex(int index) {
+        switch (index) {
+            case 1: return new CoteDeMaille();
+            case 2: return new ArmureEcaille();
+            case 3: return new DemiPlate();
+            case 4: return new Harnois();
             default:
-                System.out.println("Armure inconnue, ArmureEcaille par défaut.");
+                System.out.println("Index d'armure inconnu, ArmureEcaille par défaut.");
                 return new ArmureEcaille();
         }
     }
+
 
     private Monstre creerMonstreParChoix(int choix,int numero) {
 

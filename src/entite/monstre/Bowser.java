@@ -5,9 +5,15 @@ import jeux.De;
 public class Bowser extends Monstre{
     private De m_UnDeSept = new De(6,1);
     public Bowser(int num) {
-        super(num, 5, 0, 5, 60, 23, 1, 10, 'B');
+        super(num, 5, 0, 5, 60, 23, 1, 10);
         super.setDamage(m_UnDeSept);
         super.setEspece("Bowser");
+        setSymbole(getEspece().substring(0, 3)+num);
 
+    }
+
+    @Override
+    public String toString(){
+        return "Bowser";
     }
 }

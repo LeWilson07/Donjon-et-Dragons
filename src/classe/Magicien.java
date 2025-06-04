@@ -16,8 +16,15 @@ public class Magicien implements Classe{
         personnage.ramasser(ArmeParDefaut);
         personnage.EquiperArme(ArmeParDefaut);
         personnage.setPv(12);
-        personnage.setIsMagicien(true);
         personnage.setSort(new Sort());
+    }
+    public TypeClasse getType(){
+        return TypeClasse.MAGICIEN;
+    }
+
+    @Override
+    public String toString(){
+        return "Magicien";
     }
 
 }

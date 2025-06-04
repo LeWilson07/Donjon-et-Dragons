@@ -1,19 +1,19 @@
 package map;
 
 public class Obstacle {
-    private int x;
-    private int y;
+    private int m_x;
+    private int m_y;
 
     public Obstacle(int x, int y) {
-        this.x = x;
-        this.y = y;
+        this.m_x = x;
+        this.m_y = y;
     }
 
     public int getX() {
-        return x;
+        return m_x;
     }
 
     public int getY() {
-        return y;
+        return m_y;
     }
 }

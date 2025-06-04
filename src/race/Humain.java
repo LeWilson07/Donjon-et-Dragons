@@ -17,4 +17,7 @@ public class Humain implements Race {
     public String getM_nom() {
         return m_nom;
     }
+    public String toString(){
+        return "Race : " + m_nom;
+    }
 }

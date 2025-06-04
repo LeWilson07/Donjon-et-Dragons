@@ -1,6 +1,7 @@
 package equipement.armure;
 
 import equipement.Equipement;
+import equipement.TypeEquipement;
 
 public class Armure extends Equipement {
     private boolean m_IsLourde;
@@ -18,5 +19,10 @@ public class Armure extends Equipement {
 
     public int getClassArmure() {
         return m_classArmure;
+    }
+
+    @Override
+    public TypeEquipement getTypeEquipement() {
+        return TypeEquipement.ARMURE;
     }
 }

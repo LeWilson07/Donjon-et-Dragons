@@ -8,21 +8,37 @@ package doonjonEtDragon
 {
     package classe
     {
+        enum TypeClasse{
+            CLERC
+            GUERRIER
+            MAGICIEN
+            ROUBLARD
+        }
         interface Classe{
             +DefinirCaracsBase(p:Personnage)
+            +getType() : TypeClasse
+            +ToString() : String
         }
 
         class Guerrier implements Classe{
             +DefinirCaracsBase(p:Personnage)
+            +getType() : TypeClasse
+            +ToString() : String
         }
         class Clerc implements Classe{
             +DefinirCaracsBase(p:Personnage)
+            +getType() : TypeClasse
+            +ToString() : String
         }
         class Magicien implements Classe{
             +DefinirCaracsBase(p:Personnage)
+            +getType() : TypeClasse
+            +ToString() : String
         }
         class Roublard implements Classe{
             +DefinirCaracsBase(p:Personnage)
+            +getType() : TypeClasse
+            +ToString() : String
         }
     }
     package entite
@@ -35,7 +51,7 @@ package doonjonEtDragon
                 -m_classeArmure : Integer
                 -m_porteAttaque : Integer
                 -m_num : Integer
-                -+<<create>> Monstre(num : Integer, force : Integer,dexterite : Integer,initiative : Integer,pv : Integer, classArmure : Integer, porteAttaque : Integer,vitesse : Integer,symbole : String)
+                -+<<create>> Monstre(num : Integer, force : Integer,dexterite : Integer,initiative : Integer,pv : Integer, classArmure : Integer, porteAttaque : Integer,vitesse : Integer,typeE : TypeEntite)
                 +getClassArmure() : Integer
                 +getDamage() : De
                 +setDamage(damage : De)
@@ -47,16 +63,20 @@ package doonjonEtDragon
                 +RecevoirAttaqueDe(m:Monstre,degat : Integer)
                 +attaquer(cible : Entite)
                 +estVivant() : boolean
-                +estUnPersonnage : boolean
+                +ToString() : String
 
             }
             class Bowser extends Monstre
             {
                 +<<create>> Bowser(num : Integer)
+                +ToString() : String
+
             }
             class Dragon extends Monstre
             {
                 +<<create>> Dragon(num : Integer)
+                +ToString() : String
+
             }
         }
 
@@ -73,8 +93,6 @@ package doonjonEtDragon
                 +setSort(sort : Sort)
                 +getSort() : Sort
                 +getPvInitial() : integer
-                +setIsMagicien(isMagicien : boolean)
-                +setIsClerc(isClern : boolean)
                 +IsMagicien : boolean
                 +isClerc : boolean
                 +getM_inventaireArme() : List<Arme>
@@ -86,6 +104,8 @@ package doonjonEtDragon
                 +getDegatArme() : integer
                 +EquiperArme(arme : Arme)
                 +EquiperArmure(armure : Armure)
+                +getNomArmeEquipee : String
+                +getNomArmureEquipee : String
                 +RamasserObjetsAuSol(x : Integer, y : Integer, donjon : Donjon)
                 +Ramasser(arme : Arme)
                 +Ramasser(armure : Armure)
@@ -96,8 +116,8 @@ package doonjonEtDragon
                 +attaquer (e : Entite)
                 +infoEntite(e : Entite)
                 +estVivant() : boolean
-                +estunPersonnage() : boolean
                 +AfficheInventaire()
+                +ToString() : String
 
 
             }
@@ -112,6 +132,7 @@ package doonjonEtDragon
             -m_initiative : Integer
             -m_x : Integer
             -m_y : Integer
+            -m_TypeEntite
             #m_symbole : String
             +<<create>> Entite()
             +<<create>> Entite(pv : integer, force : integer, dex : integer, vit : integer, init : integer,symbole : char)
@@ -133,15 +154,22 @@ package doonjonEtDragon
             +getY() : Integer
             +distance(x : Integer,y : Integer)
             +ConvertCoords(coord : String)
-            +abstract  RecevoirAttaqueDe(p : Personnage,degat : Integer)
-            +abstract RecevoirAttaqueDe(m : Monstre, degat : Integer)
-            +abstract attaquer (e : Entite)
-            +abstract infoEntite(e : Entite)
-            +abstract estVivant() : boolean
-            +abstract estunPersonnage() : boolean
+            +{abstract}RecevoirAttaqueDe(p : Personnage,degat : Integer)
+            +{abstract}RecevoirAttaqueDe(m : Monstre, degat : Integer)
+            +{abstract}attaquer (e : Entite)
+            +{abstract}infoEntite(e : Entite)
+            +{abstract}estVivant() : boolean
+            +estunPersonnage() : TypeEntite
+            +estUnMonstre() : TypeEntite
             +seDeplacer(c : String,donjon : Donjon)
             +seDeplacer(c : String,donjon : Donjon)
 
+        }
+
+        enum TypeEntite
+        {
+            PERSONNAGE
+            MONSTRE
         }
     }
     package equipement
@@ -157,34 +185,48 @@ package doonjonEtDragon
             +getM_porte : Integer
             +getM_nom : String
             +getM_isGuerre : Boolean
+            +getTypeEquipement() : TypeEquipement
             }
             class ArbaleteLegere extends Arme
             {
                 +<<create>> ArbaleteLegere()
+                +ToString() : String
             }
             class ArcCourt extends Arme
             {
                 +<<create>> ArcCourt()
+                +ToString(): String
+
             }
             class Baton extends Arme
             {
                 +<<create>> Baton()
+                +ToString() : String
+
             }
             class EpeeLongue extends Arme
             {
                 +<<create>> EpeeLongue()
+                +ToString() : String
+
             }
             class Fronde extends Arme
             {
                 +<<create>> Fronde()
+                +ToString() : String
+
             }
             class MasseArme extends Arme
             {
                 +<<create>> MasseArme()
+                 +ToString() : String
+
             }
             class Rapiere extends Arme
             {
                 +<<create>> Rapiere()
+                +ToString() : String
+
             }
 
         }
@@ -198,23 +240,32 @@ package doonjonEtDragon
                 +<<create>> Armure(nom : String, classArmure : Integer,isLourde : boolean)
                 +getIsLourde : boolean
                 +getClassArmure : Integer
+                +getTypeEquipement() : TypeEquipement
 
             }
             class ArmureEcaille extends Armure
             {
                 +<<create>> ArmureEcaille()
+                +ToString() : String
+
             }
             class CoteDeMaille extends Armure
             {
                 +<<create>> CoteDeMaille()
+                +ToString() : String
+
             }
             class DemiPlate extends Armure
             {
                 +<<create>> DemiPlate()
+                +ToString() : String
+
             }
             class Harnois extends Armure
             {
                 +<<create>> Harnois()
+                +ToString() : String
+
             }
         }
 
@@ -223,6 +274,13 @@ package doonjonEtDragon
             -nom
             +<<create>> Equipement(nom : String)
             +getNom() : String
+            +{abstract} getTypeEquipement : TypeEquipement
+        }
+
+        enum TypeEquipement
+        {
+            ARME
+            ARMURE
         }
 
     }
@@ -240,6 +298,7 @@ package doonjonEtDragon
             +UnDeDix
             +UnDeVingt
             +QuatreDeQuatre
+            +ToString() : String
         }
 
         class MaitreduJeu
@@ -255,20 +314,29 @@ package doonjonEtDragon
             +CreePersonnage(scanner : Scanner)
             -getRaceByChoice(integer : Choix) : Race
             -getClasseByChoice(choix : integer) : Race
-            -CreeArmeParNom(nom : String) : Arme
-            -CreeArmureParNom(nom : String) : Armure
-            -CreeMonstreParChoix(nom : String) : Monstre
+            -CreeArmeIndex(choix : integer) : Arme
+            -CreeArmureParIndex(nom : integer) : Armure
+            -CreeMonstreParIndex(nom : integer) : Monstre
         }
 
-        class Tour
-        {
-            +<<create>> Tour(entities : List<Entities>,donjon : Donjon,personnages : List<personnages>)
-            +startGame()
-            +rollInitiative()
-            +checkGameEnd()
-            +TourMaitreDuJeu(scanner : Scanner, ToRemove : List<Entite>)
-            +AfficherMessageFinJeu()
+        class Tour {
+          +<<create>> Tour(entities : List<Entities>, donjon : Donjon, personnages : List<personnages>)
+          +start()
+          +rollInitiative()
+          +checkGameEnd() : boolean
+          +tourMaitreDuJeu(scanner : Scanner, toRemove : List<Entite>)
+          +afficherMessageFinJeu()
+
+          -gererTourPersonnage(joueur : Personnage, scanner : Scanner, toRemove : List<Entite>)
+          -executerCommandeJoueur(cmd : String, parts : String[], joueur : Personnage, scanner : Scanner, toRemove : List<Entite>) : int
+          -gererTourMonstre(monstre : Monstre, scanner : Scanner)
+          -afficherCommandes(joueur : Personnage, actionsRestantes : int)
+          -gererMort(e : Entite, toRemove : List<Entite>)
+          -gererSortAm(joueur : Personnage, parts : String[], scanner : Scanner) : int
+          -gererSortBoogieWoogie(joueur : Personnage, parts : String[]) : int
+          -gererSortGuerison(joueur : Personnage, parts : String[]) : int
         }
+
     }
     package mapJeux
     {
@@ -289,14 +357,18 @@ package doonjonEtDragon
             +<<create>> Donjon(largeur : integer,hauteur : integer)
             +setPersonnage(listP : List<Personnage>)
             +setEntite(ListE : List<Entite>)
-            +CreeDonjonParDefaut(type : TypeDonjon)
+            +{static}CreeDonjonParDefaut(type : TypeDonjon)
             -{static}CreeDonjon1()
             -{static}CreeDonjon2()
             -{static}CreeDonjon3()
             +ajouterObstacle(x : integer,y : integer)
+            +estObstacleAffichage() : boolean
+            +estEquipementAffichage() : boolean
+            +estCaseLibre() : boolean
             -AjouterEquipement(e : Equipement , x : integer,y : integer)
+            -AjouterEntite(e : Entite)
             -ajouterMonstre(m : Monstre, x : integer, y : integer)
-            +placerEntite(e : Entite, symbole : char)
+            +placerEntiteRandom(e : Entite, symbole : char)
             +EstDansGrille(int x, int y) : boolean
             +placerJoueurs(personnages : List<Personnage>)
             +afficherDonjon()
@@ -311,6 +383,7 @@ package doonjonEtDragon
             +retirerArme(arme : Arme)
             +getArmureAt(x : integer,y : integer)
             +retirerArmure(armure : Armure)
+            +enleverEntite(e : Entite)
         }
 
         class ObjetAuSol
@@ -320,6 +393,8 @@ package doonjonEtDragon
             +getX() : integer
             +getY() : integer
             +getEquipement : Equipement
+            +EstTypeEquipement : boolean
+            +toString() : String
         }
 
         class Obstacle
@@ -422,13 +497,22 @@ Tour ..> MaitreduJeu : call
 Tour ..> Sort : call
 Donjon ..> entite : call
 Donjon ..> equipement : call
+Donjon ..> TypeDonjon : uses
 Race ..> Personnage : call
 Sort ..> Personnage : call
 
+arme ..> TypeEquipement : instantiate
+armure ..> TypeEquipement : instantiate
+classe ..> TypeClasse : instantiate
+
+
 
 Entite     "1" *-[#bbbbbb,plain]-> "m_de\n1" De
+Entite     "1" *-[#bbbbbb,plain]-> "m_TypeEntite\1" TypeEntite
+
 
 Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArme\n*" Arme
+Personnage "1" *-[#bbbbbb,plain]-> "m_TypeClasse\n1" TypeClasse
 Personnage "1" *-[#bbbbbb,plain]-> "m_inventaireArmure\n*" Armure
 Personnage "1" *-[#bbbbbb,plain]-> "m_classe\n1" Classe
 Personnage "1" *-[#bbbbbb,plain]-> "m_ArmureEquipe\n1" Armure
@@ -443,9 +527,9 @@ Tour "1" *-[#bbbbbb,plain]-> "m_personnage\n*" Personnage
 Tour "1" *-[#bbbbbb,plain]-> "m_donjon\n1" Donjon
 Tour "1" *-[#bbbbbb,plain]-> "m_mj\n1" MaitreduJeu
 
-Donjon     "1" *-[#bbbbbb,plain]-> "monstres\n*" Monstre
-Donjon     "1" *-[#bbbbbb,plain]-> "objetsAuSol\n*" ObjetAuSol
-Donjon     "1" *-[#bbbbbb,plain]-> "obstacles\n*" Obstacle
+Donjon     "1" *-[#bbbbbb,plain]-> "m_monstres\n*" Monstre
+Donjon     "1" *-[#bbbbbb,plain]-> "m_objetsAuSol\n*" ObjetAuSol
+Donjon     "1" *-[#bbbbbb,plain]-> "m_obstacles\n*" Obstacle
 Donjon     "1" *-[#bbbbbb,plain]-> "m_personnages\n*" Personnage
 Donjon     "1" *-[#bbbbbb,plain]-> "m_entities\n*" Entite
 

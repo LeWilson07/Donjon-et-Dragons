@@ -17,4 +17,13 @@ public class Roublard implements Classe{
         personnage.EquiperArme(ArmeParDefaut);
         personnage.setPv(16);
     }
+
+    public TypeClasse getType(){
+        return TypeClasse.ROUBLARD;
+    }
+
+    @Override
+    public String toString(){
+        return "Roublard";
+    }
 }

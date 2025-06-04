@@ -4,6 +4,7 @@ import entite.monstre.Monstre;
 import entite.personnage.Personnage;
 import jeux.De;
 import map.Donjon;
+import map.ObjetAuSol;
 
 public abstract class Entite {
     private De m_de = new De();
@@ -14,18 +15,24 @@ public abstract class Entite {
     private int m_initiative;
     private int m_x;
     private int m_y;
-    protected char m_symbole;
+    private TypeEntite m_typeEntite;
+    protected String m_symbole = "";
 
-    public Entite() {}
+    protected Entite(TypeEntite type) {
+        this.m_typeEntite = type;
+    }
+    public TypeEntite getTypeEntite() {
+        return m_typeEntite;
+    }
 
 
-    public Entite(int pv, int force, int dexterite, int vitesse, int initiative, char symbole) {
+    public Entite(int pv, int force, int dexterite, int vitesse, int initiative,TypeEntite type) {
         m_pv = pv;
         m_force = force;
         m_dexterite = dexterite;
         m_vitesse = vitesse;
         m_initiative = initiative;
-        m_symbole = symbole;
+        m_typeEntite = type;
     }
 
     public void setPv(int pv) {
@@ -43,10 +50,10 @@ public abstract class Entite {
     public void setInitiative(int initiative) {
         m_initiative = initiative;
     }
-    public void setSymbole(char symbole) {
+    public void setSymbole(String symbole) {
         m_symbole = symbole;
     }
-    public char getSymbole() {
+    public String getSymbole() {
         return m_symbole;
     }
     public int getPv() {
@@ -85,7 +92,7 @@ public abstract class Entite {
         int dy = Math.abs(getY() - y);
         return dx + dy;
     }
-    public int[] ConvertCoord(String coord) {
+    public int[] ConvertCoord(String coord) { //Pour s'assurer que les coords sont bonnes vu que c'est une donnée qui va être beaucoup utilisé
         if (coord == null || coord.length() < 2) {
             System.out.println("Coordonnée trop courte ou nulle.");
             return null;
@@ -111,12 +118,12 @@ public abstract class Entite {
 
     public abstract void RecevoirAttaqueDe(Personnage p, int degat);
     public abstract void RecevoirAttaqueDe(Monstre m, int degat);
-    public abstract void infoEntite(Donjon donjon);
+
 
     public abstract void attaquer(Entite entite);
 
     public abstract boolean estVivant();
-    public abstract boolean estUnPersonnage();
+
 
     public void SeDeplacer(String c, Donjon donjon) {
         int[] coord = ConvertCoord(c);
@@ -130,13 +137,25 @@ public abstract class Entite {
             return;
         }
 
-        char[][] grille = donjon.getGrille();
+        String[][] grille = donjon.getGrille();
         System.out.println("x : " + coord[0] + " y : " + coord[1]);
 
         if (distance(coord[0], coord[1]) <= getVitesse()) {
-            if (grille[coord[1]][coord[0]] == '.' || grille[coord[1]][coord[0]] == 'E') {
+            if (grille[coord[1]][coord[0]].equals(".") || grille[coord[1]][coord[0]].equals("E")) {
                 grille[coord[1]][coord[0]] = m_symbole;
-                grille[m_y][m_x] = '.';
+
+                //Vérifie s’il y a un objet au sol à l’ancienne position
+                boolean equipementPresent = false;
+                for (ObjetAuSol o : donjon.getObjetsAuSol()) {
+                    if (o.getX() == m_x && o.getY() == m_y) {
+                        equipementPresent = true;
+                        break;
+                    }
+                }
+
+                //Restaure "E" ou "."
+                grille[m_y][m_x] = equipementPresent ? "E" : ".";
+
                 donjon.setGrille(grille);
                 m_x = coord[0];
                 m_y = coord[1];
@@ -146,5 +165,13 @@ public abstract class Entite {
         } else {
             System.out.println("La case sur laquelle vous souhaitez vous déplacez est trop éloignée !");
         }
+    }
+
+
+    public boolean estUnPersonnage() {
+        return this.m_typeEntite == TypeEntite.PERSONNAGE;
+    }
+    public boolean estUnMonstre() {
+        return this.m_typeEntite == TypeEntite.MONSTRE;
     }
 }

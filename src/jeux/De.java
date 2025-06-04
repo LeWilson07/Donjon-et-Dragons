@@ -50,4 +50,7 @@ public class De {
         return result;
     }
 
+    public String toString(){
+        return "nombre de face(s) : " +m_nbFace+ ", nombre de dé(s) :" + m_nbDe ;
+    }
 }

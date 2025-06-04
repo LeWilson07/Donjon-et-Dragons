@@ -11,4 +11,5 @@ public abstract class Equipement {
         return nom;
     }
 
+    public abstract TypeEquipement getTypeEquipement();
 }

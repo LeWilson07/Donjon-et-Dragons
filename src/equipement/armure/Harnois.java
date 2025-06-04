@@ -7,4 +7,7 @@ public class Harnois extends Armure {
         super("Harnois",12,true);
     }
 
+    public String toString(){
+        return "Nom : " +getNom()+ "Classe d'armure :" + getClassArmure() ;
+    }
 }

@@ -6,4 +6,7 @@ public class EpeeLongue extends Arme {
     public EpeeLongue(){
         super("épée longue",new De(200,2),1000,true);
     }
+    public String toString(){
+        return "Nom : " +getNom()+ "Portee :" + getM_porte() ;
+    }
 }

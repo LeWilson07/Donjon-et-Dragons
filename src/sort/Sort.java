@@ -26,7 +26,7 @@ public class Sort {
         e2.setX(x1);
         e2.setY(y1);
 
-        char[][] grille = d.getGrille();
+        String[][] grille = d.getGrille();
         grille[y1][x1] = e2.getSymbole();
         grille[e1.getY()][e1.getX()] = e1.getSymbole();
     }

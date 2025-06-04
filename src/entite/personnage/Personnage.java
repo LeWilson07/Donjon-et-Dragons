@@ -2,7 +2,9 @@
 package entite.personnage;
 
 import classe.Classe;
+import classe.TypeClasse;
 import entite.Entite;
+import entite.TypeEntite;
 import jeux.De;
 import map.Donjon;
 import map.ObjetAuSol;
@@ -22,19 +24,26 @@ public class Personnage extends entite.Entite{
     private Classe m_classe;
     private int m_bonusArme = 0;
     private De m_degatArme;
-    private boolean m_IsMagicien = false;
-    private boolean m_IsClerc = false;
     private Arme m_armeEquipe;
     private Armure m_armureEquipe;
     private Sort m_sort = null;
+
+    private TypeClasse m_TypeClasse;
     private ArrayList<Arme> m_inventaireArme = new ArrayList<Arme>();
     private ArrayList<Armure> m_inventaireArmure = new ArrayList<Armure>();
 
-    public Personnage(String nom,Race race,Classe classe, char sym){
+    public Personnage(String nom,Race race,Classe classe){
+        super(TypeEntite.PERSONNAGE);
+        this.m_TypeClasse = classe.getType();
         this.m_nom = nom;
         this.m_race = race;
         this.m_classe = classe;
-        super.setSymbole(sym);
+        String symbole = nom;
+        if (symbole.length() >= 3) {
+            symbole = symbole.substring(0, 3);
+        }
+
+        super.setSymbole(symbole);
 
         loadState();
         classe.definirCaracsBase(this);
@@ -66,17 +75,11 @@ public class Personnage extends entite.Entite{
     public int getPvInitial(){
         return this.m_pvInitial;
     }
-    public void setIsMagicien(boolean isMagicien){
-        m_IsMagicien = isMagicien;
-    }
-    public void setIsClerc(boolean isClerc){
-        m_IsClerc = isClerc;
-    }
     public boolean isClerc(){
-        return m_IsClerc;
+        return m_TypeClasse == TypeClasse.CLERC;
     }
     public boolean isMagicien(){
-        return m_IsMagicien;
+        return m_TypeClasse == TypeClasse.MAGICIEN;
     }
     public ArrayList<Arme> getM_inventaireArme() {
         return m_inventaireArme;
@@ -88,6 +91,25 @@ public class Personnage extends entite.Entite{
 
     public Arme getArmeEquipe() {
         return m_armeEquipe;
+    }
+
+    public String getNomArmeEquipee()
+    {
+        if(m_armeEquipe == null){
+            return "Aucune arme d'équipée";
+        }
+        return m_armeEquipe.getNom();
+    }
+
+
+
+    public String getNomArmureEquippe()
+    {
+        if(m_armureEquipe == null)
+        {
+            return "Aucune armure d'équipée";
+        }
+        return m_armureEquipe.getNom();
     }
     public void LoadStatArmeEquipe(){
         this.m_bonusArme = m_armeEquipe.getBonus();
@@ -157,16 +179,16 @@ public class Personnage extends entite.Entite{
         int tailleArmes = m_inventaireArme.size();
         int tailleArmures = m_inventaireArmure.size();
 
-        if (index < 0 || index >= (tailleArmes + tailleArmures)) {
+        if (index < 0 || index >= (tailleArmes + tailleArmures)) { //Signifie que l'index est en dehors de ce qu'on veut
             System.out.println("Index invalide pour l'équipement.");
             return false;
         }
 
-        if (index < tailleArmes) {
+        if (index < tailleArmes) { //Il veut équiper une arme
             Arme arme = m_inventaireArme.get(index);
             EquiperArme(arme);
             System.out.println("Arme '" + arme.getNom() + "' équipée.");
-        } else {
+        } else { //si c'est plus grand que l'index de taille arme, c'est donc une armure qu'il veut équiper plutot
             int indexArmure = index - tailleArmes;
             Armure armure = m_inventaireArmure.get(indexArmure);
             EquiperArmure(armure);
@@ -211,27 +233,15 @@ public class Personnage extends entite.Entite{
             }
         }
     }
-    @Override
-    public void infoEntite(Donjon donjon) {
-        System.out.println(m_nom + ", c'est votre tour !");
-        System.out.println("Nom : " + getM_nom());
-        System.out.println("Dexterite: " + getDexterite());
-        System.out.println("Vitesse : " + getVitesse());
-        System.out.println("Point de vie : " + getPv());
-        System.out.println("Force : " + getForce());
-        System.out.println("Initiative : " + getInitiative());
 
-    }
 
     @Override
     public boolean estVivant() {
         return getPv() > 0;
     }
 
-    @Override
-    public boolean estUnPersonnage() {
-        return true;
-    }
+
+
 
     public String getRaceNom(){
         return m_race.getM_nom();
@@ -248,11 +258,52 @@ public class Personnage extends entite.Entite{
         cible.RecevoirAttaqueDe(this, damage);
     }
 
-    public void Afficheinventaire(){
-        String inventaire = "";
-        for(int i=0;i<m_inventaireArme.size();i++){
-            inventaire += (i+1) + ")" + m_inventaireArme.get(i).getNom() + " -- ";
+    public void Afficheinventaire() {
+        String inventaireArme = "";
+        String inventaireArmure = "";
+
+        System.out.println("Armes\n");
+        if (m_inventaireArme.isEmpty()) {
+            inventaireArme = "Aucune arme dans l'inventaire";
+        } else {
+            for (int i = 0; i < m_inventaireArme.size(); i++) {
+                inventaireArme += (i + 1) + ") " + m_inventaireArme.get(i).getNom() + " -- ";
+            }
         }
-        System.out.println(inventaire + "\n");
+        System.out.println(inventaireArme);
+
+        System.out.println("Armure(s) : \n");
+        if (m_inventaireArmure.isEmpty()) {
+            inventaireArmure = "Aucune armure dans l'inventaire";
+        } else {
+            for (int j = m_inventaireArme.size(); j  < m_inventaireArmure.size() + m_inventaireArmure.size(); j++) { //On démarre avec j = taille de l'inventaire d'arme pour que la numérotation suis
+                inventaireArmure += (j + 1) + ") " + m_inventaireArmure.get(j).getNom() + " -- ";
+            }
+        }
+        System.out.println(inventaireArmure);
+    }
+
+    @Override
+    public String toString(){
+        String stat = "\n";
+        stat += "Vie : "+ m_pvInitial +"/" + getPv()  + "\n";
+        if(m_armureEquipe == null)
+        {
+            stat+="Armure : Pas d'armure";
+        }
+        else
+        {
+            stat += "Armure : "+ m_armureEquipe.getNom()+ "\n";
+        }
+        if(m_armeEquipe == null){
+            stat+="Arme : Pas d'arme";
+        }
+        else
+        {
+            stat += "Arme : "+ m_armeEquipe.getNom()+ "\n";
+        }
+        stat += "Nom : "+ m_nom+ "\n";
+        stat += "Classe : "+ m_classe.toString()+ "\n";
+        return stat;
     }
 }

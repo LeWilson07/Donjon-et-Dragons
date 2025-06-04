@@ -9,6 +9,8 @@ import equipement.armure.ArmureEcaille;
 import jeux.De;
 import sort.Sort;
 
+import java.lang.annotation.Native;
+
 public class Clerc implements Classe{
 
     @Override
@@ -18,10 +20,19 @@ public class Clerc implements Classe{
         Armure ArmureParDefaut = new ArmureEcaille();
         personnage.ramasser(ArmeParDefaut2);
         personnage.ramasser(ArmeParDefaut);
+        personnage.ramasser(ArmureParDefaut);
         personnage.EquiperArme(ArmeParDefaut);
         personnage.EquiperArmure(ArmureParDefaut);
         personnage.setPv(16);
-        personnage.setIsClerc(true);
         personnage.setSort(new Sort());
+    }
+
+    public TypeClasse getType(){
+        return TypeClasse.CLERC;
+    }
+
+    @Override
+    public String toString(){
+        return "Clerc";
     }
 }

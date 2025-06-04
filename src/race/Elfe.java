@@ -14,4 +14,8 @@ public class Elfe implements Race{
         return m_nom;
     }
 
+    public String toString(){
+        return "Race : " + m_nom;
+    }
+
 }

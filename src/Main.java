@@ -1,14 +1,9 @@
-import classe.Clerc;
-import classe.Guerrier;
-import classe.Magicien;
 import entite.Entite;
-import entite.monstre.Monstre;
 import entite.personnage.Personnage;
 import equipement.arme.EpeeLongue;
 import jeux.MaitreDuJeu;
 import jeux.Tour;
 import map.Donjon;
-import race.Humain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -43,13 +38,13 @@ public class Main {
             Donjon donjon = null;
 
             // Demande custom ou prédéfini
-            System.out.println("Voulez-vous utiliser le donjon prédéfini " + donjonsAExplorer.get(i) + " ? (oui/non)");
+            System.out.println("Voulez-vous crée votre propre donjon ? " + donjonsAExplorer.get(i) + " ? (oui/non)");
             String reponse = scanner.nextLine().trim().toLowerCase();
 
             if (reponse.equals("oui") || reponse.equals("o")) {
-                donjon = Donjon.creerDonjonPredefini(donjonsAExplorer.get(i));
-            } else {
                 donjon = mj.creerDonjonCustom(personnages);
+            } else {
+                donjon = Donjon.creerDonjonPredefini(donjonsAExplorer.get(i));
             }
 
             System.out.println(donjon.getContexte());
@@ -59,7 +54,7 @@ public class Main {
 
             // Si custom, les joueurs ont déjà leurs positions définies dans le donjon (via creerDonjonCustom)
             // Sinon, on place les joueurs (prédéfinis)
-            if (reponse.equals("oui") || reponse.equals("o")) {
+            if (reponse.equals("non") || reponse.equals("n")) {
                 donjon.placerJoueurs(personnages);
             }
 
