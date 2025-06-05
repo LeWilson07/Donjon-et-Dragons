@@ -17,7 +17,7 @@ class PersonnageTest {
 
     @BeforeEach
     void setUp() {
-        personnage = new Personnage("Testo", new Humain(), new Guerrier(), 'T');
+        personnage = new Personnage("Testo", new Humain(), new Guerrier());
         epee = new EpeeLongue();
         armure = new CoteDeMaille();
 
@@ -28,7 +28,7 @@ class PersonnageTest {
     @Test
     void testNomEtSymbole() {
         assertEquals("Testo", personnage.getM_nom());
-        assertEquals('T', personnage.getSymbole());
+        assertEquals("Tes", personnage.getSymbole());
     }
 
     @Test

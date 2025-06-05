@@ -12,7 +12,7 @@ class PersonnageClasseInitialisationTest {
 
     @Test
     void testGuerrierInitialisation() {
-        Personnage guerrier = new Personnage("GuerrierTest", new Humain(), new Guerrier(), 'G');
+        Personnage guerrier = new Personnage("GuerrierTest", new Humain(), new Guerrier());
 
         assertEquals(22, guerrier.getPvInitial());
         assertTrue(guerrier.getArmureEquipe() instanceof CoteDeMaille);
@@ -31,7 +31,7 @@ class PersonnageClasseInitialisationTest {
 
     @Test
     void testClercInitialisation() {
-        Personnage clerc = new Personnage("ClercTest", new Humain(), new Clerc(), 'C');
+        Personnage clerc = new Personnage("ClercTest", new Humain(), new Clerc());
 
         assertEquals(18, clerc.getPvInitial());
         assertTrue(clerc.getArmureEquipe() instanceof ArmureEcaille);
@@ -50,7 +50,7 @@ class PersonnageClasseInitialisationTest {
 
     @Test
     void testMagicienInitialisation() {
-        Personnage mage = new Personnage("MageTest", new Humain(), new Magicien(), 'M');
+        Personnage mage = new Personnage("MageTest", new Humain(), new Magicien());
 
         assertEquals(14, mage.getPvInitial());
         // Pas d'armure équipée ici (à confirmer selon ton code)
@@ -69,7 +69,7 @@ class PersonnageClasseInitialisationTest {
 
     @Test
     void testRoublardInitialisation() {
-        Personnage roublard = new Personnage("RoublardTest", new Humain(), new Roublard(), 'R');
+        Personnage roublard = new Personnage("RoublardTest", new Humain(), new Roublard());
 
         assertEquals(18, roublard.getPvInitial());
         // Pas d'armure équipée ici (à confirmer selon ton code)
