@@ -138,7 +138,7 @@ public class Tour
                 return gererSortAm(joueur, parts, scanner);
 
             case "bw":
-            case "boogiewoogie":
+            case "boogieWoogie":
                 return gererSortBoogieWoogie(joueur, parts);
 
             case "guerison":

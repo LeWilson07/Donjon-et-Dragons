@@ -454,7 +454,19 @@ package doonjonEtDragon
         }
     }
 
+    class Main
+    {
+         +main(args : String[]) : void
+    }
+
 }
+
+
+Main ..> MaitreduJeu : use
+Main ..> Personnage : instantiate
+Main ..> Donjon : instantiate
+Main ..> Tour : use
+
 
 Personnage ..> Classe : use
 Personnage ..> Race : use

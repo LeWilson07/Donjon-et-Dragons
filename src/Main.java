@@ -18,13 +18,13 @@ public class Main {
         // Création des personnages par méthode dédiée dans MaitreDuJeu
         ArrayList<Personnage> personnages = mj.creerPersonnages(scanner);
 
-        // Ajout d’armes pour test (optionnel)
-        for (Personnage p : personnages) {
-            p.ramasser(new EpeeLongue());
-            if (!p.getM_inventaireArme().isEmpty()) {
-                p.EquiperArme(p.getM_inventaireArme().get(0));
-            }
-        }
+        // Ajout d'une épée longue avec des stats hyper forte pour jouer plus vite (on va juste le laisser en commentaire au caou)
+        //for (Personnage p : personnages) {
+            //p.ramasser(new EpeeLongue());
+            //if (!p.getM_inventaireArme().isEmpty()) {
+                //p.EquiperArme(p.getM_inventaireArme().get(0));
+            //}
+        //}
 
         // Liste des donjons à parcourir
         List<Donjon.TypeDonjon> donjonsAExplorer = Arrays.asList(

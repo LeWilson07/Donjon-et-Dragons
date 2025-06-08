@@ -9,7 +9,7 @@ class DeTest {
     void lancerDe() {
         De de = new De(6, 3); // 3 dés à 6 faces
         int result = de.LancerDe();
-        assertTrue(result >= 3 && result <= 18, "Le lancer doit être entre 3 et 18");
+        assertTrue(result >= 3 &&    result <= 18, "Le lancer doit être entre 3 et 18");
     }
 
     @Test
